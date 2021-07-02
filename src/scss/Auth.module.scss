@@ -1,0 +1,189 @@
+.main {
+  background: #001529;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+.iconstyle {
+  position: absolute;
+  top: -15px;
+  transform: scale(71%);
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+.faceblock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .titleicon {
+    margin-bottom: -100px;
+    transform: scale(70%);
+    position: relative;
+    top: -10px;
+  }
+  .textblock {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    .titletext {
+      margin: 0;
+      padding: 0;
+      font-family: Arial;
+      font-size: 32px;
+      width: 600px;
+      text-align: center;
+      color: #ECF1F7;
+    }
+  }
+  .buttons {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    .buttonStyleLeft {
+      position: relative;
+      font-family: 'Gothic A1', sans-serif;
+      width: 250px;
+      height: 50px;
+      font-size: 24px;
+      line-height: 24px;
+      border: 3px solid #02172B;
+      box-shadow: 0px 0px 0px 5px #86C8D7;
+      border-radius: 3px;
+    }
+    .buttonStyleLeft:before {
+      background: none;
+      border: 5px solid #86C8D7;
+      border-radius: 5px;
+      box-shadow: 0px 0px 20px 7px #86C8D7;
+      content: "";
+      display: block;
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      pointer-events: none;
+    }
+    .buttonStyleLeft:hover {
+      box-shadow: 0px 0px 5px 5px #86C8D7;
+    }
+    .buttonStyleRight {
+      font-family: 'Gothic A1', sans-serif;
+      width: 250px;
+      height: 50px;
+      font-size: 24px;
+      line-height: 24px;
+      border: 3px solid #02172B;
+      box-shadow: 0px 0px 0px 5px #3783F5;
+      border-radius: 3px;
+    }
+    .buttonStyleRight:before {
+      background: none;
+      border: 5px solid #3783F5;
+      border-radius: 5px;
+      box-shadow: 0px 0px 20px 7px #3783F5;
+      content: "";
+      display: block;
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      pointer-events: none;
+    }
+    .buttonStyleRight:hover {
+      box-shadow: 0px 0px 5px 5px #3783F5;
+    }
+  }
+}
+.authPopup {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .popupContent {
+    position: relative;
+    background: white;
+    width: 70%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    .closeButton {
+      position: absolute;
+      right: 0;
+      margin-left: auto;
+      color: gray;
+      font-weight: bold;
+    }
+    &__signIn {
+      width: 60%;
+      padding: 50px;
+      h3 {
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 40px;
+      }
+      button {
+        background: #86C8D7;
+        color: black;
+        height: 50px;
+        border: none;
+        font-size: 20px;
+        border-radius: 5px;
+      }
+      .buttonApplicant {
+        background: #3783F5;
+      }
+      input {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding: 5px 0;
+        margin-bottom: 30px;
+      }
+      input:focus, input:active {
+        outline: none;
+        box-shadow: none;
+      }
+      .additionalButtons {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        button {
+          background: none;
+          color: black;
+          height: 40px;
+          width: 200px;
+          border: 1px solid #86C8D7;
+          font-size: 18px;
+        }
+        .borderApplicant {
+          border: 1px solid #3783F5;
+        }
+      }
+    }
+    &__logo {
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: 70%;
+      }
+    }
+  }
+}
+.ssuukkaa {
+  color: white;
+}
