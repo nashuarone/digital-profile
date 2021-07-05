@@ -72,7 +72,7 @@ const Gate = () => {
               </Button>
               <div className={style.additionalButtons}>
                 <div>
-                  <Button className={style.borderApplicant}>Регистрация</Button>
+                  <Button className={style.borderApplicant}><NavLink to="/signup">Регистрация</NavLink></Button>
                 </div>
                 <div>
                   <Button className={style.borderApplicant}>

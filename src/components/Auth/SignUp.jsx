@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import style from "../../scss/Auth.module.scss";
 import { Button, Input, Checkbox } from "antd";
 
-const Registration = () => {
+const SignUp = () => {
   return (
     <div className={style.main}>
       <div className={style.authPopup}>
@@ -21,17 +21,18 @@ const Registration = () => {
               <Input placeholder="Пароль" />
               <Input placeholder="Подтверждение пароля" />
               <Input placeholder="Телефон" />
-              <Input placeholder="Компания" />
-              <Input placeholder="Должность" />
               <Input placeholder="Дата рождения" />
             </div>
-            <Checkbox className={style.checkboxSign}>
+            <Checkbox>
+              Подтверждаю, что мне есть 18 лет
+            </Checkbox>
+            <Checkbox style={{ marginLeft: 0 }}>
               Ознакомлен с Политикой в области обработки{" "}
               <NavLink to="mama">персональных данных</NavLink> и даю{" "}
               <NavLink to="mama">согласие на их обработку</NavLink>
             </Checkbox>
             <div className={style.signButton}>
-              <Button type="primary" className={style.signButtonSelf}>
+              <Button type="primary" className={style.signButtonSelf2}>
                 Зарегистрироваться
               </Button>
             </div>
@@ -42,4 +43,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default SignUp;

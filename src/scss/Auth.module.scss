@@ -31,7 +31,7 @@
     .titletext {
       margin: 0;
       padding: 0;
-      font-family: Arial;
+      font-family: 'Montserrat', sans-serif;
       font-size: 32px;
       width: 600px;
       text-align: center;
@@ -44,7 +44,6 @@
     justify-content: space-around;
     .buttonStyleLeft {
       position: relative;
-      font-family: 'Gothic A1', sans-serif;
       width: 250px;
       height: 50px;
       font-size: 24px;
@@ -71,7 +70,6 @@
       box-shadow: 0px 0px 5px 5px #86C8D7;
     }
     .buttonStyleRight {
-      font-family: 'Gothic A1', sans-serif;
       width: 250px;
       height: 50px;
       font-size: 24px;
@@ -112,9 +110,9 @@
   align-items: center;
   .popupContent {
     position: relative;
-    background: white;
+    background: #E5E5E5;
     width: 70%;
-    height: 80%;
+    min-height: 80%;
     border-radius: 10px;
     display: flex;
     .closeButton {
@@ -150,6 +148,7 @@
         border-radius: 0;
         padding: 5px 0;
         margin-bottom: 30px;
+        background: #E5E5E500;
       }
       input:focus, input:active {
         outline: none;
@@ -180,6 +179,88 @@
       align-items: center;
       svg {
         width: 70%;
+      }
+    }
+    &__signUp {
+      width: 100%;
+      padding: 50px;
+      .inputField {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .inputField:after {
+        content: '';
+        flex: auto;
+      }
+      .signButton {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        .signButtonSelf {
+          min-width: 40%;
+          background: #86C8D7;
+        }
+        .signButtonSelf2 {
+          min-width: 40%;
+          background: #3783F5;
+        }
+      }
+      h3 {
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 40px;
+      }
+      button {
+        background: #86C8D7;
+        color: black;
+        height: 50px;
+        border: none;
+        font-size: 20px;
+        border-radius: 5px;
+      }
+      .buttonApplicant {
+        background: #3783F5;
+      }
+      input {
+        width: 30%;
+        min-width: 150px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-color: black;
+        border-radius: 0;
+        padding: 5px 0;
+        margin-bottom: 30px;
+        background: #E5E5E5;
+      }
+      input:nth-child(8n) {
+        margin-left: 5%;
+      }
+      input:focus, input:active {
+        outline: none;
+        box-shadow: none;
+        border-color: #86C8D7;
+      }
+      input:hover {
+        border-color: #86C8D7;
+      }
+      .additionalButtons {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        button {
+          background: none;
+          color: black;
+          height: 40px;
+          width: 200px;
+          border: 1px solid #86C8D7;
+          font-size: 18px;
+        }
+        .borderApplicant {
+          border: 1px solid #3783F5;
+        }
       }
     }
   }
