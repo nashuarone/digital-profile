@@ -14,12 +14,10 @@
       display: flex;
       &__left {
         width: 60%;
-        display: flex;
-        flex-wrap: wrap;
         input {
           width: 45%;
           height: 40px;
-          margin: 0 20px 20px 0;
+          margin: 20px 20px 20px 0;
         }
       }
       &__right {
@@ -51,11 +49,113 @@
       background: #3783F5;
     }
   }
-  .timelineClock {
-    color: orange;
-    font-size: 20px;
+  .ant-steps-item-active span.ant-steps-icon-dot {
+    background: orange !important;
+  }
+  .timeline {
+    margin-top: 30px;
+  }
+  .roadmapdescription {
+    position: relative;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    .roadmapopup {
+      font-size: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+  }
+  .answerPopup {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .answerContent {
+      position: relative;
+      background: #E5E5E5;
+      width: 70%;
+      min-height: 80%;
+      border-radius: 10px;
+      display: flex;
+      .closeButton {
+        position: absolute;
+        right: 0;
+        margin-left: auto;
+        color: gray;
+        font-weight: bold;
+      }
+      &__text {
+        padding: 50px;
+        h3 {
+          font-weight: bold;
+          font-size: 30px;
+          margin-bottom: 40px;
+        }
+      }
+    }
   }
   &__video {
-    margin-top: 30px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    .halfvideo {
+      width: 50%;
+    }
+  }
+  .videoplayer {
+    max-width: 82%;
+    height: auto;
+    padding-top: 36%;
+    background: #3783F5;
+  }
+
+  .introduce {
+    display: flex;
+    justify-content: space-between;
+     &__half {
+       width: 40%;
+       p {
+         font-size: 17px;
+         margin: 20px 0;
+       }
+     }
+  }
+  .resume {
+    margin-top: 20px;
+    &__main {
+      margin-top: 20px;
+      .resumeSpan {
+        display: inline-block;
+        width: 27%;
+        margin: 5px 0;
+      }
+      .resumeSpan__tall {
+        display: inline-block;
+        width: 27%;
+        margin: 30px 0;
+      }
+      .resumeArea {
+        display: inline-block;
+        width: 27%;
+        margin: 5px 0;
+        vertical-align: top;
+      }
+      input, textarea {
+        width: 50%;
+        border-radius: 5px;
+        margin: 5px 0;
+      }
+      button {
+        border-radius: 5px;
+      }
+    }
   }
 }

@@ -18,7 +18,7 @@ const Registration = () => {
               <Input placeholder="Имя" />
               <Input placeholder="Отчество (если есть)" />
               <Input placeholder="Email" />
-              <Input placeholder="Пароль" />
+              <Input placeholder="Пароль"/>
               <Input placeholder="Подтверждение пароля" />
               <Input placeholder="Телефон" />
               <Input placeholder="Компания" />

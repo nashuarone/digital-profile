@@ -32,7 +32,7 @@ function App() {
               <Hat />
               <Content>
                 <div className="site-layout-content">
-                  <Route exact path="/profile" render={() => <Profile />} />
+                  <Route path="/profile" render={() => <Profile />} />
                 </div>
               </Content>
               <Footer />

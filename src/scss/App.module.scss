@@ -13,9 +13,18 @@
     }
   }
   &__log {
-    color: white;
     margin: 0 0 0 auto;
     font-size: 18px;
+    display: flex;
+    align-items: center;
+    .logSize {
+      color: white;
+      font-size: 18px;
+      margin-left: 20px;
+    }
+    svg {
+      font-size: 30px;
+    }
   }
 }
 .footer {
