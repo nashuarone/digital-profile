@@ -8,7 +8,7 @@ import Resume from "./Resume";
 const Profile = () => {
   return (
     <div className={style.profile}>
-      <h2>Мой профиль</h2>
+      <h1>Мой профиль</h1>
       <Menu
         className={style.profile__menu}
         mode="horizontal"
