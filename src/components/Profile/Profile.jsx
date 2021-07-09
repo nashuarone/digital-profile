@@ -4,6 +4,7 @@ import style from "../../scss/Profile.module.scss";
 import { Menu } from "antd";
 import Aboutme from "./Aboutme";
 import Resume from "./Resume";
+import DigitalProfile from "./DigitalProfile";
 
 const Profile = () => {
   return (
@@ -20,11 +21,14 @@ const Profile = () => {
         <Menu.Item key="1">
           <NavLink to="/profile/resume">Резюме</NavLink>
         </Menu.Item>
-        <Menu.Item key="2">Цифровой профиль</Menu.Item>
+        <Menu.Item key="2">
+          <NavLink to="/profile/digital-profile">Цифровой профиль</NavLink>
+        </Menu.Item>
         <Menu.Item key="3">Уведомления</Menu.Item>
       </Menu>
       {<Route exact path="/profile" component={Aboutme} />}
       {<Route path="/profile/resume" component={Resume} />}
+      {<Route path="/profile/digital-profile" component={DigitalProfile} />}
     </div>
   );
 };

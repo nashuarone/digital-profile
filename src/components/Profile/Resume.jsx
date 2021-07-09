@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "../../scss/Profile.module.scss";
 import { Button, Checkbox, DatePicker, Input, Radio } from "antd";
 import { FolderAddOutlined, PlusOutlined } from "@ant-design/icons";
@@ -7,6 +7,10 @@ const { TextArea } = Input;
 
 
 const Resume = () => {
+  const [isVisibleWorkXP, setVisibleWorkXP] = useState(false);
+  const toggleVisibleWorkXP = () => {
+    setVisibleWorkXP(!isVisibleWorkXP);
+  };
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -90,7 +94,68 @@ const Resume = () => {
             <span className={style.resumeSpan__tall}>
               <b>Опыт работы</b>
             </span>
-            <Button>Добавить место работы</Button>
+            <Button onClick={toggleVisibleWorkXP}>Добавить место работы</Button>
+            {isVisibleWorkXP && (
+              <div className={style.answerPopup}>
+                <div className={style.answerContent}>
+                  <Button
+                    onClick={toggleVisibleWorkXP}
+                    type="text"
+                    className={style.closeButton}
+                  >
+                    X
+                  </Button>
+                  <div className={style.answerContent__text}>
+                    <h3>Место работы</h3>
+                    <span className={style.resumeAreaPopup}>
+                      Начало работы
+                    </span>
+                    <DatePicker
+                      className={style.datepicker}
+                      placeholder="Выберите месяц"
+                      picker="month"
+                    />
+                    <DatePicker
+                      className={style.datepicker}
+                      placeholder="Выберите год"
+                      picker="year"
+                    />
+                    <br />
+                    <span className={style.resumeAreaPopup}>
+                      Окончание работы
+                    </span>
+                    <DatePicker
+                      className={style.datepicker}
+                      placeholder="Выберите месяц"
+                      picker="month"
+                    />
+                    <DatePicker
+                      className={style.datepicker}
+                      placeholder="Выберите год"
+                      picker="year"
+                    />
+                    <Checkbox className={style.littleElemMargin}>
+                      По настоящее время
+                    </Checkbox>
+                    <Input
+                      className={style.inputPopup}
+                      placeholder="Место работы (полное название компании)"
+                    />
+                    <Input
+                      className={style.inputPopup}
+                      placeholder="Должность"
+                    />
+                    <TextArea
+                      className={style.inputPopup}
+                      placeholder="Выполняемые задачи"
+                    />
+                    <Button className={style.popupButton} type="primary">
+                      Сохранить
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
             <br />
             <span className={style.resumeArea}>Проектная деятельность</span>
             <TextArea placeholder="Расскажи о том, в каких проектах ты участвовал и в должности кого" />
@@ -170,6 +235,23 @@ const Resume = () => {
       </div>
       <div className={style.profile__personalinfo}>
         <h2>Сертификаты</h2>
+        <div className={style.certificateBlock}>
+          <div className={style.certificateBlock__img}>
+            <img src="" alt="certificate img" />
+          </div>
+          <div className={style.certificateBlock__desc}>
+            <h3 className={style.certificateTitle}>UX/UI дизайнер</h3>
+            <span>Сертификат: 00000000</span>
+            <div>
+              <span className={style.certificateSkill}>CSS</span>
+              <span className={style.certificateSkill}>HTML</span>
+            </div>
+            <span>
+              Статус:{" "}
+              <span className={style.certificateChecked}>обработано</span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

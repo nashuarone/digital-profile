@@ -49,6 +49,36 @@
       border-radius: 5px;
       background: #3783F5;
     }
+    .certificateBlock {
+      display: flex;
+      flex-wrap: wrap;
+      &__img {
+        width: 35%;
+        background: #3783F5;
+      }
+      &__desc {
+        padding: 0 20px;
+        flex-grow: 1;
+        span {
+          margin: 5px 0;
+        }
+        .certificateTitle {
+          border-bottom: 2px solid black;
+        }
+        .certificateSkill {
+          display: inline-block;
+          border: 1px solid #3783F5;
+          border-radius: 5px;
+          min-width: 60px;
+          text-align: center;
+          padding: 0 5px;
+          margin-right: 5px;
+        }
+        .certificateChecked {
+          color: green;
+        }
+      }
+    }
   }
   .ant-steps-item-active span.ant-steps-icon-dot {
     background: orange !important;
@@ -81,7 +111,7 @@
     align-items: center;
     .answerContent {
       position: relative;
-      background: #E5E5E5;
+      background: white;
       width: 70%;
       min-height: 80%;
       border-radius: 10px;
@@ -95,10 +125,34 @@
       }
       &__text {
         padding: 50px;
+        width: 100%;
         h3 {
           font-weight: bold;
           font-size: 30px;
           margin-bottom: 40px;
+        }
+        .resumeAreaPopup {
+          display: inline-block;
+          width: 27%;
+          margin: 5px 0;
+          vertical-align: top;
+        }
+        .datepicker {
+          border-radius: 5px;
+          margin: 5px;
+          width: 20%;
+        }
+        .inputPopup {
+          width: 100%;
+        }
+        .popupButton {
+          display: block;
+          margin-left: auto;
+          margin-top: 20px;
+          width: 250px;
+          height: 40px;
+          border-radius: 5px;
+          background: #3783F5;
         }
       }
     }
@@ -182,5 +236,35 @@
         margin-bottom: 0;
       }
     }
+  }
+  .digital {
+    color: red;
+  }
+  .digitalProgress {
+    display: flex;
+    justify-content: space-between;
+  }
+  .digitalCharts {
+    display: flex;
+    &__sunburst {
+      padding: 20px;
+      width: 50%;
+      height: 350px;
+    }
+  }
+  .chartSoftskill {
+    width: 100%;
+    padding: 20px;
+    height: 400px;
+  }
+  .chartSoftskill1 {
+    width: 100%;
+    padding: 20px;
+    height: 110px;
+  }
+  .chartSoftskill2 {
+    width: 100%;
+    padding: 20px;
+    height: 160px;
   }
 }
