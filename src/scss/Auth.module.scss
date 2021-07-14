@@ -184,6 +184,11 @@
     &__signUp {
       width: 100%;
       padding: 50px;
+      .signFormButton {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+      }
       .inputField {
         display: flex;
         justify-content: space-between;
@@ -222,20 +227,25 @@
       .buttonApplicant {
         background: #3783F5;
       }
-      input {
-        width: 30%;
-        min-width: 150px;
+      .regInput {
+        // width: 30%;
+        // min-width: 150px;
         border-top: none;
         border-left: none;
         border-right: none;
         border-color: black;
         border-radius: 0;
         padding: 5px 0;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+        margin-top: 5px;
         background: #E5E5E5;
+        background-color: transparent;
       }
-      input:nth-child(8n) {
+      .lastInput {
         margin-left: 5%;
+        background: transparent;
+        margin: 10px 0;
+        width: 100%;
       }
       input:focus, input:active {
         outline: none;

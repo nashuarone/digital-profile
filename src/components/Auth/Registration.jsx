@@ -14,16 +14,16 @@ const Registration = () => {
           <div className={style.popupContent__signUp}>
             <h3>Регистрация</h3>
             <div className={style.inputField}>
-              <Input placeholder="Фамилия" />
-              <Input placeholder="Имя" />
-              <Input placeholder="Отчество (если есть)" />
-              <Input placeholder="Email" />
-              <Input placeholder="Пароль"/>
-              <Input placeholder="Подтверждение пароля" />
-              <Input placeholder="Телефон" />
-              <Input placeholder="Компания" />
-              <Input placeholder="Должность" />
-              <Input placeholder="Дата рождения" />
+              <Input className={style.regInput} placeholder="Фамилия" />
+              <Input className={style.regInput} placeholder="Имя" />
+              <Input className={style.regInput} placeholder="Отчество (если есть)" />
+              <Input className={style.regInput} placeholder="Email" />
+              <Input className={style.regInput} placeholder="Пароль"/>
+              <Input className={style.regInput} placeholder="Подтверждение пароля" />
+              <Input className={style.regInput} placeholder="Телефон" />
+              <Input className={style.regInput} placeholder="Компания" />
+              <Input className={style.regInput} placeholder="Должность" />
+              <Input className={style.regInput} placeholder="Дата рождения" />
             </div>
             <Checkbox className={style.checkboxSign}>
               Ознакомлен с Политикой в области обработки{" "}

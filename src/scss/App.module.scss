@@ -32,11 +32,11 @@
   justify-content: space-between;
   padding: 0 3%;
   background: #001529;
-  div {
+  &__inner {
     width: 30%;
     padding: 30px 0;
   }
-  span {
+  .footerSpan {
     display: block;
     color: white;
     font-size: 18px;
@@ -62,10 +62,93 @@
       height: 40px;
       width: 225px;
       border-radius: 5px;
+      span {
+        display: block;
+        color: white;
+        font-size: 18px;
+      }
     }
     .footerFeedbackText {
       display: block;
       text-align: right;
+      color: white;
+      font-size: 18px;
+      padding-bottom: 10px;
+    }
+  }
+  .answerPopup {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .answerContent {
+      position: relative;
+      background: white;
+      width: 70%;
+      min-height: 80%;
+      border-radius: 10px;
+      display: flex;
+      .closeButton {
+        position: absolute;
+        right: 0;
+        margin-left: auto;
+        color: gray;
+        font-weight: bold;
+      }
+      &__text {
+        padding: 50px;
+        width: 100%;
+        h3 {
+          font-weight: bold;
+          font-size: 30px;
+          margin-bottom: 40px;
+        }
+        .feedbackInputs {
+          display: flex;
+          justify-content: space-between;
+        }
+        .feedbackText {
+          font-size: 16px;
+          margin-bottom: 20px;
+        }
+        .inputPopupName {
+          width: 60%;
+          margin: 0 20px 20px 0;
+          padding-top: 5px;
+          height: 40px;
+        }
+        .inputPopupNum {
+          width: 30%;
+          margin: 0 0 20px 0;
+          padding-top: 5px;
+          height: 40px;
+        }
+        .inputPopupArea {
+          min-height: 150px;
+        }
+        .popupButton {
+          margin-top: 20px;
+          width: 250px;
+          height: 40px;
+          border-radius: 5px;
+          background: #3783F5;
+        }
+        .popupButtonIcon {
+          margin-top: 20px;
+          width: 250px;
+          height: 40px;
+          border-radius: 5px;
+          .iconSize {
+            font-size: 18px;
+          }
+        }
+      }
     }
   }
 }

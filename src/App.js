@@ -3,8 +3,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 //import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "antd";
 
-import "./App.css";
 import "antd/dist/antd.css";
+import "./App.css";
+
 //import style from "./scss/App.module.scss";
 import Gate from "./components/Auth/Gate";
 import Registration from "./components/Auth/Registration";
@@ -16,7 +17,7 @@ import Profile from "./components/Profile/Profile";
 const { Content } = Layout;
 
 function App() {
-  const isAuth = true
+  const isAuth = false
   return (
     <BrowserRouter>
       <div>

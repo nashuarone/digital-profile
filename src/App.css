@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;400;700&family=Montserrat:wght@100;400;700&display=swap');
+@font-face {
+  font-family: "Gothic A1";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gothic A1"),
+       url("../src/fonts/GothicA1-Regular.ttf") format("ttf");
+}
+
+body {
+  margin: 0;
+  font-family: 'Gothic A1', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 .site-layout-content {
   min-height: 280px;
@@ -18,4 +33,32 @@
 }
 .ant-steps-item-active span.ant-steps-icon-dot {
   background: orange !important;
+}
+.ant-input, .ant-input-group-addon {
+  background-color: transparent;
+}
+.antInputGroup {
+  display: flex;
+  flex-wrap: wrap;
+}
+.antInputGroup .ant-form-item {
+  width: 30%;
+  margin-right: 3%;
+}
+/* .ant-form-item:last-child {
+  margin-right: auto;
+} */
+.ant-form-item-has-feedback.ant-form-item-has-success .ant-form-item-children-icon,
+.ant-form-item-has-feedback.ant-form-item-has-warning .ant-form-item-children-icon,
+.ant-form-item-has-feedback.ant-form-item-has-error .ant-form-item-children-icon,
+.ant-form-item-has-feedback.ant-form-item-is-validating .ant-form-item-children-icon {
+  top: 5%;
+  right: -9px;
+  margin-top: 10px;
+}
+.ant-form-item-has-error .ant-input:not(.ant-input-disabled),
+.ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled),
+.ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover,
+.ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+  background-color: transparent;
 }
