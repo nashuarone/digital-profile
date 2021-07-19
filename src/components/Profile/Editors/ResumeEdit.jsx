@@ -1,15 +1,70 @@
 import React, { useState } from "react";
+//import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import style from "../../scss/Profile.module.scss";
+import style from "../../../scss/Profile.module.scss";
 import { Button, Checkbox, DatePicker, Input, Radio } from "antd";
 import { FolderAddOutlined, PlusOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 const { TextArea } = Input;
+const dateFormat = "YYYY-MM-DD";
 
-const Resume = () => {
+const ResumeEdit = () => {
+  //const dispatch = useDispatch();
+  const userData = useSelector((s) => s.auth.userData);
+  const resumeData = useSelector((s) => s.resume.resumeData);
+  const isFetchingButton = useSelector((s) => s.resume.isFetchingButton);
+  //const success_message = useSelector((s) => s.resume.success_message);
+  const [email, setEmail] = useState(userData.email);
+  const [secondName, setSecondName] = useState(userData.secondName);
+  const [firstName, setFirstName] = useState(userData.firstName);
+  const [thirdName, setThirdName] = useState(userData.thirdName);
+  const [birthDate, setBirthdate] = useState(userData.birthDate);
+  const [tel, setTel] = useState(userData.tel);
+  const [telegramIdentifier, setTelegramIdentifier] = useState(
+    resumeData.telegramIdentifier
+  );
+  const [discordIdentifier, setDiscordIdentifier] = useState(
+    resumeData.discordIdentifier
+  );
+  const [fbLink, setFbLink] = useState(resumeData.fbLink);
+  const [vkLink, setVkLink] = useState(resumeData.vkLink);
+  const [placeOfResidence, setPlaceOfResidence] = useState(
+    resumeData.placeOfResidence
+  );
   const [isVisibleWorkXP, setVisibleWorkXP] = useState(false);
   const toggleVisibleWorkXP = () => {
     setVisibleWorkXP(!isVisibleWorkXP);
+  };
+  const handlleChangeF = (e) => {
+    setFirstName(e.target.value);
+  };
+  const handlleChangeS = (e) => {
+    setSecondName(e.target.value);
+  };
+  const handlleChangeE = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlleChangeT = (e) => {
+    setThirdName(e.target.value);
+  };
+  const handlleChangePh = (e) => {
+    setTel(e.target.value);
+  };
+  const handlleChangeTlgr = (e) => {
+    setTelegramIdentifier(e.target.value);
+  };
+  const handlleChangeDsc = (e) => {
+    setDiscordIdentifier(e.target.value);
+  };
+  const handlleChangeFB = (e) => {
+    setFbLink(e.target.value);
+  };
+  const handlleChangeVK = (e) => {
+    setVkLink(e.target.value);
+  };
+  const handlleChangePoR = (e) => {
+    setPlaceOfResidence(e.target.value);
   };
   return (
     <div>
@@ -23,7 +78,7 @@ const Resume = () => {
               момента вашего входа и на протяжении всего пути
             </p>
             <Button className={style.personalButton} type="primary">
-              Скачать резюме
+              Загрузить резюме
             </Button>
           </div>
           <div className={style.introduce__half}>
@@ -36,31 +91,48 @@ const Resume = () => {
           <div className={style.resume__main}>
             <h2>Основная информация о себе</h2>
             <span className={style.resumeSpan}>Имя</span>
-            <Input placeholder="" />
+            <Input value={firstName} onChange={handlleChangeF} placeholder="" />
             <span className={style.resumeSpan}>Фамилия</span>
-            <Input placeholder="" />
+            <Input
+              value={secondName}
+              onChange={handlleChangeS}
+              placeholder=""
+            />
             <span className={style.resumeSpan}>Отчество</span>
-            <Input placeholder="" />
+            <Input value={thirdName} onChange={handlleChangeT} placeholder="" />
             <span className={style.resumeSpan}>Мобильный телефон</span>
-            <Input placeholder="" />
+            <Input value={tel} onChange={handlleChangePh} placeholder="" />
             <span className={style.resumeSpan}>Email</span>
-            <Input placeholder="" />
+            <Input value={email} onChange={handlleChangeE} placeholder="" />
             <span className={style.resumeSpan}>Telegram (никнейм)</span>
-            <Input placeholder="" />
+            <Input
+              value={telegramIdentifier}
+              onChange={handlleChangeTlgr}
+              placeholder=""
+            />
             <span className={style.resumeSpan}>Discord</span>
-            <Input placeholder="" />
+            <Input
+              value={discordIdentifier}
+              onChange={handlleChangeDsc}
+              placeholder=""
+            />
             <span className={style.resumeSpan}>Ссылка на Facebook</span>
-            <Input placeholder="" />
+            <Input value={fbLink} onChange={handlleChangeFB} placeholder="" />
             <span className={style.resumeSpan}>Ссылка на Вконтакте</span>
-            <Input placeholder="" />
+            <Input value={vkLink} onChange={handlleChangeVK} placeholder="" />
             <span className={style.resumeSpan}>Место проживания</span>
-            <Input placeholder="" />
+            <Input value={placeOfResidence} onChange={handlleChangePoR} placeholder="" />
             <span className={style.resumeSpan}>Дата рождения</span>
-            <Input placeholder="" />
+            <DatePicker
+              onChange={(val) => setBirthdate(val)}
+              defaultValue={moment(birthDate, dateFormat)}
+              className={style.inputImitator}
+              placeholder=""
+            />
             <span className={style.resumeSpan}>Пол</span>
             <Radio.Group>
-              <Radio value={1}>Мужской</Radio>
-              <Radio value={2}>Женский</Radio>
+              <Radio value={0}>Мужской</Radio>
+              <Radio value={1}>Женский</Radio>
             </Radio.Group>
             <br />
             <span className={style.resumeSpan}>Военный билет</span>
@@ -209,31 +281,36 @@ const Resume = () => {
               <FolderAddOutlined className={style.iconSize} />
             </Button>
           </div>
-          <NavLink to="/profile/resume-editor">
+          <Button
+            disabled={isFetchingButton}
+            className={style.personalButton}
+            type="primary"
+          >
+            Сохранить
+          </Button>
+          <NavLink to="/profile/resume">
             <Button className={style.personalButton} type="primary">
-              Редактировать
+              Назад
             </Button>
           </NavLink>
-        </div>
-      </div>
-      <div className={style.profile__personalinfo}>
-        <div className={style.resume__main}>
-          <h2>Переход на этап “Стажировка”</h2>
-          <div className={style.internshipBlock}>
-            <p className={style.internshipText}>
-              Для открытия следующего этапа “Стажировка” необходимо прикрепить
-              сертификат, подтверждающий прохождение курса на этапе “Прохождение
-              курса”
-            </p>
-            <Button>
-              Добавить сертификат
-              <FolderAddOutlined className={style.iconSize} />
-            </Button>
+          <div className={style.resume__main}>
+            <h2>Переход на этап “Стажировка”</h2>
+            <div className={style.internshipBlock}>
+              <p className={style.internshipText}>
+                Для открытия следующего этапа “Стажировка” необходимо прикрепить
+                сертификат, подтверждающий прохождение курса на этапе
+                “Прохождение курса”
+              </p>
+              <Button>
+                Добавить сертификат
+                <FolderAddOutlined className={style.iconSize} />
+              </Button>
+            </div>
           </div>
+          <Button className={style.personalButton} type="primary">
+            Сохранить
+          </Button>
         </div>
-        <Button className={style.personalButton} type="primary">
-          Сохранить
-        </Button>
       </div>
       <div className={style.profile__personalinfo}>
         <h2>Сертификаты</h2>
@@ -259,4 +336,4 @@ const Resume = () => {
   );
 };
 
-export default Resume;
+export default ResumeEdit;

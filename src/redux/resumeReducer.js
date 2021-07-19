@@ -1,65 +1,61 @@
-import {
-  authAPI
-} from "../api/api";
+import { authAPI } from "../api/api";
 
 const LOGOUT = "LOGOUT";
-const SET_USER = "SET_USER";
+const SET_RESUME = "SET_RESUME";
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 const TOGGLE_IS_LOGIN_BUTTON = "TOGGLE_IS_LOGIN_BUTTON";
 
 let initialState = {
-  userData: {},
-  isAuth: false,
+  resumeData: {},
   isFetchingButton: false,
-  error_message: '',
-  success_message: ''
+  error_message: "",
+  success_message: "",
 };
 
-const authReducer = (state_p = initialState, action) => {
+const resumeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER: {
+    case SET_RESUME: {
       return {
-        ...state_p,
-        userData: action.payload,
-        isAuth: true,
+        ...state,
+        resumeData: action.payload,
       };
     }
     case LOGOUT: {
       localStorage.removeItem("token");
       return {
-        ...state_p,
+        ...state,
         userData: {},
         isAuth: false,
         error_message: "",
-        success_message: ""
+        success_message: "",
       };
     }
     case SET_ERROR_MESSAGE: {
       return {
-        ...state_p,
+        ...state,
         error_message: action.err_mes,
       };
     }
     case SET_SUCCESS_MESSAGE: {
       return {
-        ...state_p,
+        ...state,
         success_message: action.success_message,
       };
     }
     case TOGGLE_IS_LOGIN_BUTTON:
       return {
-        ...state_p,
+        ...state,
         isFetchingButton: action.fetchingStatus,
       };
     default:
-      return state_p;
+      return state;
   }
 };
 
-export const setUser = (user) => ({
-  type: SET_USER,
-  payload: user,
+export const setResume = (data) => ({
+  type: SET_RESUME,
+  payload: data,
 });
 export const logout = () => ({
   type: LOGOUT,
@@ -77,14 +73,16 @@ export const toggleIsLoginButton = (fetchingStatus) => ({
   fetchingStatus,
 });
 
-export const createUser =
+export const createResume =
   (firstName, secondName, thirdName, email, tel, password, birthDate) =>
   (dispatch) => {
     dispatch(toggleIsLoginButton(true));
     authAPI
       .signup(firstName, secondName, thirdName, email, tel, password, birthDate)
       .then((data) => {
-        dispatch(setSuccessMessage("Регистрация пройдена, войдите в личный кабинет"));
+        dispatch(
+          setSuccessMessage("Регистрация пройдена, войдите в личный кабинет")
+        );
         dispatch(toggleIsLoginButton(false));
         console.log(data);
         dispatch(setSuccessMessage(""));
@@ -106,7 +104,6 @@ export const getUserData = (email, password) => (dispatch) => {
       dispatch(setSuccessMessage("Успешно. Токен получен"));
       localStorage.setItem("token", res.data.token);
       dispatch(auth());
-      //dispatch(refresh(res.data.refresh_token));
       console.log(res.data);
     }
   });
@@ -125,17 +122,11 @@ export const auth = () => (dispatch) => {
     }
     if (res.status === 200) {
       dispatch(setSuccessMessage("Вход выполнен"));
-      dispatch(setUser(res.data));
+      dispatch(setResume(res.data));
       dispatch(setSuccessMessage(""));
     }
   });
 };
-// export const refresh = (refresh_token) => (dispatch) => {
-//   return authAPI.refresh(refresh_token).then((res) => {
-//     localStorage.setItem("token", res.data.token);
-//     dispatch(setSuccessMessage("Токен обновлен"));
-//   });
-// };
 export const putUserData =
   (userId, firstName, secondName, thirdName, email, tel, birthDate) =>
   (dispatch) => {
@@ -149,11 +140,11 @@ export const putUserData =
         }
         if (res.status === 200) {
           dispatch(setSuccessMessage("Данные обновлены"));
-          dispatch(setUser(res.data));
+          dispatch(setResume(res.data));
           console.log(res.data);
           dispatch(setSuccessMessage(""));
         }
       });
   };
 
-export default authReducer;
+export default resumeReducer;

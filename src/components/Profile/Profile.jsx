@@ -3,8 +3,10 @@ import { NavLink, Route } from "react-router-dom";
 import style from "../../scss/Profile.module.scss";
 import { Menu } from "antd";
 import Aboutme from "./Aboutme";
+import AboutmeEdit from "./Editors/AboutmeEdit";
 import Resume from "./Resume";
 import DigitalProfile from "./DigitalProfile";
+import ResumeEditAntd from "./Editors/ResumeEditAntd";
 
 const Profile = () => {
   return (
@@ -26,9 +28,11 @@ const Profile = () => {
         </Menu.Item>
         <Menu.Item key="3">Уведомления</Menu.Item>
       </Menu>
-      {<Route exact path="/profile" component={Aboutme} />}
+      {<Route exact path="/profile/aboutme-editor" component={AboutmeEdit} />}
+      {<Route path="/profile/resume-editor" component={ResumeEditAntd} />}
       {<Route path="/profile/resume" component={Resume} />}
       {<Route path="/profile/digital-profile" component={DigitalProfile} />}
+      {<Route exact path="/profile" component={Aboutme} />}
     </div>
   );
 };

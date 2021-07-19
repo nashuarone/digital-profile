@@ -6,7 +6,7 @@ export const HeadLogoSvg = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0)">
+    <g clipPath="url(#clip0)">
       <path
         d="M70.7358 22.1249H93.4645L89.2705 26.5534H84.4316V49.3846H79.5372V26.5534H74.9299L70.7358 22.1249Z"
         fill="white"
@@ -115,9 +115,9 @@ export const TandemTitleSvg = () => (
         width="1155.97"
         height="377.823"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -175,7 +175,7 @@ export const TandemBkgSvg = () => (
       width="2004"
       height="410.986"
       fill="url(#pattern0)"
-      fill-opacity="0.2"
+      fillOpacity="0.2"
     />
     <defs>
       <pattern

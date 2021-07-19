@@ -1,14 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../scss/App.module.scss";
 import { Layout, Menu, Button, Badge } from "antd";
 import Icon, { BellFilled } from "@ant-design/icons";
 import { HeadLogoSvg } from "../../assets/forSvgExport";
+import { logout } from "../../redux/authReducer";
 
 const { Header } = Layout;
 const HeadLogoIcon = (props) => <Icon component={HeadLogoSvg} {...props} />;
 
 const Hat = () => {
+  const dispatch = useDispatch();
   return (
     <div>
       <Header className={style.header}>
@@ -17,20 +20,24 @@ const Hat = () => {
           className={style.header__menu}
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["2"]}
+          defaultSelectedKeys={["0"]}
         >
-          <Menu.Item>
+          <Menu.Item key="0">
             <NavLink to="/profile">Профиль</NavLink>
           </Menu.Item>
-          <Menu.Item>Диагностика</Menu.Item>
-          <Menu.Item>Стажировка</Menu.Item>
-          <Menu.Item>Банк резюме</Menu.Item>
+          <Menu.Item key="1">Диагностика</Menu.Item>
+          <Menu.Item key="2">Стажировка</Menu.Item>
+          <Menu.Item key="3">Банк резюме</Menu.Item>
         </Menu>
         <div className={style.header__log}>
           <Badge count={2}>
             <BellFilled className={style.logSize} />
           </Badge>
-          <Button className={style.logSize} type="text">
+          <Button
+            onClick={() => dispatch(logout())}
+            className={style.logSize}
+            type="text"
+          >
             Выйти
           </Button>
         </div>

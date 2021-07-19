@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux"
+import { NavLink } from "react-router-dom";
+import moment from "moment";
 import style from "../../scss/Profile.module.scss";
-import { Button, Input, Upload, Steps, Popover } from "antd";
+import { Button, Input, Upload, Steps, Popover, DatePicker } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
+const dateFormat = "YYYY-MM-DD";
 
 const customDot = (dot, { status, index }) => (
   <Popover
@@ -18,6 +22,7 @@ const customDot = (dot, { status, index }) => (
 );
 
 const Aboutme = () => {
+  const userData = useSelector((s) => s.auth.userData);
   const [isVisibleAnswer, setVisibleAnswer] = useState(false);
   const toggleVisibleAnswer = () => {
     setVisibleAnswer(!isVisibleAnswer);
@@ -28,25 +33,54 @@ const Aboutme = () => {
         <h3>Личная информация</h3>
         <div className={style.personalBlock}>
           <div className={style.personalBlock__left}>
-            <Input placeholder="Фамилия" />
-            <Input placeholder="Имя" />
-            <Input placeholder="Отчество (если есть)" />
-            <Input placeholder="Email" />
-            <Input placeholder="Телефон" />
-            <Input placeholder="Дата рождения" />
+            <div className={style.userInfo}>
+              Фамилия
+              <span className={style.userInfo__inner}>
+                {userData.secondName}
+              </span>
+            </div>
+            <div className={style.userInfo}>
+              Имя
+              <span className={style.userInfo__inner}>
+                {userData.firstName}
+              </span>
+            </div>
+            <div className={style.userInfo}>
+              Отчество (если есть)
+              <span className={style.userInfo__inner}>
+                {userData.thirdName}
+              </span>
+            </div>
+            <div className={style.userInfo}>
+              Email
+              <span className={style.userInfo__inner}>{userData.email}</span>
+            </div>
+            <div className={style.userInfo}>
+              Телефон
+              <span className={style.userInfo__inner}>{userData.tel}</span>
+            </div>
+            <div className={style.userInfo}>
+              Дата рождения
+              <span className={style.userInfo__inner}>
+                {userData.birthDate}
+              </span>
+              <DatePicker
+                defaultValue={moment(userData.birthDate, dateFormat)}
+                bordered={false}
+                disabled
+              />
+            </div>
+            <Input className={style.userInfo} placeholder="Дата рождения" />
           </div>
           <div className={style.personalBlock__right}>
             <img className={style.avatar} src="" alt="avatar" />
-            <Upload listType="picture">
-              <Button icon={<i className="fas fa-camera"></i>}>
-                Загрузить фотографию
-              </Button>
-            </Upload>
           </div>
         </div>
-        <Button className={style.personalButton} type="primary">
-          Сохранить
-        </Button>
+        <NavLink to="/profile/aboutme-editor">
+          <Button className={style.personalButton} type="primary">
+            Редактировать
+          </Button>
+        </NavLink>
       </div>
       <div>
         <h2>Дорожная карта</h2>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../scss/Auth.module.scss";
-import { Form, Select, Button, Input, Checkbox, DatePicker } from "antd";
+import { Form, Select, Button, Input, Checkbox, DatePicker, message } from "antd";
 import { createUser } from "../../redux/authReducer"
+import { LoginOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const dateFormat = "YYYY-MM-DD";
@@ -11,6 +12,7 @@ const dateFormat = "YYYY-MM-DD";
 const SignUp = () => {
   const dispatch = useDispatch();
   const isFetchingButton = useSelector((s) => s.auth.isFetchingButton);
+  const success_message = useSelector((s) => s.auth.success_message);
   const [form] = Form.useForm();
   const onFinish = (values) => {
     dispatch(
@@ -37,12 +39,22 @@ const SignUp = () => {
       </Select>
     </Form.Item>
   );
+  const regSuccess = (success_message) => {
+    message.success(success_message);
+  };
+  useEffect(() => {
+    if (success_message) {
+      regSuccess(success_message);
+    }
+  }, [success_message]);
   return (
     <div className={style.main}>
       <div className={style.authPopup}>
         <div className={style.popupContent}>
           <Button type="text" className={style.closeButton}>
-            <NavLink to="/">{"<-"}</NavLink>
+            <NavLink to="/">
+              <LoginOutlined className={style.closeButtonIcon} />
+            </NavLink>
           </Button>
           <div className={style.popupContent__signUp}>
             <h3>Регистрация</h3>
@@ -58,7 +70,7 @@ const SignUp = () => {
             >
               <div className="antInputGroup">
                 <Form.Item
-                  name="firstName"
+                  name="secondName"
                   rules={[
                     {
                       required: true,
@@ -70,7 +82,7 @@ const SignUp = () => {
                   <Input className={style.regInput} placeholder="Фамилия" />
                 </Form.Item>
                 <Form.Item
-                  name="secondName"
+                  name="firstName"
                   rules={[
                     {
                       required: true,
