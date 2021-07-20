@@ -95,13 +95,6 @@ const SignUp = () => {
                 </Form.Item>
                 <Form.Item
                   name="thirdName"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Введите свое отчество",
-                      whitespace: false,
-                    },
-                  ]}
                 >
                   <Input
                     className={style.regInput}

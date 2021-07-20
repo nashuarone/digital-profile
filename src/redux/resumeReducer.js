@@ -25,7 +25,7 @@ const resumeReducer = (state = initialState, action) => {
       localStorage.removeItem("token");
       return {
         ...state,
-        userData: {},
+        resumeData: {},
         isAuth: false,
         error_message: "",
         success_message: "",
@@ -90,60 +90,6 @@ export const createResume =
       .catch((err) => {
         dispatch(toggleIsLoginButton(false));
         console.log(err);
-      });
-  };
-export const getUserData = (email, password) => (dispatch) => {
-  dispatch(toggleIsLoginButton(true));
-  authAPI.login(email, password).then((res) => {
-    dispatch(toggleIsLoginButton(false));
-    if (res.status === 401) {
-      dispatch(setErrMessage("401. Неверный логин или пароль"));
-      dispatch(logout());
-    }
-    if (res.status === 200) {
-      dispatch(setSuccessMessage("Успешно. Токен получен"));
-      localStorage.setItem("token", res.data.token);
-      dispatch(auth());
-      console.log(res.data);
-    }
-  });
-};
-export const auth = () => (dispatch) => {
-  dispatch(toggleIsLoginButton(true));
-  return authAPI.me().then((res) => {
-    dispatch(toggleIsLoginButton(false));
-    if (res.status === 401) {
-      dispatch(setErrMessage("401..."));
-      dispatch(logout());
-    }
-    if (res.status === 404) {
-      dispatch(setErrMessage("404. Пользователь не найден..."));
-      dispatch(logout());
-    }
-    if (res.status === 200) {
-      dispatch(setSuccessMessage("Вход выполнен"));
-      dispatch(setResume(res.data));
-      dispatch(setSuccessMessage(""));
-    }
-  });
-};
-export const putUserData =
-  (userId, firstName, secondName, thirdName, email, tel, birthDate) =>
-  (dispatch) => {
-    dispatch(toggleIsLoginButton(true));
-    authAPI
-      .put(userId, firstName, secondName, thirdName, email, tel, birthDate)
-      .then((res) => {
-        dispatch(toggleIsLoginButton(false));
-        if (res.status === 404) {
-          dispatch(setErrMessage("404. Пользователь не найден"));
-        }
-        if (res.status === 200) {
-          dispatch(setSuccessMessage("Данные обновлены"));
-          dispatch(setResume(res.data));
-          console.log(res.data);
-          dispatch(setSuccessMessage(""));
-        }
       });
   };
 

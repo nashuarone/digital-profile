@@ -36,7 +36,7 @@ const Resume = () => {
           <div className={style.resume__main}>
             <h2>Основная информация о себе</h2>
             <span className={style.resumeSpan}>Имя</span>
-            <Input placeholder="" />
+            <Input className={style.inputImitator} placeholder="" />
             <span className={style.resumeSpan}>Фамилия</span>
             <Input placeholder="" />
             <span className={style.resumeSpan}>Отчество</span>

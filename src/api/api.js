@@ -91,7 +91,10 @@ export const storageAPI = {
           fileEncoded,
         },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/ld+json",
+          },
         }
       )
       .then((res) => res)

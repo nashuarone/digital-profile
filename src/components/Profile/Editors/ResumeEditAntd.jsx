@@ -78,7 +78,7 @@ const ResumeEditAntd = () => {
               момента вашего входа и на протяжении всего пути
             </p>
             <Button className={style.personalButton} type="primary">
-              Загрузить резюме
+              Скачать резюме
             </Button>
           </div>
           <div className={style.introduce__half}>

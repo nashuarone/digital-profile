@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../../scss/Profile.module.scss";
-import { Button, Input, Upload, Steps, Popover, DatePicker, message } from "antd";
+import { Button, Input, Steps, Popover, DatePicker, message } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { putUserData } from "../../../redux/authReducer";
-import { Avatar } from "../../Common/Upload";
+import { Avatar } from "../../Common/Upload2";
 
 const { Step } = Steps;
 const dateFormat = "YYYY-MM-DD";

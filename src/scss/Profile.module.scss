@@ -16,8 +16,24 @@
         width: 60%;
         .userInfo {
           color: darkslategrey;
+          display: flex;
+          flex-wrap: wrap;
           &__inner {
             font-weight: bold;
+            align-self: center;
+          }
+          &__innerStock {
+            align-self: center;
+            margin-right: 10px;
+          }
+          &__innerIcon {
+            font-size: 30px;
+            margin-right: 10px;
+          }
+          &__innerBig {
+            font-weight: bold;
+            font-size: 52px;
+            padding-right: 20px;
           }
         }
         .userInfoEdit {

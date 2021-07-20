@@ -3,11 +3,12 @@ import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import style from "../../scss/Profile.module.scss";
-import { Button, Input, Upload, Steps, Popover, DatePicker } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Button, Steps, Popover, DatePicker } from "antd";
+import { MailOutlined, PhoneOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 const dateFormat = "YYYY-MM-DD";
+const shortURL = `https://tandemteam.site`;
 
 const customDot = (dot, { status, index }) => (
   <Popover
@@ -23,6 +24,7 @@ const customDot = (dot, { status, index }) => (
 
 const Aboutme = () => {
   const userData = useSelector((s) => s.auth.userData);
+  const fileLink = useSelector((s) => s.storage.fileLink);
   const [isVisibleAnswer, setVisibleAnswer] = useState(false);
   const toggleVisibleAnswer = () => {
     setVisibleAnswer(!isVisibleAnswer);
@@ -34,35 +36,32 @@ const Aboutme = () => {
         <div className={style.personalBlock}>
           <div className={style.personalBlock__left}>
             <div className={style.userInfo}>
-              Фамилия
-              <span className={style.userInfo__inner}>
+              <span className={style.userInfo__innerBig}>
                 {userData.secondName}
               </span>
-            </div>
-            <div className={style.userInfo}>
-              Имя
-              <span className={style.userInfo__inner}>
+              <span className={style.userInfo__innerBig}>
                 {userData.firstName}
               </span>
-            </div>
-            <div className={style.userInfo}>
-              Отчество (если есть)
-              <span className={style.userInfo__inner}>
+              <span className={style.userInfo__innerBig}>
                 {userData.thirdName}
               </span>
             </div>
             <div className={style.userInfo}>
-              Email
-              <span className={style.userInfo__inner}>{userData.email}</span>
-            </div>
-            <div className={style.userInfo}>
-              Телефон
+              <span className={style.userInfo__innerIcon}>
+                <PhoneOutlined />
+              </span>
               <span className={style.userInfo__inner}>{userData.tel}</span>
             </div>
             <div className={style.userInfo}>
-              Дата рождения
+              <span className={style.userInfo__innerIcon}>
+                <MailOutlined />
+              </span>
+              <span className={style.userInfo__inner}>{userData.email}</span>
+            </div>
+            <div className={style.userInfo}>
+              <span className={style.userInfo__innerStock}>Дата рождения:</span>
               <span className={style.userInfo__inner}>
-                {userData.birthDate}
+                {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
               </span>
               <DatePicker
                 defaultValue={moment(userData.birthDate, dateFormat)}
@@ -70,10 +69,13 @@ const Aboutme = () => {
                 disabled
               />
             </div>
-            <Input className={style.userInfo} placeholder="Дата рождения" />
           </div>
           <div className={style.personalBlock__right}>
-            <img className={style.avatar} src="" alt="avatar" />
+            <img
+              className={style.avatar}
+              src={`${shortURL}${fileLink}`}
+              alt="avatar"
+            />
           </div>
         </div>
         <NavLink to="/profile/aboutme-editor">
