@@ -1,4 +1,4 @@
-import { authAPI } from "../api/api";
+import { resumeAPI } from "../api/api";
 
 const LOGOUT = "LOGOUT";
 const SET_RESUME = "SET_RESUME";
@@ -73,18 +73,83 @@ export const toggleIsLoginButton = (fetchingStatus) => ({
   fetchingStatus,
 });
 
-export const createResume =
-  (firstName, secondName, thirdName, email, tel, password, birthDate) =>
-  (dispatch) => {
+export const createResume = (
+    firstName,
+    secondName,
+    thirdName,
+    tel,
+    email,
+    telegramIdentifier,
+    discordIdentifier,
+    fbLink,
+    vkLink,
+    placeOfResidence,
+    birthDate,
+    sex,
+    militaryTicker,
+    citizenship,
+    desiredEmployment,
+    desiredWorkSchedule,
+    workExperiences,
+    projectActivities,
+    additionalInformation,
+    availableLanguages,
+    aboutMe,
+    secondaryGeneralEducations,
+    otherEducation,
+    certificates
+  ) => (dispatch) => {
     dispatch(toggleIsLoginButton(true));
-    authAPI
-      .signup(firstName, secondName, thirdName, email, tel, password, birthDate)
-      .then((data) => {
+    resumeAPI
+      .create(
+        firstName,
+        secondName,
+        thirdName,
+        tel,
+        email,
+        telegramIdentifier,
+        discordIdentifier,
+        fbLink,
+        vkLink,
+        placeOfResidence,
+        birthDate,
+        sex,
+        militaryTicker,
+        citizenship,
+        desiredEmployment,
+        desiredWorkSchedule,
+        workExperiences,
+        projectActivities,
+        additionalInformation,
+        availableLanguages,
+        aboutMe,
+        secondaryGeneralEducations,
+        otherEducation,
+        certificates
+      )
+      .then((res) => {
         dispatch(
-          setSuccessMessage("Регистрация пройдена, войдите в личный кабинет")
+          setSuccessMessage("Резюме сохранено")
         );
         dispatch(toggleIsLoginButton(false));
-        console.log(data);
+        dispatch(setResume(res.data))
+        console.log(res.data);
+        dispatch(setSuccessMessage(""));
+      })
+      .catch((err) => {
+        dispatch(toggleIsLoginButton(false));
+        console.log(err);
+      });
+  };
+  export const getResume = (resumeLink) => (dispatch) => {
+    dispatch(toggleIsLoginButton(true));
+    resumeAPI
+      .get(resumeLink)
+      .then((res) => {
+        dispatch(setSuccessMessage("Резюме подгружено"));
+        dispatch(toggleIsLoginButton(false));
+        dispatch(setResume(res.data))
+        console.log(res.data);
         dispatch(setSuccessMessage(""));
       })
       .catch((err) => {

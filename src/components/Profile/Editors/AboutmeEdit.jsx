@@ -7,7 +7,6 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { putUserData } from "../../../redux/authReducer";
 import { Avatar } from "../../Common/Upload2";
-import { createDebuggerStatement } from "typescript";
 
 const { Step } = Steps;
 const dateFormat = "YYYY-MM-DD";
@@ -27,7 +26,7 @@ const customDot = (dot, { status, index }) => (
 const AboutmeEdit = () => {
   const dispatch = useDispatch();
   const userData = useSelector((s) => s.auth.userData);
-  const uuid = useSelector((s) => s.storage.uuid);
+  const almazId = useSelector((s) => s.storage.almazId);
   const userId = userData.id
   const isFetchingButton = useSelector((s) => s.auth.isFetchingButton);
   const success_message = useSelector((s) => s.auth.success_message);
@@ -57,12 +56,12 @@ const AboutmeEdit = () => {
   const handlleChangePh = (e) => {
     setTel(e.target.value);
   };
-  const handlleChangePhoto = (e) => {
-    debugger
-    if (uuid) {
-      setPhoto(e.target.value);
-    }
-  };
+  // const handlleChangePhoto = (e) => {
+  //   debugger;
+  //   if (!!uuid) {
+  //     setPhoto(e.target.value);
+  //   }
+  // };
   const changeSuccess = (success_message) => {
     message.success(success_message);
   };
@@ -71,6 +70,11 @@ const AboutmeEdit = () => {
       changeSuccess(success_message);
     }
   }, [success_message]);
+  useEffect(() => {
+    if (!!almazId) {
+      setPhoto(almazId);
+    }
+  }, [almazId]);
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -115,8 +119,7 @@ const AboutmeEdit = () => {
             />
             <div className={style.invisibleBlock}>
               <Input
-                value={uuid}
-                onChange={handlleChangePhoto}
+                value={photo}
                 placeholder="Идентификатор фото"
               />
             </div>

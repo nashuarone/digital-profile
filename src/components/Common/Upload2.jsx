@@ -73,7 +73,7 @@ export const Avatar = () => {
   };
 
   useEffect(() => {
-    if (!!successParams) {
+    if (successParams) {
       dispatch(saveAvatar(first, second, third));
     }
   }, [dispatch, successParams, first, second, third]);

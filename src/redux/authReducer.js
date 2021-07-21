@@ -156,7 +156,7 @@ export const putUserData =
         if (res.status === 200) {
           dispatch(setSuccessMessage("Данные обновлены"));
           dispatch(setUser(res.data));
-          console.log(res.data);
+          console.log("put with photo", res.data);
           dispatch(setSuccessMessage(""));
         }
       });

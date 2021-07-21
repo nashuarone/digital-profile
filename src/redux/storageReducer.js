@@ -1,11 +1,14 @@
 import { storageAPI } from "../api/api";
 
 const SET_AVATAR = "SET_AVATAR";
+const SET_PROFILE_PHOTO = "SET_PROFILE_PHOTO";
 const CLEAR = "CLEAR";
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 
 let initialState = {
+  profilePhotoFileLink: "",
+  profilePhotoUuid: "",
   fileLink: "",
   almazId: "",
   uuid: "",
@@ -26,9 +29,17 @@ const storageReducer = (state_a = initialState, action) => {
         fileName: action.payload.fileName,
         fileExtension: action.payload.fileExtension,
       };
+      case SET_PROFILE_PHOTO:
+      return {
+        ...state_a,
+        profilePhotoFileLink: action.payload.fileLink,
+        profilePhotoUuid: action.payload.uuid,
+      };
     case CLEAR:
       return {
         ...state_a,
+        profilePhotoFileLink: "",
+        profilePhotoUuid: "",
         fileLink: "",
         almazId: "",
         uuid: "",
@@ -55,6 +66,7 @@ const storageReducer = (state_a = initialState, action) => {
 };
 
 export const setAvatarData = (payload) => ({ type: SET_AVATAR, payload });
+export const setProfilePhoto = (payload) => ({ type: SET_PROFILE_PHOTO, payload });
 export const clearStorage = () => ({ type: CLEAR });
 export const setErrMessage = (err_mes) => ({
   type: SET_ERROR_MESSAGE,
@@ -70,7 +82,16 @@ export const saveAvatar = (fileName, fileExtension, fileEncoded) => (dispatch) =
     dispatch(setSuccessMessage("Файл сохранен на сервере"));
     dispatch(setAvatarData(res.data));
     //dispatch(refresh(res.data.refresh_token));
-    console.log(res.data);
+    console.log("Save avatar", res.data);
+    dispatch(setSuccessMessage(""));
+  });
+};
+export const getProfilePhoto = (photoLink) => (dispatch) => {
+  storageAPI.photo(photoLink).then((res) => {
+    dispatch(setSuccessMessage("Фото профиля загружено"));
+    dispatch(setProfilePhoto(res.data));
+    //dispatch(refresh(res.data.refresh_token));
+    console.log("Almaz additional req/res", res.data);
     dispatch(setSuccessMessage(""));
   });
 };

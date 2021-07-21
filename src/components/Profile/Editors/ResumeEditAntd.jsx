@@ -24,10 +24,27 @@ const ResumeEditAntd = () => {
         values.firstName,
         values.secondName,
         values.thirdName,
-        values.email,
         values.prefix + values.tel,
-        values.password,
-        values.birthDate
+        values.email,
+        values.telegramIdentifier,
+        values.discordIdentifier,
+        values.fbLink,
+        values.vkLink,
+        values.placeOfResidence,
+        values.birthDate,
+        values.sex,
+        values.militaryTicker,
+        values.citizenship,
+        values.desiredEmployment,
+        values.desiredWorkSchedule,
+        values.workExperiences,
+        values.projectActivities,
+        values.additionalInformation,
+        values.availableLanguages,
+        values.aboutMe,
+        values.secondaryGeneralEducations,
+        values.otherEducation,
+        values.certificates,
       )
     );
     console.log("Received values of form: ", values);
@@ -438,21 +455,76 @@ const ResumeEditAntd = () => {
                   </>
                 )}
               </Form.List>
-              <span className={style.resumeSpan}>Проектная деятельность</span>
-              <Form.Item
-                className={style.inputImitator}
-                initialValue={resumeData?.Almaz1}
-                name="Almaz1"
-              >
-                <TextArea placeholder="Расскажи о том, в каких проектах ты участвовал и в должности кого" />
-              </Form.Item>
+              <div className={style.resumeFlex}>
+                <h2>Проектная деятельность</h2>
+              </div>
+              <Form.List name="projectActivities">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                      <Space
+                        key={key}
+                        className={style.workXPform}
+                        align="baseline"
+                        direction="vertical"
+                      >
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>Описание проекта</span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "description"]}
+                            fieldKey={[fieldKey, "description"]}
+                          >
+                            <TextArea placeholder="Название проекта, краткая аннотация о чём проект, кукаю роль выполняли в проекте, в какой период" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Ссылка на проект
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "link"]}
+                            fieldKey={[fieldKey, "link"]}
+                          >
+                            <Input placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <Button
+                          className={style.inputImitatorCenter}
+                          type="dashed"
+                          onClick={() => remove(name)}
+                          block
+                          icon={<MinusOutlined />}
+                        >
+                          Удалить поле
+                        </Button>
+                      </Space>
+                    ))}
+                    <div className={style.workXPform}>
+                      <div className={style.inputImitatorCenter}>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          block
+                          icon={<PlusOutlined />}
+                        >
+                          Добавить проект
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </Form.List>
               <span className={style.resumeSpan}>
                 Дополнительная информация
               </span>
               <Form.Item
                 className={style.inputImitator}
                 initialValue={resumeData?.Almaz2}
-                name="Almaz2"
+                name="additionalInformation"
                 rules={[
                   {
                     min: 2,
@@ -561,7 +633,7 @@ const ResumeEditAntd = () => {
                   <b>Среднее общее образование</b>
                 </h3>
               </div>
-              <Form.List name="secondaryGeneralEducationSchools">
+              <Form.List name="secondaryGeneralEducations">
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map(({ key, name, fieldKey, ...restField }) => (

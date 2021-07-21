@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom";
 import style from "../../scss/Profile.module.scss";
-import { Button, Checkbox, DatePicker, Input, Radio } from "antd";
-import { FolderAddOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Checkbox, DatePicker, Input } from "antd";
+import { FolderAddOutlined, PlusOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
+import { getProfilePhoto } from "../../redux/storageReducer";
+import { getResume } from "../../redux/resumeReducer";
 
 const { TextArea } = Input;
+const baseImgURL = `https://tandemteam.site`;
+let defaultPhotoLink = `/api/storage-file/487d89df-2f87-4049-8c9e-c847b66954c1`;
 
 const Resume = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector((s) => s.auth.userData);
+  const resumeData = useSelector((s) => s.resume.resumeData);
+  const profilePhotoFileLink = useSelector((s) => s.storage.profilePhotoFileLink);
   const [isVisibleWorkXP, setVisibleWorkXP] = useState(false);
   const toggleVisibleWorkXP = () => {
     setVisibleWorkXP(!isVisibleWorkXP);
   };
+  useEffect(() => {
+    if (userData.photo) {
+      dispatch(getProfilePhoto(userData.photo))
+    }
+  }, [dispatch, userData.photo, profilePhotoFileLink]);
+  useEffect(() => {
+    if (userData.resume) {
+      dispatch(getResume(userData.resume))
+    }
+  }, [dispatch, userData.resume]);
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -32,68 +51,175 @@ const Resume = () => {
           </div>
         </div>
         <div className={style.resume}>
-          <h2>Ваше резюме</h2>
+          <h2>Мое резюме</h2>
+          <div className={style.personalBlock}>
+          <div className={style.personalBlock__left}>
+            <div className={style.userInfo}>
+              <span className={style.userInfo__innerBig}>
+                {userData.secondName}
+              </span>
+              <span className={style.userInfo__innerBig}>
+                {userData.firstName}
+              </span>
+              <span className={style.userInfo__innerBig}>
+                {userData.thirdName}
+              </span>
+            </div>
+
+
+
+          </div>
+          <div className={style.personalBlock__right}>
+            <img
+              className={style.avatar}
+              src={`${baseImgURL}${profilePhotoFileLink ? profilePhotoFileLink : defaultPhotoLink}`}
+              alt="avatar"
+            />
+          </div>
+        </div>
           <div className={style.resume__main}>
             <h2>Основная информация о себе</h2>
-            <span className={style.resumeSpan}>Имя</span>
-            <Input className={style.inputImitator} placeholder="" />
-            <span className={style.resumeSpan}>Фамилия</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Отчество</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Мобильный телефон</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Email</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Telegram (никнейм)</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Discord</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Ссылка на Facebook</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Ссылка на Вконтакте</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Место проживания</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Дата рождения</span>
-            <Input placeholder="" />
-            <span className={style.resumeSpan}>Пол</span>
-            <Radio.Group>
-              <Radio value={1}>Мужской</Radio>
-              <Radio value={2}>Женский</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan}>Военный билет</span>
-            <Radio.Group>
-              <Radio value={1}>Есть</Radio>
-              <Radio value={2}>Нет</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan}>Гражданство</span>
-            <Input placeholder="" />
+            <div className={style.hhBlocks}>
+              <div className={style.hhBlocks__left}>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <PhoneOutlined />
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.tel}</span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <MailOutlined />
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <i className="fab fa-telegram-plane"></i>
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <i className="fab fa-discord"></i>
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <i className="fab fa-vk"></i>
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <i className="fab fa-facebook"></i>
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+              </div>
+              <div className={style.hhBlocks__right}>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Место жительства:</span>
+                  <span className={style.userInfo__inner}>
+                    {resumeData.placeOfResidence}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Дата рождения:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Пол:</span>
+                  <span className={style.userInfo__inner}>
+                    {resumeData.sex === 0 ? "Мужской" : "Женский"}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Военный билет:</span>
+                  <span className={style.userInfo__inner}>
+                    {resumeData.militaryTicker ? "Есть" : "Нет"}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Гражданство:</span>
+                  <span className={style.userInfo__inner}>
+                    {resumeData.citizenship}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className={style.resume__main}>
             <h2>Профессиональная деятельность</h2>
             <span className={style.resumeSpan}>Желаемая занятость</span>
-            <Radio.Group>
-              <Radio value={1}>Полная</Radio>
-              <Radio value={2}>Частичная</Radio>
-              <Radio value={1}>Проектная работа</Radio>
-              <Radio value={2}>Стажировка</Radio>
-            </Radio.Group>
+            <span className={style.userInfo__inner}>
+              {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+            </span>
             <br />
             <span className={style.resumeSpan}>Желаемый график работы</span>
-            <Radio.Group>
-              <Radio value={1}>Полный день</Radio>
-              <Radio value={2}>Сменный график</Radio>
-              <Radio value={1}>Гибкий график</Radio>
-              <Radio value={2}>Удаленная работа</Radio>
-              <Radio value={2}>Вахтовый метод</Radio>
-            </Radio.Group>
+            <span className={style.userInfo__inner}>
+              {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+            </span>
             <br />
             <span className={style.resumeSpan__tall}>
               <b>Опыт работы</b>
             </span>
+            <div className={style.hhBlocks}>
+              <div className={style.hhBlocks__left}>
+                <div className={style.resumeInfo}>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                  <span className={style.userInfo__inner}>
+                    -
+                  </span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDa ? userData.birthDa : "По настоящее время"}
+                  </span>
+                </div>
+                <div className={style.resumeInfo}>
+                  <span className={style.resumeInfo__innerIcon}>
+                    <i className="fab fa-facebook"></i>
+                  </span>
+                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                </div>
+              </div>
+              <div className={style.hhBlocks__right}>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Место жительства:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Дата рождения:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Пол:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Военный билет:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+                <div className={style.userInfo}>
+                  <span className={style.userInfo__innerStock}>Гражданство:</span>
+                  <span className={style.userInfo__inner}>
+                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                  </span>
+                </div>
+              </div>
+            </div>
             <Button onClick={toggleVisibleWorkXP}>Добавить место работы</Button>
             {isVisibleWorkXP && (
               <div className={style.answerPopup}>

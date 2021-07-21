@@ -3,14 +3,14 @@ import axios from "axios";
 //headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 
 export const axiosInstanse = axios.create({
-  baseURL: "https://tandemteam.site/api/",
+  baseURL: "https://tandemteam.site",
   withCredentials: true,
 });
 
 export const authAPI = {
   signup(firstName, secondName, thirdName, email, tel, password, birthDate) {
     return axiosInstanse
-      .post(`users`, {
+      .post(`/api/users`, {
         firstName,
         secondName,
         thirdName,
@@ -26,7 +26,7 @@ export const authAPI = {
   },
   login(email, password) {
     return axiosInstanse
-      .post(`auth/login`, {
+      .post(`/api/auth/login`, {
         email,
         password,
       })
@@ -47,7 +47,7 @@ export const authAPI = {
   // },
   me() {
     return axiosInstanse
-      .get(`users/me`, {
+      .get(`/api/users/me`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {
@@ -60,7 +60,7 @@ export const authAPI = {
   put(userId, firstName, secondName, thirdName, email, tel, birthDate, photo) {
     return axiosInstanse
       .put(
-        `users/${userId}`,
+        `/api/users/${userId}`,
         {
           firstName,
           secondName,
@@ -71,7 +71,7 @@ export const authAPI = {
           photo,
         },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/ld+json", },
         }
       )
       .then((res) => res)
@@ -85,12 +85,112 @@ export const storageAPI = {
   avatar(fileName, fileExtension, fileEncoded) {
     return axiosInstanse
       .post(
-        `storage`,
+        `/api/storage`,
         {
           fileName,
           fileExtension,
           fileEncoded,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/ld+json",
+          },
+        }
+      )
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+  photo(photoLink) {
+    return axiosInstanse
+      .get(
+        `${photoLink}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/ld+json",
+          },
+        }
+      )
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+};
+
+export const resumeAPI = {
+  create(firstName,
+        secondName,
+        thirdName,
+        tel,
+        email,
+        telegramIdentifier,
+        discordIdentifier,
+        fbLink,
+        vkLink,
+        placeOfResidence,
+        birthDate,
+        sex,
+        militaryTicker,
+        citizenship,
+        desiredEmployment,
+        desiredWorkSchedule,
+        workExperiences,
+        projectActivities,
+        additionalInformation,
+        availableLanguages,
+        aboutMe,
+        secondaryGeneralEducations,
+        otherEducation,
+        certificates) {
+    return axiosInstanse
+      .post(
+        `/api/resumes`,
+        {
+          firstName,
+          secondName,
+          thirdName,
+          tel,
+          email,
+          telegramIdentifier,
+          discordIdentifier,
+          fbLink,
+          vkLink,
+          placeOfResidence,
+          birthDate,
+          sex,
+          militaryTicker,
+          citizenship,
+          desiredEmployment,
+          desiredWorkSchedule,
+          workExperiences,
+          projectActivities,
+          additionalInformation,
+          availableLanguages,
+          aboutMe,
+          secondaryGeneralEducations,
+          otherEducation,
+          certificates
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/ld+json",
+          },
+        }
+      )
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+  get(resumeLink) {
+    return axiosInstanse
+      .get(
+        `${resumeLink}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

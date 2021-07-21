@@ -212,6 +212,12 @@
     margin-top: 20px;
     &__main {
       margin-top: 20px;
+      .hhBlocks  {
+        display: flex;
+        &__left {
+          border-right: 1px solid darkslategrey;
+        }
+      }
       .resumeFlex {
         display: flex;
         width: 100%;
