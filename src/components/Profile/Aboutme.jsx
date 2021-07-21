@@ -8,7 +8,8 @@ import { MailOutlined, PhoneOutlined, QuestionCircleOutlined } from "@ant-design
 
 const { Step } = Steps;
 const dateFormat = "YYYY-MM-DD";
-const shortURL = `https://tandemteam.site`;
+const baseImgURL = `https://tandemteam.site/api/storage-file/`;
+let defaultUuid = `487d89df-2f87-4049-8c9e-c847b66954c1`;
 
 const customDot = (dot, { status, index }) => (
   <Popover
@@ -24,11 +25,14 @@ const customDot = (dot, { status, index }) => (
 
 const Aboutme = () => {
   const userData = useSelector((s) => s.auth.userData);
-  const fileLink = useSelector((s) => s.storage.fileLink);
+  const [photo, setPhoto] = useState(userData.photo);
   const [isVisibleAnswer, setVisibleAnswer] = useState(false);
   const toggleVisibleAnswer = () => {
     setVisibleAnswer(!isVisibleAnswer);
   };
+  if (!photo) {
+    setPhoto(defaultUuid);
+  }
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -73,7 +77,7 @@ const Aboutme = () => {
           <div className={style.personalBlock__right}>
             <img
               className={style.avatar}
-              src={`${shortURL}${fileLink}`}
+              src={`${baseImgURL}${photo}`}
               alt="avatar"
             />
           </div>

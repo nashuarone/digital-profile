@@ -1,6 +1,7 @@
 import {
   authAPI
 } from "../api/api";
+import { clearStorage } from "./storageReducer";
 
 const LOGOUT = "LOGOUT";
 const SET_USER = "SET_USER";
@@ -101,6 +102,7 @@ export const getUserData = (email, password) => (dispatch) => {
     if (res.status === 401) {
       dispatch(setErrMessage("401. Неверный логин или пароль"));
       dispatch(logout());
+      dispatch(clearStorage());
     }
     if (res.status === 200) {
       dispatch(setSuccessMessage("Успешно. Токен получен"));
@@ -118,15 +120,18 @@ export const auth = () => (dispatch) => {
     if (res.status === 401) {
       dispatch(setErrMessage("401..."));
       dispatch(logout());
+      dispatch(clearStorage());
     }
     if (res.status === 404) {
       dispatch(setErrMessage("404. Пользователь не найден..."));
       dispatch(logout());
+      dispatch(clearStorage());
     }
     if (res.status === 200) {
       dispatch(setSuccessMessage("Вход выполнен"));
       dispatch(setUser(res.data));
       dispatch(setSuccessMessage(""));
+      console.log(res.data);
     }
   });
 };
@@ -137,11 +142,12 @@ export const auth = () => (dispatch) => {
 //   });
 // };
 export const putUserData =
-  (userId, firstName, secondName, thirdName, email, tel, birthDate) =>
+  (userId, firstName, secondName, thirdName, email, tel, birthDate, photo) =>
   (dispatch) => {
     dispatch(toggleIsLoginButton(true));
+    debugger
     authAPI
-      .put(userId, firstName, secondName, thirdName, email, tel, birthDate)
+      .put(userId, firstName, secondName, thirdName, email, tel, birthDate, photo)
       .then((res) => {
         dispatch(toggleIsLoginButton(false));
         if (res.status === 404) {

@@ -51,9 +51,10 @@
         line-height: 20px;
         .avatar {
           background: #86C8D7;
-          width: 250px;
+          width: 300px;
           height: 300px;
           margin: 20px;
+          border-radius: 5px;
         }
         button {
           border: none;
@@ -313,5 +314,18 @@
     width: 100%;
     padding: 20px;
     height: 160px;
+  }
+  .invisibleBlock {
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    input {
+      height: 0;
+      width: 0;
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
   }
 }

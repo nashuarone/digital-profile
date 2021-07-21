@@ -61,6 +61,7 @@ const Gate = () => {
         <div className={style.buttons}>
           <Button
             disabled
+            title="В разработке..."
             onClick={toggleVisiblePopupE}
             className={style.buttonStyleLeft}
           >

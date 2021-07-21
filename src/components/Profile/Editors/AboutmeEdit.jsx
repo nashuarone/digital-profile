@@ -7,6 +7,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { putUserData } from "../../../redux/authReducer";
 import { Avatar } from "../../Common/Upload2";
+import { createDebuggerStatement } from "typescript";
 
 const { Step } = Steps;
 const dateFormat = "YYYY-MM-DD";
@@ -26,6 +27,7 @@ const customDot = (dot, { status, index }) => (
 const AboutmeEdit = () => {
   const dispatch = useDispatch();
   const userData = useSelector((s) => s.auth.userData);
+  const uuid = useSelector((s) => s.storage.uuid);
   const userId = userData.id
   const isFetchingButton = useSelector((s) => s.auth.isFetchingButton);
   const success_message = useSelector((s) => s.auth.success_message);
@@ -35,6 +37,7 @@ const AboutmeEdit = () => {
   const [thirdName, setThirdName] = useState(userData.thirdName);
   const [birthDate, setBirthdate] = useState(userData.birthDate);
   const [tel, setTel] = useState(userData.tel);
+  const [photo, setPhoto] = useState(userData.photo);
   const [isVisibleAnswer, setVisibleAnswer] = useState(false);
   const toggleVisibleAnswer = () => {
     setVisibleAnswer(!isVisibleAnswer);
@@ -53,6 +56,12 @@ const AboutmeEdit = () => {
   };
   const handlleChangePh = (e) => {
     setTel(e.target.value);
+  };
+  const handlleChangePhoto = (e) => {
+    debugger
+    if (uuid) {
+      setPhoto(e.target.value);
+    }
   };
   const changeSuccess = (success_message) => {
     message.success(success_message);
@@ -104,6 +113,13 @@ const AboutmeEdit = () => {
               className={style.userInfoEdit}
               defaultValue={moment(birthDate, dateFormat)}
             />
+            <div className={style.invisibleBlock}>
+              <Input
+                value={uuid}
+                onChange={handlleChangePhoto}
+                placeholder="Идентификатор фото"
+              />
+            </div>
           </div>
           <div className={style.personalBlock__right}>
             <Avatar />
@@ -125,7 +141,8 @@ const AboutmeEdit = () => {
                 thirdName,
                 email,
                 tel,
-                birthDate
+                birthDate,
+                photo
               )
             )
           }

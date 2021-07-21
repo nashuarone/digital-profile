@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Upload, Progress } from "antd";
 import { saveAvatar } from "../../redux/storageReducer";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,10 @@ import "./localDecor.css"
 export const Avatar = () => {
   const dispatch = useDispatch();
   const [defaultFileList, setDefaultFileList] = useState([]);
+  const [first, setFirst] = useState("");
+  const [second, setSecond] = useState("");
+  const [third, setThird] = useState("");
+  const [successParams, setSuccessParams] = useState(false);
   const [progress] = useState(0);
 
   const toBase64 = (file) =>
@@ -37,14 +41,12 @@ export const Avatar = () => {
     //   },
     // };
     const fileEncoded = await toBase64(file)
+    //console.log(fileEncoded);
     fmData.append("image", file);
-    dispatch(
-      saveAvatar(
-        file.name.split(".").shift(),
-        file.name.split(".").pop(),
-        fileEncoded
-      )
-    );
+    setFirst(file.name.split(".").shift())
+    setSecond(file.name.split(".").pop())
+    setThird(fileEncoded.slice(23))
+    setSuccessParams(true)
     onSuccess("Ok");
     // try {
     //   const res = await axios.post(
@@ -63,12 +65,18 @@ export const Avatar = () => {
   };
 
   const handleOnChange = ({ file, fileList, event }) => {
-    console.log("1:", file, "2:", fileList, "3:", event, "4:", file.thumbUrl);
+    // console.log("1:", file, "2:", fileList, "3:", event, "4:", file.thumbUrl);
 
     //Using Hooks to update the state to the current filelist
     setDefaultFileList(fileList);
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
+
+  useEffect(() => {
+    if (!!successParams) {
+      dispatch(saveAvatar(first, second, third));
+    }
+  }, [dispatch, successParams, first, second, third]);
 
   return (
     <div className="container">

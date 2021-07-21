@@ -57,7 +57,7 @@ export const authAPI = {
         return e.response;
       });
   },
-  put(userId, firstName, secondName, thirdName, email, tel, birthDate) {
+  put(userId, firstName, secondName, thirdName, email, tel, birthDate, photo) {
     return axiosInstanse
       .put(
         `users/${userId}`,
@@ -68,6 +68,7 @@ export const authAPI = {
           email,
           tel,
           birthDate,
+          photo,
         },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
