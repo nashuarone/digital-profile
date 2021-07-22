@@ -45,22 +45,22 @@ const Resume = () => {
   if (resumeData.desiredWorkSchedule === 4) {
     workGraphic = "Вахтовый метод"
   }
-  let highSchoolLvl = ""
-  if (resumeData?.otherEducation[0]["level"] === 0) {
-    highSchoolLvl = "Среднее профессиональное образование"
-  }
-  if (resumeData?.otherEducation[0]["level"] === 1) {
-    highSchoolLvl = "Высшее образование (бакалавриат)"
-  }
-  if (resumeData?.otherEducation[0]["level"] === 2) {
-    highSchoolLvl = "Высшее образование (магистратура)"
-  }
-  if (resumeData?.otherEducation[0]["level"] === 3) {
-    highSchoolLvl = "Высшее образование (аспирантура)"
-  }
-  if (resumeData?.otherEducation[0]["level"] === 4) {
-    highSchoolLvl = "Высшее образование (специалитет)"
-  }
+  // let highSchoolLvl = ""
+  // if (resumeData?.otherEducation[0]["level"] === 0) {
+  //   highSchoolLvl = "Среднее профессиональное образование"
+  // }
+  // if (resumeData?.otherEducation[0]["level"] === 1) {
+  //   highSchoolLvl = "Высшее образование (бакалавриат)"
+  // }
+  // if (resumeData?.otherEducation[0]["level"] === 2) {
+  //   highSchoolLvl = "Высшее образование (магистратура)"
+  // }
+  // if (resumeData?.otherEducation[0]["level"] === 3) {
+  //   highSchoolLvl = "Высшее образование (аспирантура)"
+  // }
+  // if (resumeData?.otherEducation[0]["level"] === 4) {
+  //   highSchoolLvl = "Высшее образование (специалитет)"
+  // }
 
   useEffect(() => {
     if (userData.photo) {
@@ -343,7 +343,15 @@ const Resume = () => {
                 </div>
                 <div className={style.hhBlocks__right}>
                   <div className={style.workInfo}>
-                    <span className={style.userInfo__innerStock}>{highSchoolLvl}</span>
+                    <span className={style.userInfo__innerStock}>{highSchool.level === 0
+                    ? "Среднее профессиональное образование"
+                    : highSchool.level === 1
+                    ? "Высшее образование (бакалавриат)"
+                    : highSchool.level === 2
+                    ? "Высшее образование (магистратура)"
+                    : highSchool.level === 3
+                    ? "Высшее образование (аспирантура)"
+                    : "Высшее образование (специалитет)"}</span>
                     <span className={style.workInfo__innerClear}>
                       {highSchool.institution}
                     </span>
