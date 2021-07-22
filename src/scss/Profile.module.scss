@@ -22,6 +22,12 @@
             font-weight: bold;
             align-self: center;
           }
+          &__innerclear {
+            align-self: center;
+          }
+          &__innerMinus {
+            margin: 0 10px;
+          }
           &__innerStock {
             align-self: center;
             margin-right: 10px;
@@ -209,13 +215,70 @@
      }
   }
   .resume {
+    .h2size {
+      font-size: 28px;
+      font-weight: bold;
+    }
     margin-top: 20px;
     &__main {
       margin-top: 20px;
+      h2 {
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .userInfo__inner {
+        font-size: 18px;
+      }
+      .userInfo__innerclear {
+        align-self: center;
+      }
+      .userInfo__innerMinus {
+        margin: 0 5px;
+      }
       .hhBlocks  {
         display: flex;
+        font-size: 20px;
         &__left {
           border-right: 1px solid darkslategrey;
+          width: 35%;
+          margin-right: 20px;
+          .resumeInfo {
+            margin: 5px 0;
+            display: flex;
+            font-size: 16px;
+            &__innerIcon {
+              font-size: 30px;
+              margin-right: 10px;
+              color: #A8A8A8;
+            }
+            &__inner {
+              line-height: 40px;
+              word-break: break-word;
+              padding-right: 10px;
+            }
+          }
+        }
+        &__right {
+          .resumeInfo {
+            margin: 10px 0;
+            display: flex;
+            line-height: 40px;
+            &__innerStock {
+              margin-right: 10px;
+            }
+          }
+          .workInfo {
+            display: flex;
+            flex-wrap: wrap;
+            span {
+              display: block;
+              width: 100%;
+            }
+            &__innerClear {
+              font-weight: normal;
+              font-size: 16px;
+            }
+          }
         }
       }
       .resumeFlex {
@@ -227,11 +290,18 @@
         display: inline-block;
         width: 27%;
         margin: 20px 0;
+        font-size: 20px;
       }
       .resumeSpan__tall {
         display: inline-block;
         width: 27%;
         margin: 30px 0;
+      }
+      .resumeSpan__long {
+        display: inline-block;
+        width: 100%;
+        margin: 30px 0;
+        font-size: 20px;
       }
       .resumeArea {
         display: inline-block;

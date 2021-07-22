@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom";
-import moment from "moment";
 import style from "../../scss/Profile.module.scss";
-import { Button, Steps, Popover, DatePicker } from "antd";
+import { Button, Steps, Popover } from "antd";
 import { MailOutlined, PhoneOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { getProfilePhoto } from "../../redux/storageReducer";
 
 const { Step } = Steps;
-const dateFormat = "YYYY-MM-DD";
 const baseImgURL = `https://tandemteam.site`;
 let defaultPhotoLink = `/api/storage-file/487d89df-2f87-4049-8c9e-c847b66954c1`;
 
@@ -74,11 +72,6 @@ const Aboutme = () => {
               <span className={style.userInfo__inner}>
                 {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
               </span>
-              <DatePicker
-                defaultValue={moment(userData.birthDate, dateFormat)}
-                bordered={false}
-                disabled
-              />
             </div>
           </div>
           <div className={style.personalBlock__right}>

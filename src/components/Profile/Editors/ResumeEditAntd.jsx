@@ -210,12 +210,6 @@ const ResumeEditAntd = () => {
                 className={style.inputImitator}
                 initialValue={resumeData?.fbLink}
                 name="fbLink"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ссылка на Facebook обязательна",
-                  },
-                ]}
               >
                 <Input placeholder="" />
               </Form.Item>
@@ -224,12 +218,6 @@ const ResumeEditAntd = () => {
                 className={style.inputImitator}
                 initialValue={resumeData?.vkLink}
                 name="vkLink"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ссылка на Вконтакте обязательна",
-                  },
-                ]}
               >
                 <Input placeholder="" />
               </Form.Item>
@@ -281,8 +269,8 @@ const ResumeEditAntd = () => {
                   <span className={style.resumeSpan}>Военный билет</span>
                   <Form.Item
                     className={style.inputImitator}
-                    initialValue={resumeData?.militaryTicket}
-                    name="militaryTicket"
+                    initialValue={resumeData?.militaryTicker}
+                    name="militaryTicker"
                   >
                     <Radio.Group>
                       <Radio value={true}>Есть</Radio>
