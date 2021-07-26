@@ -122,30 +122,32 @@ export const storageAPI = {
 };
 
 export const resumeAPI = {
-  create(firstName,
-        secondName,
-        thirdName,
-        tel,
-        email,
-        telegramIdentifier,
-        discordIdentifier,
-        fbLink,
-        vkLink,
-        placeOfResidence,
-        birthDate,
-        sex,
-        militaryTicker,
-        citizenship,
-        desiredEmployment,
-        desiredWorkSchedule,
-        workExperiences,
-        projectActivities,
-        additionalInformation,
-        availableLanguages,
-        aboutMe,
-        secondaryGeneralEducations,
-        otherEducation,
-        certificates) {
+  create(
+    firstName,
+    secondName,
+    thirdName,
+    tel,
+    email,
+    telegramIdentifier,
+    discordIdentifier,
+    fbLink,
+    vkLink,
+    placeOfResidence,
+    birthDate,
+    sex,
+    militaryTicker,
+    citizenship,
+    desiredEmployment,
+    desiredWorkSchedule,
+    workExperiences,
+    projectActivities,
+    additionalInformation,
+    availableLanguages,
+    aboutMe,
+    secondaryGeneralEducations,
+    otherEducation,
+    certificates
+  ) {
     return axiosInstanse
       .post(
         `/api/resumes`,
@@ -173,7 +175,75 @@ export const resumeAPI = {
           aboutMe,
           secondaryGeneralEducations,
           otherEducation,
-          certificates
+          certificates,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/ld+json",
+          },
+        }
+      )
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+  edit(
+    resumeId,
+    firstName,
+    secondName,
+    thirdName,
+    tel,
+    email,
+    telegramIdentifier,
+    discordIdentifier,
+    fbLink,
+    vkLink,
+    placeOfResidence,
+    birthDate,
+    sex,
+    militaryTicker,
+    citizenship,
+    desiredEmployment,
+    desiredWorkSchedule,
+    workExperiences,
+    projectActivities,
+    additionalInformation,
+    availableLanguages,
+    aboutMe,
+    secondaryGeneralEducations,
+    otherEducation,
+    certificates
+  ) {
+    return axiosInstanse
+      .put(
+        `/api/resumes/${resumeId}`,
+        {
+          firstName,
+          secondName,
+          thirdName,
+          tel,
+          email,
+          telegramIdentifier,
+          discordIdentifier,
+          fbLink,
+          vkLink,
+          placeOfResidence,
+          birthDate,
+          sex,
+          militaryTicker,
+          citizenship,
+          desiredEmployment,
+          desiredWorkSchedule,
+          workExperiences,
+          projectActivities,
+          additionalInformation,
+          availableLanguages,
+          aboutMe,
+          secondaryGeneralEducations,
+          otherEducation,
+          certificates,
         },
         {
           headers: {
@@ -189,8 +259,30 @@ export const resumeAPI = {
   },
   get(resumeLink) {
     return axiosInstanse
-      .get(
-        `${resumeLink}`,
+      .get(`${resumeLink}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/ld+json",
+        },
+      })
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+};
+
+export const feedbackAPI = {
+  report(name, tel, email, message) {
+    return axiosInstanse
+      .post(
+        `/api/reports`,
+        {
+          name,
+          tel,
+          email,
+          message,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -198,6 +290,22 @@ export const resumeAPI = {
           },
         }
       )
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+};
+
+export const skillsAPI = {
+  hard(userId) {
+    return axiosInstanse
+      .get(`/api/hard_skills/users/${userId}/data`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/ld+json",
+        },
+      })
       .then((res) => res)
       .catch((e) => {
         return e.response;

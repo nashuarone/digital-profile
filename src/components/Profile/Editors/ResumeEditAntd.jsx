@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../../scss/Profile.module.scss";
-import { Form, Select, Button, Checkbox, DatePicker, Input, Radio, Space, InputNumber } from "antd";
+import { Form, Select, Button, Checkbox, DatePicker, Input, Radio, Space, InputNumber, message } from "antd";
 import { FolderAddOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { createResume } from "../../../redux/resumeReducer";
+import { Certificate } from "../../Common/UploadPdf";
+import SpecialInput from "./SpecialInput";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -16,7 +18,10 @@ const ResumeEditAntd = () => {
   const userData = useSelector((s) => s.auth.userData);
   const resumeData = useSelector((s) => s.resume.resumeData);
   const isFetchingButton = useSelector((s) => s.resume.isFetchingButton);
-  //const success_message = useSelector((s) => s.resume.success_message);
+  const success_message = useSelector((s) => s.resume.success_message);
+  const almazIdCertificate = useSelector((s) => s.storage.almazIdCertificate);
+  const fileLinkCertificate = useSelector((s) => s.storage.fileLinkCertificate);
+
   const [form] = Form.useForm();
   const onFinish = (values) => {
     dispatch(
@@ -60,11 +65,13 @@ const ResumeEditAntd = () => {
       </Select>
     </Form.Item>
   );
+  const [certificateLink, setCertificateLink] = useState(almazIdCertificate);
   const [enemyVisible, setEnemyVisible] = useState(false);
   // const [isVisibleWorkXP, setVisibleWorkXP] = useState(false);
   const [disabledValue, setDisabledValue] = useState(false);
   const [disabledValueSchool, setDisabledValueSchool] = useState(false);
   const [disabledValueInst, setDisabledValueInst] = useState(false);
+  const [disabledValueAddition, setDisabledValueAddition] = useState(false);
   const getDisabledValue = () => {
     setDisabledValue(!disabledValue);
   };
@@ -73,6 +80,9 @@ const ResumeEditAntd = () => {
   };
   const getDisabledValueInst = () => {
     setDisabledValueInst(!disabledValueInst);
+  };
+  const getDisabledValueAddition = () => {
+    setDisabledValueAddition(!disabledValueAddition);
   };
   const showEnemyVisible = () => {
     setEnemyVisible(true);
@@ -83,6 +93,19 @@ const ResumeEditAntd = () => {
   // const toggleVisibleWorkXP = () => {
   //   setVisibleWorkXP(!isVisibleWorkXP);
   // };
+  const changeSuccess = (success_message) => {
+    message.success(success_message);
+  };
+  useEffect(() => {
+    if (success_message) {
+      changeSuccess(success_message);
+    }
+  }, [success_message]);
+  useEffect(() => {
+    if (!!almazIdCertificate) {
+      setCertificateLink(almazIdCertificate);
+    }
+  }, [almazIdCertificate, fileLinkCertificate]);
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -94,7 +117,12 @@ const ResumeEditAntd = () => {
               динамику вашего роста, а вы наглядно заметить разницу навыков с
               момента вашего входа и на протяжении всего пути
             </p>
-            <Button className={style.personalButton} type="primary">
+            <Button
+              disabled
+              title="В разработке..."
+              className={style.personalButton}
+              type="primary"
+            >
               Скачать резюме
             </Button>
           </div>
@@ -185,6 +213,10 @@ const ResumeEditAntd = () => {
                     type: "email",
                     message: "Невалидный E-mail",
                   },
+                  {
+                    required: true,
+                    message: "Введите свой email",
+                  },
                 ]}
               >
                 <Input placeholder="" />
@@ -254,6 +286,12 @@ const ResumeEditAntd = () => {
                 className={style.inputImitator}
                 initialValue={resumeData?.sex}
                 name="sex"
+                rules={[
+                  {
+                    required: true,
+                    message: "Введите пол (гедерная принадлежность)",
+                  },
+                ]}
               >
                 <Radio.Group>
                   <Radio onClick={showEnemyVisible} value={0}>
@@ -287,7 +325,7 @@ const ResumeEditAntd = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Гражданство",
+                    message: "Введите гражданство",
                   },
                 ]}
               >
@@ -424,7 +462,7 @@ const ResumeEditAntd = () => {
                           block
                           icon={<MinusOutlined />}
                         >
-                          Удалить поле
+                          Удалить место работы
                         </Button>
                       </Space>
                     ))}
@@ -457,7 +495,9 @@ const ResumeEditAntd = () => {
                         direction="vertical"
                       >
                         <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>Описание проекта</span>
+                          <span className={style.workXPspan}>
+                            Описание проекта
+                          </span>
                           <Form.Item
                             className={style.inputImitator}
                             {...restField}
@@ -487,7 +527,7 @@ const ResumeEditAntd = () => {
                           block
                           icon={<MinusOutlined />}
                         >
-                          Удалить поле
+                          Удалить проект
                         </Button>
                       </Space>
                     ))}
@@ -511,7 +551,7 @@ const ResumeEditAntd = () => {
               </span>
               <Form.Item
                 className={style.inputImitator}
-                initialValue={resumeData?.Almaz2}
+                initialValue={resumeData?.additionalInformation}
                 name="additionalInformation"
                 rules={[
                   {
@@ -522,7 +562,7 @@ const ResumeEditAntd = () => {
               >
                 <TextArea
                   showCount
-                  maxLength={255}
+                  maxLength={1024}
                   placeholder="Расскажи о себе то, что думаешь не упомянул выше, но работодателю это полезно знать"
                 />
               </Form.Item>
@@ -580,7 +620,7 @@ const ResumeEditAntd = () => {
                           block
                           icon={<MinusOutlined />}
                         >
-                          Удалить поле
+                          Удалить язык
                         </Button>
                       </Space>
                     ))}
@@ -604,12 +644,12 @@ const ResumeEditAntd = () => {
               </span>
               <Form.Item
                 className={style.inputImitator}
-                initialValue={resumeData?.Almaz2}
-                name="additionalInformation"
+                initialValue={resumeData?.aboutMe}
+                name="aboutMe"
               >
                 <TextArea
                   showCount
-                  maxLength={255}
+                  maxLength={1024}
                   placeholder="Расскажите о своих навыках, знаниях, увлечениях, мероприятиях в каких участвовали, волонтёрство"
                 />
               </Form.Item>
@@ -638,8 +678,8 @@ const ResumeEditAntd = () => {
                           <Form.Item
                             className={style.inputImitator}
                             {...restField}
-                            name={[name, "name"]}
-                            fieldKey={[fieldKey, "name"]}
+                            name={[name, "schoolName"]}
+                            fieldKey={[fieldKey, "schoolName"]}
                           >
                             <Input placeholder="" />
                           </Form.Item>
@@ -653,7 +693,7 @@ const ResumeEditAntd = () => {
                             name={[name, "startDate"]}
                             fieldKey={[fieldKey, "startDate"]}
                           >
-                            <DatePicker placeholder="" />
+                            <DatePicker picker="year" placeholder="" />
                           </Form.Item>
                         </div>
                         <div className={style.workXPform__child}>
@@ -666,6 +706,7 @@ const ResumeEditAntd = () => {
                             fieldKey={[fieldKey, "endDate"]}
                           >
                             <DatePicker
+                              picker="year"
                               disabled={disabledValueSchool}
                               placeholder=""
                             />
@@ -684,7 +725,7 @@ const ResumeEditAntd = () => {
                           block
                           icon={<MinusOutlined />}
                         >
-                          Удалить поле
+                          Удалить школу
                         </Button>
                       </Space>
                     ))}
@@ -784,7 +825,7 @@ const ResumeEditAntd = () => {
                             name={[name, "startDate"]}
                             fieldKey={[fieldKey, "startDate"]}
                           >
-                            <DatePicker placeholder="" />
+                            <DatePicker picker="year" placeholder="" />
                           </Form.Item>
                         </div>
                         <div className={style.workXPform__child}>
@@ -797,6 +838,7 @@ const ResumeEditAntd = () => {
                             fieldKey={[fieldKey, "endDate"]}
                           >
                             <DatePicker
+                              picker="year"
                               disabled={disabledValueInst}
                               placeholder=""
                             />
@@ -815,7 +857,7 @@ const ResumeEditAntd = () => {
                           block
                           icon={<MinusOutlined />}
                         >
-                          Удалить поле
+                          Удалить учебное заведение
                         </Button>
                       </Space>
                     ))}
@@ -848,166 +890,186 @@ const ResumeEditAntd = () => {
               <Form.List name="certificates">
                 {(fields, { add, remove }) => (
                   <>
-                    {fields.map(({ key, name, fieldKey, ...restField }) => (
-                      <Space
-                        key={key}
-                        className={style.workXPform}
-                        align="baseline"
-                        direction="vertical"
-                      >
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Начало обучения
-                          </span>
-                          <Form.Item
-                            {...restField}
-                            name={[name, "startDate"]}
-                            fieldKey={[fieldKey, "startDate"]}
-                          >
-                            <DatePicker placeholder="" />
-                          </Form.Item>
-                        </div>
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Окончание обучения
-                          </span>
-                          <Form.Item
-                            {...restField}
-                            name={[name, "endDate"]}
-                            fieldKey={[fieldKey, "endDate"]}
-                          >
-                            <DatePicker
-                              disabled={disabledValueInst}
-                              placeholder=""
-                            />
-                            <Checkbox
-                              onClick={getDisabledValueInst}
-                              className={style.littleElemMargin}
-                            >
-                              По настоящее время
-                            </Checkbox>
-                          </Form.Item>
-                        </div>
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Название курса
-                          </span>
-                          <Form.Item
-                            className={style.inputImitator}
-                            {...restField}
-                            name={[name, "name"]}
-                            fieldKey={[fieldKey, "name"]}
-                          >
-                            <Input placeholder="" />
-                          </Form.Item>
-                        </div>
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Номер сертификата
-                          </span>
-                          <Form.Item
-                            className={style.inputImitator}
-                            {...restField}
-                            name={[name, "number"]}
-                            fieldKey={[fieldKey, "number"]}
-                          >
-                            <Input placeholder="" />
-                          </Form.Item>
-                        </div>
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Место прохождения
-                          </span>
-                          <Form.Item
-                            className={style.inputImitator}
-                            {...restField}
-                            name={[name, "courseDeveloper"]}
-                            fieldKey={[fieldKey, "courseDeveloper"]}
-                          >
-                            <Input placeholder="" />
-                          </Form.Item>
-                        </div>
-                        <div className={style.workXPform__child}>
-                          <span className={style.workXPspan}>
-                            Количество часов
-                          </span>
-                          <Form.Item
-                            className={style.inputImitator}
-                            {...restField}
-                            name={[name, "hours"]}
-                            fieldKey={[fieldKey, "hours"]}
-                          >
-                            <InputNumber placeholder="" />
-                          </Form.Item>
-                        </div>
-                        <div className={style.resumeFlex}>
-                          <h3>Какие навыки приобрели</h3>
-                        </div>
-                        <Form.List name="acquiredSkills">
-                          {(fields, { add, remove }) => (
-                            <>
-                              {fields.map(
-                                ({ key, name, fieldKey, ...restField }) => (
-                                  <Space
-                                    key={key}
-                                    className={style.workXPform}
-                                    align="baseline"
-                                    direction="vertical"
-                                  >
-                                    <div className={style.workXPform__child}>
-                                      <span className={style.workXPspan}>
-                                        Навык
-                                      </span>
-                                      <Form.Item
-                                        className={style.inputImitator}
-                                        {...restField}
-                                        name={[name, "title"]}
-                                        fieldKey={[fieldKey, "title"]}
-                                      >
-                                        <Input placeholder="" />
-                                      </Form.Item>
-                                    </div>
-                                    <Button
-                                      className={style.inputImitatorCenter}
-                                      type="dashed"
-                                      onClick={() => remove(name)}
-                                      block
-                                      icon={<MinusOutlined />}
-                                    >
-                                      Удалить поле
-                                    </Button>
-                                  </Space>
-                                )
-                              )}
-                              <div className={style.workXPform}>
-                                <div className={style.inputImitatorCenter}>
-                                  <Button
-                                    type="dashed"
-                                    onClick={() => add()}
-                                    block
-                                    icon={<PlusOutlined />}
-                                  >
-                                    Добавить навык
-                                  </Button>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </Form.List>
-                        <div className={style.resumeFlex}>
-                          <h3>ТУТ ФАЙЛ ЕЩЕ</h3>
-                        </div>
-                        <Button
-                          className={style.inputImitatorCenter}
-                          type="dashed"
-                          onClick={() => remove(name)}
-                          block
-                          icon={<MinusOutlined />}
+                    {fields.map(
+                      ({ key, name, fieldKey, ...restField }, index) => (
+                        <Space
+                          key={key}
+                          className={style.workXPform}
+                          align="baseline"
+                          direction="vertical"
                         >
-                          Удалить поле
-                        </Button>
-                      </Space>
-                    ))}
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Начало обучения
+                            </span>
+                            <Form.Item
+                              {...restField}
+                              name={[name, "startDate"]}
+                              fieldKey={[fieldKey, "startDate"]}
+                            >
+                              <DatePicker placeholder="" />
+                            </Form.Item>
+                          </div>
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Окончание обучения
+                            </span>
+                            <Form.Item
+                              {...restField}
+                              name={[name, "endDate"]}
+                              fieldKey={[fieldKey, "endDate"]}
+                            >
+                              <DatePicker
+                                disabled={disabledValueAddition}
+                                placeholder=""
+                              />
+                              <Checkbox
+                                onClick={getDisabledValueAddition}
+                                className={style.littleElemMargin}
+                              >
+                                По настоящее время
+                              </Checkbox>
+                            </Form.Item>
+                          </div>
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Название курса
+                            </span>
+                            <Form.Item
+                              className={style.inputImitator}
+                              {...restField}
+                              name={[name, "name"]}
+                              fieldKey={[fieldKey, "name"]}
+                            >
+                              <Input placeholder="" />
+                            </Form.Item>
+                          </div>
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Номер сертификата
+                            </span>
+                            <Form.Item
+                              className={style.inputImitator}
+                              {...restField}
+                              name={[name, "number"]}
+                              fieldKey={[fieldKey, "number"]}
+                            >
+                              <Input placeholder="" />
+                            </Form.Item>
+                          </div>
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Место прохождения
+                            </span>
+                            <Form.Item
+                              className={style.inputImitator}
+                              {...restField}
+                              name={[name, "serviceName"]}
+                              fieldKey={[fieldKey, "serviceName"]}
+                            >
+                              <Input placeholder="" />
+                            </Form.Item>
+                          </div>
+                          <div className={style.workXPform__child}>
+                            <span className={style.workXPspan}>
+                              Количество часов
+                            </span>
+                            <Form.Item
+                              className={style.inputImitator}
+                              {...restField}
+                              name={[name, "hours"]}
+                              fieldKey={[fieldKey, "hours"]}
+                            >
+                              <InputNumber placeholder="" />
+                            </Form.Item>
+                          </div>
+                          <div className={style.invisibleBlock}>
+                            <span className={style.invisibleBlock__span}>
+                              Невидимый блок для хранения ссылки сертификата
+                              invisibleBlock
+                            </span>
+                            <Form.Item
+                              className={style.inputImitator}
+                              initialValue={certificateLink}
+                              {...restField}
+                              name={[name, "storage"]}
+                              fieldKey={[fieldKey, "storage"]}
+                            >
+                              <SpecialInput certificateData={certificateLink} />
+                            </Form.Item>
+                          </div>
+                          <div className={style.resumeFlex}>
+                            <h3>Какие навыки приобрели</h3>
+                          </div>
+                          <Form.List name="acquiredSkills">
+                            {(fields, { add, remove }) => (
+                              <>
+                                {fields.map(
+                                  (
+                                    { key, name, fieldKey, ...restField },
+                                    index
+                                  ) => (
+                                    <Space
+                                      key={key}
+                                      className={style.workXPform}
+                                      align="baseline"
+                                      direction="vertical"
+                                    >
+                                      <div className={style.workXPform__child}>
+                                        <span className={style.workXPspan}>
+                                          Навык
+                                        </span>
+                                        <Form.Item
+                                          className={style.inputImitator}
+                                          {...restField}
+                                          name={[name, "title"]}
+                                          fieldKey={[fieldKey, "title"]}
+                                        >
+                                          <Input placeholder="" />
+                                        </Form.Item>
+                                      </div>
+                                      <Button
+                                        className={style.inputImitatorCenter}
+                                        type="dashed"
+                                        onClick={() => remove(name)}
+                                        block
+                                        icon={<MinusOutlined />}
+                                      >
+                                        Удалить навык
+                                      </Button>
+                                    </Space>
+                                  )
+                                )}
+                                <div className={style.workXPform}>
+                                  <div className={style.inputImitatorCenter}>
+                                    <Button
+                                      type="dashed"
+                                      onClick={() => add()}
+                                      block
+                                      icon={<PlusOutlined />}
+                                    >
+                                      Добавить навык
+                                    </Button>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </Form.List>
+                          <div className={style.resumeFlex}>
+                            <Certificate />
+                          </div>
+                          <Button
+                            className={style.inputImitatorCenter}
+                            type="dashed"
+                            onClick={() => remove(name)}
+                            block
+                            icon={<MinusOutlined />}
+                          >
+                            Удалить сертификат
+                          </Button>
+                        </Space>
+                      )
+                    )}
                     <div className={style.workXPform}>
                       <div className={style.inputImitatorCenter}>
                         <Button
@@ -1042,216 +1104,6 @@ const ResumeEditAntd = () => {
               </Form.Item>
             </div>
           </Form>
-
-          {/* <div className={style.resume__main}>
-            <h2>Основная информация о себе</h2>
-            <span className={style.resumeSpan}>Имя</span>
-            <Input value={firstName} onChange={handlleChangeF} placeholder="" />
-            <span className={style.resumeSpan}>Фамилия</span>
-            <Input
-              value={secondName}
-              onChange={handlleChangeS}
-              placeholder=""
-            />
-            <span className={style.resumeSpan}>Отчество</span>
-            <Input value={thirdName} onChange={handlleChangeT} placeholder="" />
-            <span className={style.resumeSpan}>Мобильный телефон</span>
-            <Input value={tel} onChange={handlleChangePh} placeholder="" />
-            <span className={style.resumeSpan}>Email</span>
-            <Input value={email} onChange={handlleChangeE} placeholder="" />
-            <span className={style.resumeSpan}>Telegram (никнейм)</span>
-            <Input
-              value={telegramIdentifier}
-              onChange={handlleChangeTlgr}
-              placeholder=""
-            />
-            <span className={style.resumeSpan}>Discord</span>
-            <Input
-              value={discordIdentifier}
-              onChange={handlleChangeDsc}
-              placeholder=""
-            />
-            <span className={style.resumeSpan}>Ссылка на Facebook</span>
-            <Input value={fbLink} onChange={handlleChangeFB} placeholder="" />
-            <span className={style.resumeSpan}>Ссылка на Вконтакте</span>
-            <Input value={vkLink} onChange={handlleChangeVK} placeholder="" />
-            <span className={style.resumeSpan}>Место проживания</span>
-            <Input
-              value={placeOfResidence}
-              onChange={handlleChangePoR}
-              placeholder=""
-            />
-            <span className={style.resumeSpan}>Дата рождения</span>
-            <DatePicker
-              onChange={(val) => setBirthdate(val)}
-              defaultValue={moment(birthDate, dateFormat)}
-              className={style.inputImitator}
-              placeholder=""
-            />
-            <span className={style.resumeSpan}>Пол</span>
-            <Radio.Group>
-              <Radio value={0}>Мужской</Radio>
-              <Radio value={1}>Женский</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan}>Военный билет</span>
-            <Radio.Group>
-              <Radio value={1}>Есть</Radio>
-              <Radio value={2}>Нет</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan}>Гражданство</span>
-            <Input placeholder="" />
-          </div>
-          <div className={style.resume__main}>
-            <h2>Профессиональная деятельность</h2>
-            <span className={style.resumeSpan}>Желаемая занятость</span>
-            <Radio.Group>
-              <Radio value={1}>Полная</Radio>
-              <Radio value={2}>Частичная</Radio>
-              <Radio value={1}>Проектная работа</Radio>
-              <Radio value={2}>Стажировка</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan}>Желаемый график работы</span>
-            <Radio.Group>
-              <Radio value={1}>Полный день</Radio>
-              <Radio value={2}>Сменный график</Radio>
-              <Radio value={1}>Гибкий график</Radio>
-              <Radio value={2}>Удаленная работа</Radio>
-              <Radio value={2}>Вахтовый метод</Radio>
-            </Radio.Group>
-            <br />
-            <span className={style.resumeSpan__tall}>
-              <b>Опыт работы</b>
-            </span>
-            <Button onClick={toggleVisibleWorkXP}>Добавить место работы</Button>
-            {isVisibleWorkXP && (
-              <div className={style.answerPopup}>
-                <div className={style.answerContent}>
-                  <Button
-                    onClick={toggleVisibleWorkXP}
-                    type="text"
-                    className={style.closeButton}
-                  >
-                    X
-                  </Button>
-                  <div className={style.answerContent__text}>
-                    <h3>Место работы</h3>
-                    <span className={style.resumeAreaPopup}>Начало работы</span>
-                    <DatePicker
-                      className={style.datepicker}
-                      placeholder="Выберите месяц"
-                      picker="month"
-                    />
-                    <DatePicker
-                      className={style.datepicker}
-                      placeholder="Выберите год"
-                      picker="year"
-                    />
-                    <br />
-                    <span className={style.resumeAreaPopup}>
-                      Окончание работы
-                    </span>
-                    <DatePicker
-                      className={style.datepicker}
-                      placeholder="Выберите месяц"
-                      picker="month"
-                    />
-                    <DatePicker
-                      className={style.datepicker}
-                      placeholder="Выберите год"
-                      picker="year"
-                    />
-                    <Checkbox className={style.littleElemMargin}>
-                      По настоящее время
-                    </Checkbox>
-                    <Input
-                      className={style.inputPopup}
-                      placeholder="Место работы (полное название компании)"
-                    />
-                    <Input
-                      className={style.inputPopup}
-                      placeholder="Должность"
-                    />
-                    <TextArea
-                      className={style.inputPopup}
-                      placeholder="Выполняемые задачи"
-                    />
-                    <Button className={style.popupButton} type="primary">
-                      Сохранить
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-            <br />
-            <span className={style.resumeArea}>Проектная деятельность</span>
-            <TextArea placeholder="Расскажи о том, в каких проектах ты участвовал и в должности кого" />
-            <span className={style.resumeArea}>Дополнительная информация</span>
-            <TextArea placeholder="Расскажи о себе то, что думаешь не упомянул выше, но работодателю это полезно знать" />
-          </div>
-          <div className={style.resume__main}>
-            <h2>О себе</h2>
-            <span className={style.resumeSpan}>Знание языков</span>
-            <Input placeholder="Язык, уровень знания" />
-            <Button icon={<PlusOutlined />} />
-            <span className={style.resumeArea}>Дополнительная информация</span>
-            <TextArea placeholder="Расскажите о своих навыках, знаниях, увлечениях, мероприятиях в каких участвовали, волонтёрство" />
-          </div>
-          <div className={style.resume__main}>
-            <h2>Образование</h2>
-            <h3>Среднее общее образование</h3>
-            <span className={style.resumeArea}>Начало обучения</span>
-            <DatePicker
-              className={style.datepicker}
-              placeholder="Выберите год"
-              picker="year"
-            />
-            <br />
-            <span className={style.resumeArea}>Окончание обучения</span>
-            <DatePicker
-              className={style.datepicker}
-              placeholder="Выберите год"
-              picker="year"
-            />
-            <Checkbox className={style.littleElemMargin}>
-              По настоящее время
-            </Checkbox>
-            <br />
-            <span className={style.resumeSpan}>Название школы</span>
-            <Input placeholder="" />
-            <Button icon={<PlusOutlined />} />
-            <h3>Среднее профессиональное образование / Высшее образование</h3>
-            <Button className={style.centerButton}>
-              Добавить учебное заведение
-            </Button>
-          </div>
-          <div className={style.resume__main}>
-            <h2>Дополнительное образование, курсы</h2>
-            <p>
-              Если есть дополнительные курсы или вы прошли переквалификацию и у
-              вас есть сертификат, удостоверение о повышении квалификации,
-              диплом о профессиональной переподготовке и т.д., то прикрепляй
-              скан и получи дополнительные баллы к профилю!
-            </p>
-            <Button>
-              Добавить сертификат
-              <FolderAddOutlined className={style.iconSize} />
-            </Button>
-          </div>
-          <Button
-            disabled={isFetchingButton}
-            className={style.personalButton}
-            type="primary"
-          >
-            Сохранить
-          </Button>
-          <NavLink to="/profile/resume">
-            <Button className={style.personalButton} type="primary">
-              Назад
-            </Button>
-          </NavLink> */}
         </div>
       </div>
       <div className={style.profile__personalinfo}>
@@ -1280,7 +1132,7 @@ const ResumeEditAntd = () => {
             <img src="" alt="certificate img" />
           </div>
           <div className={style.certificateBlock__desc}>
-            <h3 className={style.certificateTitle}>UX/UI дизайнер</h3>
+            <h3 className={style.certificateTitle}>Web основы</h3>
             <span>Сертификат: 00000000</span>
             <div>
               <span className={style.certificateSkill}>CSS</span>

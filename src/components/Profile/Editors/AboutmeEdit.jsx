@@ -165,7 +165,7 @@ const AboutmeEdit = () => {
         <h2>Дорожная карта</h2>
         <div className={style.profile__personalinfo}>
           <div className={style.timeline}>
-            <Steps current={1} progressDot={customDot}>
+            <Steps current={0} progressDot={customDot}>
               <Step description="Регистрация, Резюме" />
               <Step description="Диагностика" />
               <Step description="Прохождение курсов" />

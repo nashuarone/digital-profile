@@ -16,6 +16,7 @@ import Footer from "./components/Common/Footer";
 import Profile from "./components/Profile/Profile";
 import { initializeApp } from "./redux/appReducer";
 import Preloader from "./components/Common/Preloader";
+import Diagnostics from "./components/Diagnostics/Diagnostics";
 
 const { Content } = Layout;
 
@@ -51,6 +52,7 @@ function App() {
                   <Content>
                     <div className="site-layout-content">
                       <Route path="/profile" render={() => <Profile />} />
+                      <Route path="/diagnostics" render={() => <Diagnostics />} />
                       <Redirect to="/profile" />
                     </div>
                   </Content>

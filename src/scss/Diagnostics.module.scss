@@ -1,0 +1,31 @@
+
+.testsBlock {
+  display: flex;
+  &__test {
+    width: 45%;
+    background: white;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #C4C4C4;
+    border-radius: 7px;
+    .testDescription {
+      margin: 10px 0;
+      padding: 10px 0;
+      border-top: 1px solid #C4C4C4;
+    }
+    button {
+      display: block;
+      border-radius: 5px;
+      margin-left: auto;
+    }
+  }
+}
+.diagnosticsDone {
+  display: block;
+  margin-left: auto;
+  width: 250px;
+  height: 40px;
+  border-radius: 5px;
+  background: #4148d0;
+  background: linear-gradient(0deg,#4148d0 0%, #3aabe7 100%);
+}

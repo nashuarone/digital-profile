@@ -77,7 +77,8 @@
       width: 250px;
       height: 40px;
       border-radius: 5px;
-      background: #3783F5;
+      background: #4148d0;
+      background: linear-gradient(0deg,#4148d0 0%, #3aabe7 100%);
     }
     .certificateBlock {
       display: flex;
@@ -292,6 +293,11 @@
         margin: 20px 0;
         font-size: 20px;
       }
+      .resumeSpanLikeBlock {
+        display: inline-flex;
+        flex-wrap: wrap;
+        width: 55%;
+      }
       .resumeSpan__tall {
         display: inline-block;
         width: 27%;
@@ -402,6 +408,9 @@
       margin: 0;
       border: none;
       padding: 0;
+    }
+    &__span {
+      display: none;
     }
   }
 }

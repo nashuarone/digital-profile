@@ -8,7 +8,7 @@ import { getProfilePhoto } from "../../redux/storageReducer";
 
 const { Step } = Steps;
 const baseImgURL = `https://tandemteam.site`;
-let defaultPhotoLink = `/api/storage-file/487d89df-2f87-4049-8c9e-c847b66954c1`;
+let defaultPhotoLink = `/api/storage-file/6149e258-7821-40a1-9966-a68cfe6281a0`;
 
 const customDot = (dot, { status, index }) => (
   <Popover
@@ -92,7 +92,7 @@ const Aboutme = () => {
         <h2>Дорожная карта</h2>
         <div className={style.profile__personalinfo}>
           <div className={style.timeline}>
-            <Steps current={1} progressDot={customDot}>
+            <Steps current={0} progressDot={customDot}>
               <Step description="Регистрация, Резюме" />
               <Step description="Диагностика" />
               <Step description="Прохождение курсов" />

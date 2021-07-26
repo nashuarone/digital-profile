@@ -1,19 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../scss/App.module.scss";
-import Icon from "@ant-design/icons";
+import Icon, { CloseOutlined } from "@ant-design/icons";
 import { HeadLogoSvg } from "../../assets/forSvgExport";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { FolderAddOutlined } from "@ant-design/icons";
+import { sendFeedback } from "../../redux/feedbackReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const { TextArea } = Input;
 
 const HeadLogoIcon = (props) => <Icon component={HeadLogoSvg} {...props} />;
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const success_message = useSelector((s) => s.feedback.success_message);
   const [isVisibleFeedback, setVisibleFeedback] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [tel, setTel] = useState("");
+  const [userMessage, setMessage] = useState("");
   const toggleVisibleFeedback = () => {
     setVisibleFeedback(!isVisibleFeedback);
   };
+  const handlleChangeE = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlleChangeN = (e) => {
+    setName(e.target.value);
+  };
+  const handlleChangeT = (e) => {
+    setTel(e.target.value);
+  };
+  const handlleChangeM = (e) => {
+    setMessage(e.target.value);
+  };
+  const changeSuccess = (success_message) => {
+    message.success(success_message);
+  };
+  useEffect(() => {
+    if (success_message) {
+      changeSuccess(success_message);
+    }
+  }, [success_message]);
   return (
     <div className={style.footer}>
       <div className={style.footer__inner}>
@@ -50,7 +78,7 @@ const Footer = () => {
               type="text"
               className={style.closeButton}
             >
-              X
+              <CloseOutlined className={style.closeButtonIcon} />
             </Button>
             <div className={style.answerContent__text}>
               <h3>Обратная связь</h3>
@@ -60,21 +88,48 @@ const Footer = () => {
               </p>
               <div className={style.feedbackInputs}>
                 <Input
-                  className={style.inputPopupName}
+                  className={style.inputPopupNameLong}
+                  value={name}
+                  onChange={handlleChangeN}
                   placeholder="Как к вам обращаться"
                 />
-                <Input className={style.inputPopupNum} placeholder="Телефон" />
+              </div>
+              <div className={style.feedbackInputs}>
+                <Input
+                  className={style.inputPopupName}
+                  value={email}
+                  onChange={handlleChangeE}
+                  placeholder="Ваш email"
+                />
+                <Input
+                  className={style.inputPopupNum}
+                  value={tel}
+                  onChange={handlleChangeT}
+                  placeholder="Телефон"
+                />
               </div>
               <TextArea
                 className={style.inputPopupArea}
+                value={userMessage}
+                onChange={handlleChangeM}
                 placeholder="Текст сообщения..."
               />
               <div className={style.feedbackInputs}>
-                <Button className={style.popupButtonIcon}>
+                <Button
+                  disabled
+                  title="В разработке..."
+                  className={style.popupButtonIcon}
+                >
                   <FolderAddOutlined className={style.iconSize} />
-                  Добавить сертификат
+                  Добавить файл
                 </Button>
-                <Button className={style.popupButton} type="primary">
+                <Button
+                  onClick={() =>
+                    dispatch(sendFeedback(name, tel, email, userMessage))
+                  }
+                  className={style.popupButton}
+                  type="primary"
+                >
                   Отправить
                 </Button>
               </div>

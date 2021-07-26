@@ -45,22 +45,6 @@ const Resume = () => {
   if (resumeData.desiredWorkSchedule === 4) {
     workGraphic = "Вахтовый метод"
   }
-  // let highSchoolLvl = ""
-  // if (resumeData?.otherEducation[0]["level"] === 0) {
-  //   highSchoolLvl = "Среднее профессиональное образование"
-  // }
-  // if (resumeData?.otherEducation[0]["level"] === 1) {
-  //   highSchoolLvl = "Высшее образование (бакалавриат)"
-  // }
-  // if (resumeData?.otherEducation[0]["level"] === 2) {
-  //   highSchoolLvl = "Высшее образование (магистратура)"
-  // }
-  // if (resumeData?.otherEducation[0]["level"] === 3) {
-  //   highSchoolLvl = "Высшее образование (аспирантура)"
-  // }
-  // if (resumeData?.otherEducation[0]["level"] === 4) {
-  //   highSchoolLvl = "Высшее образование (специалитет)"
-  // }
 
   useEffect(() => {
     if (userData.photo) {
@@ -83,7 +67,12 @@ const Resume = () => {
               динамику вашего роста, а вы наглядно заметить разницу навыков с
               момента вашего входа и на протяжении всего пути
             </p>
-            <Button className={style.personalButton} type="primary">
+            <Button
+              disabled
+              title="В разработке..."
+              className={style.personalButton}
+              type="primary"
+            >
               Скачать резюме
             </Button>
           </div>
@@ -95,27 +84,29 @@ const Resume = () => {
         <div className={style.resume}>
           <h2 className={style.h2size}>Мое резюме</h2>
           <div className={style.personalBlock}>
-          <div className={style.personalBlock__left}>
-            <div className={style.userInfo}>
-              <span className={style.userInfo__innerBig}>
-                {userData.secondName}
-              </span>
-              <span className={style.userInfo__innerBig}>
-                {userData.firstName}
-              </span>
-              <span className={style.userInfo__innerBig}>
-                {userData.thirdName}
-              </span>
+            <div className={style.personalBlock__left}>
+              <div className={style.userInfo}>
+                <span className={style.userInfo__innerBig}>
+                  {userData.secondName}
+                </span>
+                <span className={style.userInfo__innerBig}>
+                  {userData.firstName}
+                </span>
+                <span className={style.userInfo__innerBig}>
+                  {userData.thirdName}
+                </span>
+              </div>
+            </div>
+            <div className={style.personalBlock__right}>
+              <img
+                className={style.avatar}
+                src={`${baseImgURL}${
+                  profilePhotoFileLink ? profilePhotoFileLink : defaultPhotoLink
+                }`}
+                alt="avatar"
+              />
             </div>
           </div>
-          <div className={style.personalBlock__right}>
-            <img
-              className={style.avatar}
-              src={`${baseImgURL}${profilePhotoFileLink ? profilePhotoFileLink : defaultPhotoLink}`}
-              alt="avatar"
-            />
-          </div>
-        </div>
           <div className={style.resume__main}>
             <h2>Основная информация о себе</h2>
             <div className={style.hhBlocks}>
@@ -124,50 +115,70 @@ const Resume = () => {
                   <span className={style.resumeInfo__innerIcon}>
                     <PhoneOutlined />
                   </span>
-                  <span className={style.resumeInfo__inner}>{userData.tel}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {userData.tel}
+                  </span>
                 </div>
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <MailOutlined />
                   </span>
-                  <span className={style.resumeInfo__inner}>{userData.email}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {userData.email}
+                  </span>
                 </div>
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-telegram-plane"></i>
                   </span>
-                  <span className={style.resumeInfo__inner}>{resumeData.telegramIdentifier}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {resumeData.telegramIdentifier}
+                  </span>
                 </div>
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-discord"></i>
                   </span>
-                  <span className={style.resumeInfo__inner}>{resumeData.discordIdentifier}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {resumeData.discordIdentifier}
+                  </span>
                 </div>
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-vk"></i>
                   </span>
-                  <span className={style.resumeInfo__inner}>{resumeData.vkLink}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {resumeData.vkLink}
+                  </span>
                 </div>
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-facebook"></i>
                   </span>
-                  <span className={style.resumeInfo__inner}>{resumeData.fbLink}</span>
+                  <span className={style.resumeInfo__inner}>
+                    {resumeData.fbLink}
+                  </span>
                 </div>
               </div>
               <div className={style.hhBlocks__right}>
                 <div className={style.resumeInfo}>
-                  <span className={style.resumeInfo__innerStock}>Место жительства:</span>
+                  <span className={style.resumeInfo__innerStock}>
+                    Место жительства:
+                  </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.placeOfResidence}
                   </span>
                 </div>
                 <div className={style.resumeInfo}>
-                  <span className={style.resumeInfo__innerStock}>Дата рождения:</span>
+                  <span className={style.resumeInfo__innerStock}>
+                    Дата рождения:
+                  </span>
                   <span className={style.resumeInfo__inner}>
-                    {userData.birthDate.slice(0, 10).split("-").reverse().join(".")}
+                    {userData.birthDate
+                      .slice(0, 10)
+                      .split("-")
+                      .reverse()
+                      .join(".")}
                   </span>
                 </div>
                 <div className={style.resumeInfo}>
@@ -177,13 +188,17 @@ const Resume = () => {
                   </span>
                 </div>
                 <div className={style.resumeInfo}>
-                  <span className={style.resumeInfo__innerStock}>Военный билет:</span>
+                  <span className={style.resumeInfo__innerStock}>
+                    Военный билет:
+                  </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.militaryTicker ? "Есть" : "Нет"}
                   </span>
                 </div>
                 <div className={style.resumeInfo}>
-                  <span className={style.resumeInfo__innerStock}>Гражданство:</span>
+                  <span className={style.resumeInfo__innerStock}>
+                    Гражданство:
+                  </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.citizenship}
                   </span>
@@ -194,59 +209,65 @@ const Resume = () => {
           <div className={style.resume__main}>
             <h2>Профессиональная деятельность</h2>
             <span className={style.resumeSpan}>Желаемая занятость</span>
-            <span className={style.userInfo__inner}>
-              {workEmploye}
-            </span>
+            <span className={style.userInfo__inner}>{workEmploye}</span>
             <br />
             <span className={style.resumeSpan}>Желаемый график работы</span>
-            <span className={style.userInfo__inner}>
-              {workGraphic}
-            </span>
+            <span className={style.userInfo__inner}>{workGraphic}</span>
             <br />
             <span className={style.resumeSpan__tall}>
               <b className={style.h2size}>Опыт работы</b>
             </span>
             {resumeData?.workExperiences?.length
-            ? resumeData.workExperiences.map(work => (
-              <div className={style.hhBlocks}>
-                <div className={style.hhBlocks__left}>
-                  <div className={style.resumeInfo}>
-                    <span className={style.userInfo__innerClear}>
-                      {work.startDate.slice(0, 10).split("-").reverse().join(".")}
-                    </span>
-                    <span className={style.userInfo__innerMinus}>
-                      -
-                    </span>
-                    <span className={style.userInfo__innerClear}>
-                      {work.endDate ? work.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
-                    </span>
+              ? resumeData.workExperiences.map((work) => (
+                  <div className={style.hhBlocks}>
+                    <div className={style.hhBlocks__left}>
+                      <div className={style.resumeInfo}>
+                        <span className={style.userInfo__innerClear}>
+                          {work.startDate
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join(".")}
+                        </span>
+                        <span className={style.userInfo__innerMinus}>-</span>
+                        <span className={style.userInfo__innerClear}>
+                          {work.endDate
+                            ? work.endDate
+                                .slice(0, 10)
+                                .split("-")
+                                .reverse()
+                                .join(".")
+                            : "По настоящее время"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={style.hhBlocks__right}>
+                      <div className={style.workInfo}>
+                        <span className={style.userInfo__innerStock}>
+                          {work.organization}
+                        </span>
+                        <span className={style.userInfo__inner}>
+                          {work.position}
+                        </span>
+                        <span className={style.workInfo__innerClear}>
+                          {work.duty}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={style.hhBlocks__right}>
-                  <div className={style.workInfo}>
-                    <span className={style.userInfo__innerStock}>{work.organization}</span>
-                    <span className={style.userInfo__inner}>
-                      {work.position}
-                    </span>
-                    <span className={style.workInfo__innerClear}>
-                      {work.duty}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-            : "Опыт работы не указан"}
+                ))
+              : "Опыт работы не указан"}
             <br />
             <span className={style.resumeSpan__long}>
               <b className={style.h2size}>Проектная деятельность</b>
             </span>
             {resumeData?.projectActivities?.length
-            ? resumeData.projectActivities.map(proj => (
-              <div className={style.hhBlocks}>
-                <div className={style.hhBlocks__left}>
+              ? resumeData.projectActivities.map((proj) => (
+                  <div className={style.hhBlocks}>
+                    {/* <div className={style.hhBlocks__left}>
                   <div className={style.resumeInfo}>
                     <span className={style.userInfo__innerClear}>
-                      {proj.startDate.slice(0, 10).split("-").reverse().join(".")}
+                      {proj ? proj.startDate.slice(0, 10).split("-").reverse().join(".") : null}
                     </span>
                     <span className={style.userInfo__innerMinus}>
                       -
@@ -255,144 +276,141 @@ const Resume = () => {
                       {proj.endDate ? proj.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
                     </span>
                   </div>
-                </div>
-                <div className={style.hhBlocks__right}>
-                  <div className={style.workInfo}>
-                    <span className={style.workInfo__innerClear}>
-                      {proj.description}
-                    </span>
-                    <span className={style.workInfo__innerClear}>
-                      {/* <a href={proj.link}></a> */}
-                      {proj.link}
-                    </span>
+                </div> */}
+                    <div className={style.hhBlocks__right}>
+                      <div className={style.workInfo}>
+                        <span className={style.workInfo__innerClear}>
+                          {proj.description}
+                        </span>
+                        <span className={style.workInfo__innerClear}>
+                          <a href={proj.link}> {proj.link}</a>
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))
-            : "Проектная деятельность не указана"}
+                ))
+              : "Проектная деятельность не указана"}
             <br />
-            <span className={style.resumeSpan__long}>Дополнительная информация</span>
+            <span className={style.resumeSpan__long}>
+              Дополнительная информация
+            </span>
             {resumeData.additionalInformation}
           </div>
           <div className={style.resume__main}>
             <h2>О себе</h2>
             <span className={style.resumeSpan}>Знание языков</span>
-            {resumeData?.availableLanguages?.length
-            ? resumeData.availableLanguages.map(lang => (
-              <span>
-                <span className={style.userInfo__inner}>
-                  {lang.language}
-                </span>
-                <span> - </span>
-                <span className={style.userInfo__inner}>
-                  {lang.level}
-                </span>
-              </span>
-            ))
-            : "Языки не указаны"}
+            <span className={style.resumeSpanLikeBlock}>
+              {resumeData?.availableLanguages?.length
+                ? resumeData.availableLanguages.map((lang) => (
+                    <span className={style.resumeSpanLikeBlock}>
+                      <span className={style.userInfo__inner}>
+                        {lang.language}
+                      </span>
+                      <span> - </span>
+                      <span className={style.userInfo__inner}>
+                        {lang.level}
+                      </span>
+                    </span>
+                  ))
+                : "Языки не указаны"}
+            </span>
             <br />
-            <span className={style.resumeSpan__long}>Дополнительная информация</span>
+            <span className={style.resumeSpan__long}>
+              Дополнительная информация
+            </span>
             {resumeData.aboutMe}
           </div>
           <div className={style.resume__main}>
             <h2>Образование</h2>
-            <span className={style.resumeSpan__long}>Среднее общее образование</span>
+            <span className={style.resumeSpan__long}>
+              Среднее общее образование
+            </span>
             {resumeData?.secondaryGeneralEducations?.length
-            ? resumeData.secondaryGeneralEducations.map(school => (
-              <div className={style.hhBlocks}>
-                <div className={style.hhBlocks__left}>
-                  <div className={style.resumeInfo}>
-                    <span className={style.userInfo__innerClear}>
-                      {school.startDate.slice(0, 10).split("-").reverse().join(".")}
-                    </span>
-                    <span className={style.userInfo__innerMinus}>
-                      -
-                    </span>
-                    <span className={style.userInfo__innerClear}>
-                      {school.endDate ? school.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
-                    </span>
+              ? resumeData.secondaryGeneralEducations.map((school) => (
+                  <div className={style.hhBlocks}>
+                    <div className={style.hhBlocks__left}>
+                      <div className={style.resumeInfo}>
+                        <span className={style.userInfo__innerClear}>
+                          {school.startDate
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join(".")}
+                        </span>
+                        <span className={style.userInfo__innerMinus}>-</span>
+                        <span className={style.userInfo__innerClear}>
+                          {school.endDate
+                            ? school.endDate
+                                .slice(0, 10)
+                                .split("-")
+                                .reverse()
+                                .join(".")
+                            : "По настоящее время"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={style.hhBlocks__right}>
+                      <div className={style.workInfo}>
+                        <span className={style.workInfo__innerClear}>
+                          {school.schoolName}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={style.hhBlocks__right}>
-                  <div className={style.workInfo}>
-                    <span className={style.workInfo__innerClear}>
-                      {school.schoolName}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-            : "Школы не указаны"}
+                ))
+              : "Школы не указаны"}
             <br />
-            <span className={style.resumeSpan__long}>Среднее профессиональное образование / Высшее образование</span>
+            <span className={style.resumeSpan__long}>
+              Среднее профессиональное образование / Высшее образование
+            </span>
             {resumeData?.otherEducation?.length
-            ? resumeData.otherEducation.map(highSchool => (
-              <div className={style.hhBlocks}>
-                <div className={style.hhBlocks__left}>
-                  <div className={style.resumeInfo}>
-                    <span className={style.userInfo__innerClear}>
-                      {highSchool.startDate.slice(0, 10).split("-").reverse().join(".")}
-                    </span>
-                    <span className={style.userInfo__innerMinus}>
-                      -
-                    </span>
-                    <span className={style.userInfo__innerClear}>
-                      {highSchool.endDate ? highSchool.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
-                    </span>
+              ? resumeData.otherEducation.map((highSchool) => (
+                  <div className={style.hhBlocks}>
+                    <div className={style.hhBlocks__left}>
+                      <div className={style.resumeInfo}>
+                        <span className={style.userInfo__innerClear}>
+                          {highSchool.startDate
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join(".")}
+                        </span>
+                        <span className={style.userInfo__innerMinus}>-</span>
+                        <span className={style.userInfo__innerClear}>
+                          {highSchool.endDate
+                            ? highSchool.endDate
+                                .slice(0, 10)
+                                .split("-")
+                                .reverse()
+                                .join(".")
+                            : "По настоящее время"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={style.hhBlocks__right}>
+                      <div className={style.workInfo}>
+                        <span className={style.userInfo__innerStock}>
+                          {highSchool.level === 0
+                            ? "Среднее профессиональное образование"
+                            : highSchool.level === 1
+                            ? "Высшее образование (бакалавриат)"
+                            : highSchool.level === 2
+                            ? "Высшее образование (магистратура)"
+                            : highSchool.level === 3
+                            ? "Высшее образование (аспирантура)"
+                            : "Высшее образование (специалитет)"}
+                        </span>
+                        <span className={style.workInfo__innerClear}>
+                          {highSchool.institution}
+                        </span>
+                        <span className={style.workInfo__innerClear}>
+                          {highSchool.specialization}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={style.hhBlocks__right}>
-                  <div className={style.workInfo}>
-                    <span className={style.userInfo__innerStock}>{highSchool.level === 0
-                    ? "Среднее профессиональное образование"
-                    : highSchool.level === 1
-                    ? "Высшее образование (бакалавриат)"
-                    : highSchool.level === 2
-                    ? "Высшее образование (магистратура)"
-                    : highSchool.level === 3
-                    ? "Высшее образование (аспирантура)"
-                    : "Высшее образование (специалитет)"}</span>
-                    <span className={style.workInfo__innerClear}>
-                      {highSchool.institution}
-                    </span>
-                    <span className={style.workInfo__innerClear}>
-                      {highSchool.specialization}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-            : "Образование не указано"}
-          </div>
-          <div className={style.resume__main}>
-            <h2>Дополнительное образование, курсы</h2>
-            {resumeData?.otherEducation?.length
-            ? resumeData.otherEducation.map(highSchool => (
-              <div className={style.hhBlocks}>
-                <div className={style.hhBlocks__left}>
-                  <div className={style.resumeInfo}>
-                    <span className={style.userInfo__innerClear}>
-                      {highSchool.startDate.slice(0, 10).split("-").reverse().join(".")}
-                    </span>
-                    <span className={style.userInfo__innerMinus}>
-                      -
-                    </span>
-                    <span className={style.userInfo__innerClear}>
-                      {highSchool.endDate ? highSchool.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
-                    </span>
-                  </div>
-                </div>
-                <div className={style.hhBlocks__right}>
-                  <div className={style.workInfo}>
-                    <span className={style.userInfo__innerStock}>{highSchool.level}</span>
-                    <span className={style.workInfo__innerClear}>
-                      {highSchool.institution}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-            : "Дополнительные курсы не указаны"}
+                ))
+              : "Образование не указано"}
           </div>
           <NavLink to="/profile/resume-editor">
             <Button className={style.personalButton} type="primary">

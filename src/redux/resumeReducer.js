@@ -1,6 +1,6 @@
 import { resumeAPI } from "../api/api";
 
-const LOGOUT = "LOGOUT";
+const CLEAR = "RESUME/CLEAR";
 const SET_RESUME = "SET_RESUME";
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
@@ -8,6 +8,7 @@ const TOGGLE_IS_LOGIN_BUTTON = "TOGGLE_IS_LOGIN_BUTTON";
 
 let initialState = {
   resumeData: {},
+  isLoaded: false,
   isFetchingButton: false,
   error_message: "",
   success_message: "",
@@ -19,14 +20,14 @@ const resumeReducer = (state = initialState, action) => {
       return {
         ...state,
         resumeData: action.payload,
+        isLoaded: true,
       };
     }
-    case LOGOUT: {
-      localStorage.removeItem("token");
+    case CLEAR: {
       return {
         ...state,
         resumeData: {},
-        isAuth: false,
+        isLoaded: false,
         error_message: "",
         success_message: "",
       };
@@ -57,8 +58,8 @@ export const setResume = (data) => ({
   type: SET_RESUME,
   payload: data,
 });
-export const logout = () => ({
-  type: LOGOUT,
+export const clearResume = () => ({
+  type: CLEAR,
 });
 export const setErrMessage = (err_mes) => ({
   type: SET_ERROR_MESSAGE,
@@ -98,48 +99,87 @@ export const createResume = (
     secondaryGeneralEducations,
     otherEducation,
     certificates
-  ) => (dispatch) => {
+  ) => (dispatch, getState) => {
     dispatch(toggleIsLoginButton(true));
-    resumeAPI
-      .create(
-        firstName,
-        secondName,
-        thirdName,
-        tel,
-        email,
-        telegramIdentifier,
-        discordIdentifier,
-        fbLink,
-        vkLink,
-        placeOfResidence,
-        birthDate,
-        sex,
-        militaryTicker,
-        citizenship,
-        desiredEmployment,
-        desiredWorkSchedule,
-        workExperiences,
-        projectActivities,
-        additionalInformation,
-        availableLanguages,
-        aboutMe,
-        secondaryGeneralEducations,
-        otherEducation,
-        certificates
-      )
-      .then((res) => {
-        dispatch(
-          setSuccessMessage("Резюме сохранено")
-        );
-        dispatch(toggleIsLoginButton(false));
-        dispatch(setResume(res.data))
-        console.log(res.data);
-        dispatch(setSuccessMessage(""));
-      })
-      .catch((err) => {
-        dispatch(toggleIsLoginButton(false));
-        console.log(err);
-      });
+    debugger
+    getState().isLoaded
+      ? resumeAPI
+          .edit(
+            initialState.resumeData.id,
+            firstName,
+            secondName,
+            thirdName,
+            tel,
+            email,
+            telegramIdentifier,
+            discordIdentifier,
+            fbLink,
+            vkLink,
+            placeOfResidence,
+            birthDate,
+            sex,
+            militaryTicker,
+            citizenship,
+            desiredEmployment,
+            desiredWorkSchedule,
+            workExperiences,
+            projectActivities,
+            additionalInformation,
+            availableLanguages,
+            aboutMe,
+            secondaryGeneralEducations,
+            otherEducation,
+            certificates
+          )
+          .then((res) => {
+            dispatch(setSuccessMessage("Резюме сохранено"));
+            dispatch(toggleIsLoginButton(false));
+            dispatch(setResume(res.data));
+            console.log(res.data);
+            dispatch(setSuccessMessage(""));
+          })
+          .catch((err) => {
+            dispatch(toggleIsLoginButton(false));
+            console.log(err);
+          })
+      : resumeAPI
+          .create(
+            firstName,
+            secondName,
+            thirdName,
+            tel,
+            email,
+            telegramIdentifier,
+            discordIdentifier,
+            fbLink,
+            vkLink,
+            placeOfResidence,
+            birthDate,
+            sex,
+            militaryTicker,
+            citizenship,
+            desiredEmployment,
+            desiredWorkSchedule,
+            workExperiences,
+            projectActivities,
+            additionalInformation,
+            availableLanguages,
+            aboutMe,
+            secondaryGeneralEducations,
+            otherEducation,
+            certificates
+          )
+          .then((res) => {
+            dispatch(setSuccessMessage("Резюме сохранено"));
+            dispatch(toggleIsLoginButton(false));
+            dispatch(setResume(res.data));
+            console.log(res.data);
+            dispatch(setSuccessMessage(""));
+          })
+          .catch((err) => {
+            dispatch(toggleIsLoginButton(false));
+            console.log(err);
+          });
   };
   export const getResume = (resumeLink) => (dispatch) => {
     dispatch(toggleIsLoginButton(true));

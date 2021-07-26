@@ -5,7 +5,7 @@ import style from "../../scss/App.module.scss";
 import { Layout, Menu, Button, Badge } from "antd";
 import Icon, { BellFilled } from "@ant-design/icons";
 import { HeadLogoSvg } from "../../assets/forSvgExport";
-import { logout } from "../../redux/authReducer";
+import { generalLogout } from "../../redux/authReducer";
 
 const { Header } = Layout;
 const HeadLogoIcon = (props) => <Icon component={HeadLogoSvg} {...props} />;
@@ -25,7 +25,9 @@ const Hat = () => {
           <Menu.Item key="0">
             <NavLink to="/profile">Профиль</NavLink>
           </Menu.Item>
-          <Menu.Item key="1">Диагностика</Menu.Item>
+          <Menu.Item key="1">
+            <NavLink to="/diagnostics">Диагностика</NavLink>
+          </Menu.Item>
           <Menu.Item key="2">Стажировка</Menu.Item>
           <Menu.Item key="3">Банк резюме</Menu.Item>
         </Menu>
@@ -34,7 +36,7 @@ const Hat = () => {
             <BellFilled className={style.logSize} />
           </Badge>
           <Button
-            onClick={() => dispatch(logout())}
+            onClick={() => dispatch(generalLogout())}
             className={style.logSize}
             type="text"
           >

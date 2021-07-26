@@ -1,59 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "../../scss/Profile.module.scss";
 import { Tooltip, Progress } from "antd";
 import { ResponsiveSunburst } from "@nivo/sunburst";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveRadar } from "@nivo/radar";
 import { ResponsiveBullet } from "@nivo/bullet";
+import { getHardSkills } from "../../redux/skillReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const data = {
-  name: "nivo",
-  color: "hsl(25, 70%, 50%)",
   children: [
     {
       name: "PHP",
-      color: "hsl(147, 70%, 50%)",
       loc: 31,
     },
     {
       name: "Angular",
-      color: "hsl(147, 70%, 50%)",
       loc: 33,
     },
     {
       name: "Nodejs",
-      color: "hsl(147, 70%, 50%)",
       loc: 26,
     },
     {
       name: "React",
-      color: "hsl(147, 70%, 50%)",
       children: [
         {
           name: "Redux",
-          color: "hsl(147, 70%, 50%)",
-          loc: 29,
+          children: [
+            {
+              name: "redux",
+              loc: 13,
+            },
+            {
+              name: "redux-thunk",
+              loc: 23,
+            },
+          ],
         },
         {
           name: "Hooks",
-          color: "hsl(147, 70%, 50%)",
           loc: 17,
         },
         {
           name: "JSX",
-          color: "hsl(147, 70%, 50%)",
           loc: 6,
         },
         {
           name: "JS / ES6",
-          color: "hsl(147, 70%, 50%)",
           loc: 22,
         },
       ],
     },
     {
       name: "Vue",
-      color: "hsl(147, 70%, 50%)",
       loc: 43,
     },
   ],
@@ -151,6 +151,12 @@ const dataOrange = data4.filter((it) => it.measures[0] >= 25 && it.measures[0] <
 const dataGreen = data4.filter((it) => it.measures[0] >= 50);
 
 const DigitalProfile = () => {
+  const dispatch = useDispatch();
+  const userId = useSelector((s) => s.auth.userData.id);
+//  const hardSkillsData = useSelector((s) => s.skills.hardSkillsData);
+  useEffect(() => {
+    dispatch(getHardSkills(userId));
+  }, [dispatch, userId]);
   return (
     <div>
       <h2>Hard skills</h2>
@@ -158,7 +164,13 @@ const DigitalProfile = () => {
         <h2>Web разработка</h2>
         <div>
           <Tooltip title="Стажер / Junior / Middle">
-            <Progress percent={50} success={{ percent: 20 }} />
+            <Progress
+              strokeColor={{
+                "0%": "#32FFDA",
+                "100%": "#1388F3",
+              }}
+              percent={42}
+            />
             <div className={style.digitalProgress}>
               <span>Стажер</span>
               <span>Junior</span>
@@ -176,7 +188,7 @@ const DigitalProfile = () => {
               cornerRadius={2}
               borderColor={{ theme: "background" }}
               colors={{ scheme: "nivo" }}
-              childColor={{ from: "color", modifiers: [["brighter", 0.1]] }}
+              childColor={{ from: "color", modifiers: [["brighter", 0.2]] }}
               enableArcLabels={true}
               arcLabelsSkipAngle={10}
               arcLabelsTextColor={{
