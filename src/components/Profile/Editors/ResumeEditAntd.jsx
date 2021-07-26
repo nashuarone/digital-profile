@@ -26,6 +26,7 @@ const ResumeEditAntd = () => {
   const onFinish = (values) => {
     dispatch(
       createResume(
+        resumeData.id,
         values.firstName,
         values.secondName,
         values.thirdName,

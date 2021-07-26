@@ -6,6 +6,8 @@ const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 const TOGGLE_IS_LOGIN_BUTTON = "TOGGLE_IS_LOGIN_BUTTON";
 
+let isCheck = false
+
 let initialState = {
   resumeData: {},
   isLoaded: false,
@@ -54,6 +56,11 @@ const resumeReducer = (state = initialState, action) => {
   }
 };
 
+const checkChanger = () => {
+  isCheck = true;
+  return
+}
+
 export const setResume = (data) => ({
   type: SET_RESUME,
   payload: data,
@@ -75,6 +82,7 @@ export const toggleIsLoginButton = (fetchingStatus) => ({
 });
 
 export const createResume = (
+    resumeId,
     firstName,
     secondName,
     thirdName,
@@ -99,13 +107,12 @@ export const createResume = (
     secondaryGeneralEducations,
     otherEducation,
     certificates
-  ) => (dispatch, getState) => {
+  ) => (dispatch) => {
     dispatch(toggleIsLoginButton(true));
-    debugger
-    getState().isLoaded
+    isCheck
       ? resumeAPI
           .edit(
-            initialState.resumeData.id,
+            resumeId,
             firstName,
             secondName,
             thirdName,
@@ -190,6 +197,7 @@ export const createResume = (
         dispatch(toggleIsLoginButton(false));
         dispatch(setResume(res.data))
         console.log(res.data);
+        checkChanger()
         dispatch(setSuccessMessage(""));
       })
       .catch((err) => {
