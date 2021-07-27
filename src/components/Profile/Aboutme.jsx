@@ -77,7 +77,9 @@ const Aboutme = () => {
           <div className={style.personalBlock__right}>
             <img
               className={style.avatar}
-              src={`${baseImgURL}${profilePhotoFileLink ? profilePhotoFileLink : defaultPhotoLink}`}
+              src={`${baseImgURL}${
+                profilePhotoFileLink ? profilePhotoFileLink : defaultPhotoLink
+              }`}
               alt="avatar"
             />
           </div>
@@ -125,7 +127,18 @@ const Aboutme = () => {
                   </Button>
                   <div className={style.answerContent__text}>
                     <h3>Нужна помощь?</h3>
-                    <p>bla bla</p>
+                    <div>
+                      <p>
+                        Перед тобой дорожная карта, представляющая из себя
+                        горизонтальную линию с наименованиями этапов твоего
+                        пути.
+                      </p>
+                      <p>
+                        Каждый этап представлен в виде кружков, которые по мере
+                        прохождения будут иметь соответствующий цвет, в
+                        зависимости от статуса прохождения этапа:
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

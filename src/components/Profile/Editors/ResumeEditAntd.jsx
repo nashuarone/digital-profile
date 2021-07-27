@@ -7,7 +7,7 @@ import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { createResume } from "../../../redux/resumeReducer";
 import { Certificate } from "../../Common/UploadPdf";
-import SpecialInput from "./SpecialInput";
+import SpecialInput from "./SpecialInput"
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -50,7 +50,17 @@ const ResumeEditAntd = () => {
         values.aboutMe,
         values.secondaryGeneralEducations,
         values.otherEducation,
-        values.certificates,
+        values.certificates
+          .map((it) =>
+            Object.entries(it)
+              .map(([k, v]) =>
+                k === "storage" ? [k, (v = almazIdCertificate)] : [k, v]
+              )
+              .reduce((accum, [k, v]) => {
+                accum[k] = v;
+                return accum;
+              }, {})
+          )
       )
     );
     console.log("Received values of form: ", values);
@@ -68,11 +78,9 @@ const ResumeEditAntd = () => {
   );
   const [certificateLink, setCertificateLink] = useState(almazIdCertificate);
   const [enemyVisible, setEnemyVisible] = useState(false);
-  // const [isVisibleWorkXP, setVisibleWorkXP] = useState(false);
   const [disabledValue, setDisabledValue] = useState(false);
   const [disabledValueSchool, setDisabledValueSchool] = useState(false);
   const [disabledValueInst, setDisabledValueInst] = useState(false);
-  const [disabledValueAddition, setDisabledValueAddition] = useState(false);
   const getDisabledValue = () => {
     setDisabledValue(!disabledValue);
   };
@@ -82,18 +90,12 @@ const ResumeEditAntd = () => {
   const getDisabledValueInst = () => {
     setDisabledValueInst(!disabledValueInst);
   };
-  const getDisabledValueAddition = () => {
-    setDisabledValueAddition(!disabledValueAddition);
-  };
   const showEnemyVisible = () => {
     setEnemyVisible(true);
   };
   const hideEnemyVisible = () => {
     setEnemyVisible(false);
   };
-  // const toggleVisibleWorkXP = () => {
-  //   setVisibleWorkXP(!isVisibleWorkXP);
-  // };
   const changeSuccess = (success_message) => {
     message.success(success_message);
   };
@@ -927,16 +929,7 @@ const ResumeEditAntd = () => {
                             name={[name, "endDate"]}
                             fieldKey={[fieldKey, "endDate"]}
                           >
-                            <DatePicker
-                              disabled={disabledValueAddition}
-                              placeholder=""
-                            />
-                            <Checkbox
-                              onClick={getDisabledValueAddition}
-                              className={style.littleElemMargin}
-                            >
-                              По настоящее время
-                            </Checkbox>
+                            <DatePicker placeholder="" />
                           </Form.Item>
                         </div>
                         <div className={style.workXPform__child}>
@@ -991,7 +984,7 @@ const ResumeEditAntd = () => {
                             <InputNumber placeholder="" />
                           </Form.Item>
                         </div>
-                        <div className={style.workXPform__child}>
+                        <div className={style.invisibleBlock}>
                           <span className={style.invisibleBlock__span}>
                             Невидимый блок для хранения ссылки сертификата
                             invisibleBlock
@@ -1003,47 +996,50 @@ const ResumeEditAntd = () => {
                             fieldKey={[fieldKey, "storage"]}
                             initialValue={certificateLink}
                           >
-                            <SpecialInput certificateData={certificateLink} />
+                            <SpecialInput certificateLink={certificateLink} />
                           </Form.Item>
                         </div>
                         <div className={style.resumeFlex}>
                           <h3>Какие навыки приобрели</h3>
                         </div>
-                        <Form.List name="acquiredSkills">
+                        <Form.List
+                          className={style.inputImitator}
+                          {...restField}
+                          name={[name, "acquiredSkills"]}
+                          fieldKey={[fieldKey, "acquiredSkills"]}
+                        >
                           {(fields, { add, remove }) => (
                             <>
-                              {fields.map(
-                                (field) => (
-                                  <Space
-                                    key={field.key}
-                                    className={style.workXPform}
-                                    align="baseline"
-                                    direction="vertical"
-                                  >
-                                    <div className={style.workXPform__child}>
-                                      <span className={style.workXPspan}>
-                                        Навык
-                                      </span>
-                                      <Form.Item
-                                        className={style.inputImitator}
-                                        {...field}
-                                        name={[field.name, "title"]}
-                                      >
-                                        <Input placeholder="" />
-                                      </Form.Item>
-                                    </div>
-                                    <Button
-                                      className={style.inputImitatorCenter}
-                                      type="dashed"
-                                      onClick={() => remove(name)}
-                                      block
-                                      icon={<MinusOutlined />}
+                              {fields.map((field) => (
+                                <Space
+                                  key={field.key}
+                                  className={style.workXPform}
+                                  align="baseline"
+                                  direction="vertical"
+                                >
+                                  <div className={style.workXPform__child}>
+                                    <span className={style.workXPspan}>
+                                      Навык
+                                    </span>
+                                    <Form.Item
+                                      className={style.inputImitator}
+                                      {...field}
+                                      name={[field.name, "title"]}
                                     >
-                                      Удалить навык
-                                    </Button>
-                                  </Space>
-                                )
-                              )}
+                                      <Input placeholder="" />
+                                    </Form.Item>
+                                  </div>
+                                  <Button
+                                    className={style.inputImitatorCenter}
+                                    type="dashed"
+                                    onClick={() => remove(name)}
+                                    block
+                                    icon={<MinusOutlined />}
+                                  >
+                                    Удалить навык
+                                  </Button>
+                                </Space>
+                              ))}
                               <div className={style.workXPform}>
                                 <div className={style.inputImitatorCenter}>
                                   <Button

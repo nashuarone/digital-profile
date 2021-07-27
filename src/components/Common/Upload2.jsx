@@ -24,52 +24,19 @@ export const Avatar = () => {
 
   const uploadImage = async (options) => {
     const { onSuccess, file } = options;
-    //const { onSuccess, onError, file, onProgress } = options;
 
     const fmData = new FormData();
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //     "content-type": "multipart/form-data" },
-    //   onUploadProgress: (event) => {
-    //     const percent = Math.floor((event.loaded / event.total) * 100);
-    //     setProgress(percent);
-    //     if (percent === 100) {
-    //       setTimeout(() => setProgress(0), 1000);
-    //     }
-    //     onProgress({ percent: (event.loaded / event.total) * 100 });
-    //   },
-    // };
     const fileEncoded = await toBase64(file)
-    //console.log(fileEncoded);
     fmData.append("image", file);
     setFirst(file.name.split(".").shift())
     setSecond(file.name.split(".").pop())
     setThird(fileEncoded.slice(23))
     setSuccessParams(true)
     onSuccess("Ok");
-    // try {
-    //   const res = await axios.post(
-    //     "https://tandemteam.site/api/storage",
-    //     fmData,
-    //     config
-    //   );
-
-    //   onSuccess("Ok");
-    //   console.log("server res: ", res);
-    // } catch (err) {
-    //   console.log("Eroor: ", err);
-    //   const error = new Error("Some error");
-    //   onError({ err });
-    // }
   };
 
   const handleOnChange = ({ file, fileList, event }) => {
-    // console.log("1:", file, "2:", fileList, "3:", event, "4:", file.thumbUrl);
-
-    //Using Hooks to update the state to the current filelist
     setDefaultFileList(fileList);
-    //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
   useEffect(() => {

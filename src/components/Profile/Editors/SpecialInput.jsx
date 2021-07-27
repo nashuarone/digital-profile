@@ -5,9 +5,9 @@ import { setSpecialAntdSolution } from "../../../redux/storageReducer";
 
 const SpecialInput = (props) => {
   const dispatch = useDispatch();
-  const certificateData = props.certificateData;
+  const certificateLink = props.certificateLink;
   const almazIdCertificate = useSelector((s) => s.storage.almazIdCertificate);
-  const [certificateLink2, setCertificateLink2] = useState(certificateData);
+  const [certificateLink2, setCertificateLink2] = useState(certificateLink);
   useEffect(() => {
     if (!!almazIdCertificate) {
       setCertificateLink2(almazIdCertificate);

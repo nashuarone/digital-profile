@@ -56,12 +56,6 @@ const AboutmeEdit = () => {
   const handlleChangePh = (e) => {
     setTel(e.target.value);
   };
-  // const handlleChangePhoto = (e) => {
-  //   debugger;
-  //   if (!!uuid) {
-  //     setPhoto(e.target.value);
-  //   }
-  // };
   const changeSuccess = (success_message) => {
     message.success(success_message);
   };
@@ -126,12 +120,6 @@ const AboutmeEdit = () => {
           </div>
           <div className={style.personalBlock__right}>
             <Avatar />
-            {/* <img className={style.avatar} src="" alt="avatar" />
-            <Upload listType="picture">
-              <Button icon={<i className="fas fa-camera"></i>}>
-                Загрузить фотографию
-              </Button>
-            </Upload> */}
           </div>
         </div>
         <Button
