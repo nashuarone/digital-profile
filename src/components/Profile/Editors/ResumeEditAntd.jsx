@@ -19,8 +19,8 @@ const ResumeEditAntd = () => {
   const resumeData = useSelector((s) => s.resume.resumeData);
   const isFetchingButton = useSelector((s) => s.resume.isFetchingButton);
   const success_message = useSelector((s) => s.resume.success_message);
+  const error_message = useSelector((s) => s.resume.error_message);
   const almazIdCertificate = useSelector((s) => s.storage.almazIdCertificate);
-  const fileLinkCertificate = useSelector((s) => s.storage.fileLinkCertificate);
 
   const [form] = Form.useForm();
   const onFinish = (values) => {
@@ -97,16 +97,24 @@ const ResumeEditAntd = () => {
   const changeSuccess = (success_message) => {
     message.success(success_message);
   };
+  const changeError = (error_message) => {
+    message.error(error_message);
+  };
+  useEffect(() => {
+    if (!!almazIdCertificate) {
+      setCertificateLink(almazIdCertificate);
+    }
+  }, [almazIdCertificate]);
+  useEffect(() => {
+    if (error_message) {
+      changeError(error_message);
+    }
+  }, [error_message]);
   useEffect(() => {
     if (success_message) {
       changeSuccess(success_message);
     }
   }, [success_message]);
-  useEffect(() => {
-    if (!!almazIdCertificate) {
-      setCertificateLink(almazIdCertificate);
-    }
-  }, [almazIdCertificate, fileLinkCertificate]);
   return (
     <div>
       <div className={style.profile__personalinfo}>
@@ -891,186 +899,180 @@ const ResumeEditAntd = () => {
               <Form.List name="certificates">
                 {(fields, { add, remove }) => (
                   <>
-                    {fields.map(
-                      ({ key, name, fieldKey, ...restField }, index) => (
-                        <Space
-                          key={key}
-                          className={style.workXPform}
-                          align="baseline"
-                          direction="vertical"
-                        >
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Начало обучения
-                            </span>
-                            <Form.Item
-                              {...restField}
-                              name={[name, "startDate"]}
-                              fieldKey={[fieldKey, "startDate"]}
-                            >
-                              <DatePicker placeholder="" />
-                            </Form.Item>
-                          </div>
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Окончание обучения
-                            </span>
-                            <Form.Item
-                              {...restField}
-                              name={[name, "endDate"]}
-                              fieldKey={[fieldKey, "endDate"]}
-                            >
-                              <DatePicker
-                                disabled={disabledValueAddition}
-                                placeholder=""
-                              />
-                              <Checkbox
-                                onClick={getDisabledValueAddition}
-                                className={style.littleElemMargin}
-                              >
-                                По настоящее время
-                              </Checkbox>
-                            </Form.Item>
-                          </div>
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Название курса
-                            </span>
-                            <Form.Item
-                              className={style.inputImitator}
-                              {...restField}
-                              name={[name, "name"]}
-                              fieldKey={[fieldKey, "name"]}
-                            >
-                              <Input placeholder="" />
-                            </Form.Item>
-                          </div>
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Номер сертификата
-                            </span>
-                            <Form.Item
-                              className={style.inputImitator}
-                              {...restField}
-                              name={[name, "number"]}
-                              fieldKey={[fieldKey, "number"]}
-                            >
-                              <Input placeholder="" />
-                            </Form.Item>
-                          </div>
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Место прохождения
-                            </span>
-                            <Form.Item
-                              className={style.inputImitator}
-                              {...restField}
-                              name={[name, "serviceName"]}
-                              fieldKey={[fieldKey, "serviceName"]}
-                            >
-                              <Input placeholder="" />
-                            </Form.Item>
-                          </div>
-                          <div className={style.workXPform__child}>
-                            <span className={style.workXPspan}>
-                              Количество часов
-                            </span>
-                            <Form.Item
-                              className={style.inputImitator}
-                              {...restField}
-                              name={[name, "hours"]}
-                              fieldKey={[fieldKey, "hours"]}
-                            >
-                              <InputNumber placeholder="" />
-                            </Form.Item>
-                          </div>
-                          <div className={style.invisibleBlock}>
-                            <span className={style.invisibleBlock__span}>
-                              Невидимый блок для хранения ссылки сертификата
-                              invisibleBlock
-                            </span>
-                            <Form.Item
-                              className={style.inputImitator}
-                              initialValue={certificateLink}
-                              {...restField}
-                              name={[name, "storage"]}
-                              fieldKey={[fieldKey, "storage"]}
-                            >
-                              <SpecialInput certificateData={certificateLink} />
-                            </Form.Item>
-                          </div>
-                          <div className={style.resumeFlex}>
-                            <h3>Какие навыки приобрели</h3>
-                          </div>
-                          <Form.List name="acquiredSkills">
-                            {(fields, { add, remove }) => (
-                              <>
-                                {fields.map(
-                                  (
-                                    { key, name, fieldKey, ...restField },
-                                    index
-                                  ) => (
-                                    <Space
-                                      key={key}
-                                      className={style.workXPform}
-                                      align="baseline"
-                                      direction="vertical"
-                                    >
-                                      <div className={style.workXPform__child}>
-                                        <span className={style.workXPspan}>
-                                          Навык
-                                        </span>
-                                        <Form.Item
-                                          className={style.inputImitator}
-                                          {...restField}
-                                          name={[name, "title"]}
-                                          fieldKey={[fieldKey, "title"]}
-                                        >
-                                          <Input placeholder="" />
-                                        </Form.Item>
-                                      </div>
-                                      <Button
-                                        className={style.inputImitatorCenter}
-                                        type="dashed"
-                                        onClick={() => remove(name)}
-                                        block
-                                        icon={<MinusOutlined />}
-                                      >
-                                        Удалить навык
-                                      </Button>
-                                    </Space>
-                                  )
-                                )}
-                                <div className={style.workXPform}>
-                                  <div className={style.inputImitatorCenter}>
-                                    <Button
-                                      type="dashed"
-                                      onClick={() => add()}
-                                      block
-                                      icon={<PlusOutlined />}
-                                    >
-                                      Добавить навык
-                                    </Button>
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </Form.List>
-                          <div className={style.resumeFlex}>
-                            <Certificate />
-                          </div>
-                          <Button
-                            className={style.inputImitatorCenter}
-                            type="dashed"
-                            onClick={() => remove(name)}
-                            block
-                            icon={<MinusOutlined />}
+                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                      <Space
+                        key={key}
+                        className={style.workXPform}
+                        align="baseline"
+                        direction="vertical"
+                      >
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Начало обучения
+                          </span>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "startDate"]}
+                            fieldKey={[fieldKey, "startDate"]}
                           >
-                            Удалить сертификат
-                          </Button>
-                        </Space>
-                      )
-                    )}
+                            <DatePicker placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Окончание обучения
+                          </span>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "endDate"]}
+                            fieldKey={[fieldKey, "endDate"]}
+                          >
+                            <DatePicker
+                              disabled={disabledValueAddition}
+                              placeholder=""
+                            />
+                            <Checkbox
+                              onClick={getDisabledValueAddition}
+                              className={style.littleElemMargin}
+                            >
+                              По настоящее время
+                            </Checkbox>
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Название курса
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "name"]}
+                            fieldKey={[fieldKey, "name"]}
+                          >
+                            <Input placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Номер сертификата
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "number"]}
+                            fieldKey={[fieldKey, "number"]}
+                          >
+                            <Input placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Место прохождения
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "serviceName"]}
+                            fieldKey={[fieldKey, "serviceName"]}
+                          >
+                            <Input placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.workXPspan}>
+                            Количество часов
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "hours"]}
+                            fieldKey={[fieldKey, "hours"]}
+                          >
+                            <InputNumber placeholder="" />
+                          </Form.Item>
+                        </div>
+                        <div className={style.workXPform__child}>
+                          <span className={style.invisibleBlock__span}>
+                            Невидимый блок для хранения ссылки сертификата
+                            invisibleBlock
+                          </span>
+                          <Form.Item
+                            className={style.inputImitator}
+                            {...restField}
+                            name={[name, "storage"]}
+                            fieldKey={[fieldKey, "storage"]}
+                            initialValue={certificateLink}
+                          >
+                            <SpecialInput certificateData={certificateLink} />
+                          </Form.Item>
+                        </div>
+                        <div className={style.resumeFlex}>
+                          <h3>Какие навыки приобрели</h3>
+                        </div>
+                        <Form.List name="acquiredSkills">
+                          {(fields, { add, remove }) => (
+                            <>
+                              {fields.map(
+                                (field) => (
+                                  <Space
+                                    key={field.key}
+                                    className={style.workXPform}
+                                    align="baseline"
+                                    direction="vertical"
+                                  >
+                                    <div className={style.workXPform__child}>
+                                      <span className={style.workXPspan}>
+                                        Навык
+                                      </span>
+                                      <Form.Item
+                                        className={style.inputImitator}
+                                        {...field}
+                                        name={[field.name, "title"]}
+                                      >
+                                        <Input placeholder="" />
+                                      </Form.Item>
+                                    </div>
+                                    <Button
+                                      className={style.inputImitatorCenter}
+                                      type="dashed"
+                                      onClick={() => remove(name)}
+                                      block
+                                      icon={<MinusOutlined />}
+                                    >
+                                      Удалить навык
+                                    </Button>
+                                  </Space>
+                                )
+                              )}
+                              <div className={style.workXPform}>
+                                <div className={style.inputImitatorCenter}>
+                                  <Button
+                                    type="dashed"
+                                    onClick={() => add()}
+                                    block
+                                    icon={<PlusOutlined />}
+                                  >
+                                    Добавить навык
+                                  </Button>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </Form.List>
+                        <div className={style.resumeFlex}>
+                          <Certificate />
+                        </div>
+                        <Button
+                          className={style.inputImitatorCenter}
+                          type="dashed"
+                          onClick={() => remove(name)}
+                          block
+                          icon={<MinusOutlined />}
+                        >
+                          Удалить сертификат
+                        </Button>
+                      </Space>
+                    ))}
                     <div className={style.workXPform}>
                       <div className={style.inputImitatorCenter}>
                         <Button

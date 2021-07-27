@@ -139,11 +139,21 @@ export const createResume = (
             certificates
           )
           .then((res) => {
-            dispatch(setSuccessMessage("Резюме сохранено"));
-            dispatch(toggleIsLoginButton(false));
-            dispatch(setResume(res.data));
-            console.log(res.data);
-            dispatch(setSuccessMessage(""));
+            if (res.status === 500) {
+              dispatch(setErrMessage("500. Что-то пошло не так"));
+              dispatch(toggleIsLoginButton(false));
+            }
+            if (res.status === 400 || res.status === 404) {
+              dispatch(setErrMessage("400. Что-то пошло не так"));
+              dispatch(toggleIsLoginButton(false));
+            }
+            if (res.status === 200) {
+              dispatch(setSuccessMessage("Резюме сохранено"));
+              dispatch(toggleIsLoginButton(false));
+              dispatch(setResume(res.data));
+              console.log(res.data);
+              dispatch(setSuccessMessage(""));
+            }
           })
           .catch((err) => {
             dispatch(toggleIsLoginButton(false));

@@ -1,13 +1,17 @@
 
 .testsBlock {
   display: flex;
+  justify-content: space-between;
   &__test {
-    width: 45%;
+    width: 47%;
     background: white;
     margin: 20px 0;
     padding: 20px;
     border: 1px solid #C4C4C4;
     border-radius: 7px;
+    .hashtagsColor {
+      color: #3783F5;
+    }
     .testDescription {
       margin: 10px 0;
       padding: 10px 0;
@@ -18,6 +22,9 @@
       border-radius: 5px;
       margin-left: auto;
     }
+  }
+  &__test:hover {
+    border: 1px solid #1AFBB7;
   }
 }
 .diagnosticsDone {

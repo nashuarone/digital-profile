@@ -440,6 +440,26 @@ const Resume = () => {
       </div>
       <div className={style.profile__personalinfo}>
         <h2>Сертификаты</h2>
+        {resumeData.certificates?.length === 0
+          ? "Сертификаты не загружены"
+          : "нет"}
+        <div className={style.certificateBlock}>
+          <div className={style.certificateBlock__img}>
+            <img src="" alt="certificate img" />
+          </div>
+          <div className={style.certificateBlock__desc}>
+            <h3 className={style.certificateTitle}>UX/UI дизайнер</h3>
+            <span>Сертификат: 00000000</span>
+            <div>
+              <span className={style.certificateSkill}>CSS</span>
+              <span className={style.certificateSkill}>HTML</span>
+            </div>
+            <span>
+              Статус:{" "}
+              <span className={style.certificateChecked}>обработано</span>
+            </span>
+          </div>
+        </div>
         <div className={style.certificateBlock}>
           <div className={style.certificateBlock__img}>
             <img src="" alt="certificate img" />

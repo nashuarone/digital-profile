@@ -83,8 +83,9 @@
     .certificateBlock {
       display: flex;
       flex-wrap: wrap;
+      margin-bottom: 20px;
       &__img {
-        width: 35%;
+        width: 25%;
         background: #3783F5;
       }
       &__desc {

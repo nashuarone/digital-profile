@@ -6,12 +6,14 @@ const SET_PROFILE_PHOTO = "SET_PROFILE_PHOTO";
 const CLEAR = "CLEAR";
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
+const SET_SPECIAL_ANTD_SOLUTION = "SET_SPECIAL_ANTD_SOLUTION";
 
 let initialState = {
   profilePhotoFileLink: "",
   profilePhotoUuid: "",
   fileLink: "",
   fileLinkCertificate: "",
+  specialAntdFlowBugSolutionVariable: "",
   almazId: "",
   almazIdCertificate: "",
   uuid: "",
@@ -27,29 +29,34 @@ let initialState = {
 const storageReducer = (state_a = initialState, action) => {
   switch (action.type) {
     case SET_AVATAR:
-    return {
-      ...state_a,
-      fileLink: action.payload.fileLink,
-      almazId: action.payload["@id"],
-      uuid: action.payload.uuid,
-      fileName: action.payload.fileName,
-      fileExtension: action.payload.fileExtension,
-    };
+      return {
+        ...state_a,
+        fileLink: action.payload.fileLink,
+        almazId: action.payload["@id"],
+        uuid: action.payload.uuid,
+        fileName: action.payload.fileName,
+        fileExtension: action.payload.fileExtension,
+      };
     case SET_CERTIFICATE:
-    return {
-      ...state_a,
-      fileLinkCertificate: action.payload.fileLink,
-      almazIdCertificate: action.payload["@id"],
-      uuidCertificate: action.payload.uuid,
-      fileNameCertificate: action.payload.fileName,
-      fileExtensionCertificate: action.payload.fileExtension,
-    };
+      return {
+        ...state_a,
+        fileLinkCertificate: action.payload.fileLink,
+        almazIdCertificate: action.payload["@id"],
+        uuidCertificate: action.payload.uuid,
+        fileNameCertificate: action.payload.fileName,
+        fileExtensionCertificate: action.payload.fileExtension,
+      };
     case SET_PROFILE_PHOTO:
-    return {
-      ...state_a,
-      profilePhotoFileLink: action.payload.fileLink,
-      profilePhotoUuid: action.payload.uuid,
-    };
+      return {
+        ...state_a,
+        profilePhotoFileLink: action.payload.fileLink,
+        profilePhotoUuid: action.payload.uuid,
+      };
+    case SET_SPECIAL_ANTD_SOLUTION:
+      return {
+        ...state_a,
+        specialAntdFlowBugSolutionVariable: action.resumeSolutionLink,
+      };
     case CLEAR:
       return {
         ...state_a,
@@ -57,6 +64,7 @@ const storageReducer = (state_a = initialState, action) => {
         profilePhotoUuid: "",
         fileLink: "",
         fileLinkCertificate: "",
+        specialAntdFlowBugSolutionVariable: "",
         almazId: "",
         almazIdCertificate: "",
         uuid: "",
@@ -88,6 +96,10 @@ const storageReducer = (state_a = initialState, action) => {
 export const setAvatarData = (payload) => ({ type: SET_AVATAR, payload });
 export const setCertificateData = (payload) => ({ type: SET_CERTIFICATE, payload });
 export const setProfilePhoto = (payload) => ({ type: SET_PROFILE_PHOTO, payload });
+export const setSpecialAntdSolution = (resumeSolutionLink) => ({
+  type: SET_SPECIAL_ANTD_SOLUTION,
+  resumeSolutionLink,
+});
 export const clearStorage = () => ({ type: CLEAR });
 export const setErrMessage = (err_mes) => ({
   type: SET_ERROR_MESSAGE,
