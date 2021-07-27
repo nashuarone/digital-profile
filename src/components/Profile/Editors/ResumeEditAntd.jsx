@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../../scss/Profile.module.scss";
 import { Form, Select, Button, Checkbox, DatePicker, Input, Radio, Space, InputNumber, message } from "antd";
-import { FolderAddOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { createResume } from "../../../redux/resumeReducer";
 import { Certificate } from "../../Common/UploadPdf";
@@ -1107,45 +1107,6 @@ const ResumeEditAntd = () => {
               </Form.Item>
             </div>
           </Form>
-        </div>
-      </div>
-      <div className={style.profile__personalinfo}>
-        <div className={style.resume__main}>
-          <h2>Переход на этап “Стажировка”</h2>
-          <div className={style.internshipBlock}>
-            <p className={style.internshipText}>
-              Для открытия следующего этапа “Стажировка” необходимо прикрепить
-              сертификат, подтверждающий прохождение курса на этапе “Прохождение
-              курса”
-            </p>
-            <Button>
-              Добавить сертификат
-              <FolderAddOutlined className={style.iconSize} />
-            </Button>
-          </div>
-        </div>
-        <Button className={style.personalButton} type="primary">
-          Сохранить
-        </Button>
-      </div>
-      <div className={style.profile__personalinfo}>
-        <h2>Сертификаты</h2>
-        <div className={style.certificateBlock}>
-          <div className={style.certificateBlock__img}>
-            <img src="" alt="certificate img" />
-          </div>
-          <div className={style.certificateBlock__desc}>
-            <h3 className={style.certificateTitle}>Web основы</h3>
-            <span>Сертификат: 00000000</span>
-            <div>
-              <span className={style.certificateSkill}>CSS</span>
-              <span className={style.certificateSkill}>HTML</span>
-            </div>
-            <span>
-              Статус:{" "}
-              <span className={style.certificateChecked}>обработано</span>
-            </span>
-          </div>
         </div>
       </div>
     </div>
