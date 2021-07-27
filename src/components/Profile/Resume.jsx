@@ -14,46 +14,57 @@ const Resume = () => {
   const dispatch = useDispatch();
   const userData = useSelector((s) => s.auth.userData);
   const resumeData = useSelector((s) => s.resume.resumeData);
-  const profilePhotoFileLink = useSelector((s) => s.storage.profilePhotoFileLink);
+  const profilePhotoFileLink = useSelector(
+    (s) => s.storage.profilePhotoFileLink
+  );
 
-  let workEmploye = ""
-  if (resumeData.desiredEmployment === 0) {
-    workEmploye = "Полная"
-  }
-  if (resumeData.desiredEmployment === 1) {
-    workEmploye = "Частичная"
-  }
-  if (resumeData.desiredEmployment === 2) {
-    workEmploye = "Проектная работа"
-  }
-  if (resumeData.desiredEmployment === 3) {
-    workEmploye = "Стажировка"
-  }
-  let workGraphic = ""
-  if (resumeData.desiredWorkSchedule === 0) {
-    workGraphic = "Полный день"
-  }
-  if (resumeData.desiredWorkSchedule === 1) {
-    workGraphic = "Сменный график"
-  }
-  if (resumeData.desiredWorkSchedule === 2) {
-    workGraphic = "Гибкий график"
-  }
-  if (resumeData.desiredWorkSchedule === 3) {
-    workGraphic = "Удаленная работа"
-  }
-  if (resumeData.desiredWorkSchedule === 4) {
-    workGraphic = "Вахтовый метод"
-  }
+  let desiredEmployment = resumeData.desiredEmployment ? resumeData.desiredEmployment : {isEmpty: true}
+  let workEmployeArr = Object.entries(desiredEmployment)
+    .reduce((accum, [k, v]) => {
+      return v === true ? [...accum, k] : accum;
+    }, []);
+  let workEmployeRus = workEmployeArr.map((it) =>
+    it === "isFull"
+      ? "Полная"
+      : it === "isPartial"
+      ? "Частичная"
+      : it === "isProject"
+      ? "Проектная работа"
+      : it === "isInternship"
+      ? "Стажировка"
+      : "Желаемая занятость не указана"
+  );
+  let desiredWorkSchedule = resumeData.desiredWorkSchedule
+    ? resumeData.desiredWorkSchedule
+    : { isEmpty: true };
+  let desiredWorkScheduleArr = Object.entries(desiredWorkSchedule).reduce(
+    (accum, [k, v]) => {
+      return v === true ? [...accum, k] : accum;
+    },
+    []
+  );
+  let desiredWorkScheduleArrRus = desiredWorkScheduleArr.map((it) =>
+    it === "isFull"
+      ? "Полный день"
+      : it === "isShift"
+      ? "Сменный график"
+      : it === "isFlex"
+      ? "Гибкий график"
+      : it === "isRemote"
+      ? "Удаленная работа"
+      : it === "isRotational"
+      ? "Вахтовый метод"
+      : "Желаемый график работы не указан"
+  );
 
   useEffect(() => {
     if (userData.photo) {
-      dispatch(getProfilePhoto(userData.photo))
+      dispatch(getProfilePhoto(userData.photo));
     }
   }, [dispatch, userData.photo, profilePhotoFileLink]);
   useEffect(() => {
     if (userData.resume) {
-      dispatch(getResume(userData.resume))
+      dispatch(getResume(userData.resume));
     }
   }, [dispatch, userData.resume]);
   return (
@@ -209,10 +220,18 @@ const Resume = () => {
           <div className={style.resume__main}>
             <h2>Профессиональная деятельность</h2>
             <span className={style.resumeSpan}>Желаемая занятость</span>
-            <span className={style.userInfo__inner}>{workEmploye}</span>
+            <span className={style.userInfo__inner}>
+              {workEmployeRus.map((it) => (
+                <span className={style.workEmployeSpan}>{it}</span>
+              ))}
+            </span>
             <br />
             <span className={style.resumeSpan}>Желаемый график работы</span>
-            <span className={style.userInfo__inner}>{workGraphic}</span>
+            <span className={style.userInfo__inner}>
+              {desiredWorkScheduleArrRus.map((it) => (
+                <span className={style.workEmployeSpan}>{it}</span>
+              ))}
+            </span>
             <br />
             <span className={style.resumeSpan__tall}>
               <b className={style.h2size}>Опыт работы</b>
