@@ -12,6 +12,19 @@ import SpecialInput from "./SpecialInput"
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "YYYY-MM-DD";
+const plainOptions = [
+  { label: "Полная", value: "isFull" },
+  { label: "Частичная", value: "isPartial" },
+  { label: "Проектная работа", value: "isProject" },
+  { label: "Стажировка", value: "isInternship" },
+];
+const plainOptions2 = [
+  { label: "Полный день", value: "isFull" },
+  { label: "Сменный график", value: "isShift" },
+  { label: "Гибкий график", value: "isFlex" },
+  { label: "Удаленная работа", value: "isRemote" },
+  { label: "Вахтовый метод", value: "isRotational" },
+];
 
 const ResumeEditAntd = () => {
   const dispatch = useDispatch();
@@ -41,8 +54,14 @@ const ResumeEditAntd = () => {
         values.sex,
         values.militaryTicker,
         values.citizenship,
-        values.desiredEmployment,
-        values.desiredWorkSchedule,
+        values.desiredEmployment.reduce((accum, rec) => {
+          accum[rec] = true;
+          return accum;
+        }, {}),
+        values.desiredWorkSchedule.reduce((accum, rec) => {
+          accum[rec] = true;
+          return accum;
+        }, {}),
         values.workExperiences,
         values.projectActivities,
         values.additionalInformation,
@@ -51,16 +70,17 @@ const ResumeEditAntd = () => {
         values.secondaryGeneralEducations,
         values.otherEducation,
         values.certificates
-          .map((it) =>
-            Object.entries(it)
-              .map(([k, v]) =>
-                k === "storage" ? [k, (v = almazIdCertificate)] : [k, v]
-              )
-              .reduce((accum, [k, v]) => {
-                accum[k] = v;
-                return accum;
-              }, {})
-          )
+          ? values.certificates.map((it) =>
+              Object.entries(it)
+                .map(([k, v]) =>
+                  k === "storage" ? [k, (v = almazIdCertificate)] : [k, v]
+                )
+                .reduce((accum, [k, v]) => {
+                  accum[k] = v;
+                  return accum;
+                }, {})
+            )
+          : undefined
       )
     );
     console.log("Received values of form: ", values);
@@ -351,12 +371,7 @@ const ResumeEditAntd = () => {
                 initialValue={resumeData?.desiredEmployment}
                 name="desiredEmployment"
               >
-                <Radio.Group>
-                  <Radio value={0}>Полная</Radio>
-                  <Radio value={1}>Частичная</Radio>
-                  <Radio value={2}>Проектная работа</Radio>
-                  <Radio value={3}>Стажировка</Radio>
-                </Radio.Group>
+                <Checkbox.Group options={plainOptions} />
               </Form.Item>
               <span className={style.resumeSpan}>Желаемый график работы</span>
               <Form.Item
@@ -364,13 +379,7 @@ const ResumeEditAntd = () => {
                 initialValue={resumeData?.desiredWorkSchedule}
                 name="desiredWorkSchedule"
               >
-                <Radio.Group>
-                  <Radio value={0}>Полный день</Radio>
-                  <Radio value={1}>Сменный график</Radio>
-                  <Radio value={2}>Гибкий график</Radio>
-                  <Radio value={3}>Удаленная работа</Radio>
-                  <Radio value={4}>Вахтовый метод</Radio>
-                </Radio.Group>
+                <Checkbox.Group options={plainOptions2} />
               </Form.Item>
               <div className={style.resumeFlex}>
                 <h2>
