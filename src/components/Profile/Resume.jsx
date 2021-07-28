@@ -459,9 +459,9 @@ const Resume = () => {
       </div>
       <div className={style.profile__personalinfo}>
         <h2>Сертификаты</h2>
-        {resumeData.certificates?.length === 0
-          ? "Сертификаты не загружены"
-          : "Блок с сертификатами (beta)"}
+        {resumeData.certificates?.length
+          ? "Блок с сертификатами (beta)"
+          : "Сертификаты не загружены"}
         <div className={style.certificateBlock}>
           <div className={style.certificateBlock__img}>
             <img src="" alt="certificate img" />

@@ -54,14 +54,16 @@ const ResumeEditAntd = () => {
         values.sex,
         values.militaryTicker,
         values.citizenship,
+        values.desiredEmployment ?
         values.desiredEmployment.reduce((accum, rec) => {
           accum[rec] = true;
           return accum;
-        }, {}),
+        }, {}) : undefined,
+        values.desiredWorkSchedule ?
         values.desiredWorkSchedule.reduce((accum, rec) => {
           accum[rec] = true;
           return accum;
-        }, {}),
+        }, {}) : undefined,
         values.workExperiences,
         values.projectActivities,
         values.additionalInformation,
@@ -96,6 +98,50 @@ const ResumeEditAntd = () => {
       </Select>
     </Form.Item>
   );
+
+  let desiredEmployment = resumeData.desiredEmployment
+    ? resumeData.desiredEmployment
+    : { isEmpty: true };
+  let workEmployeArr = Object.entries(desiredEmployment).reduce(
+    (accum, [k, v]) => {
+      return v === true ? [...accum, k] : accum;
+    },
+    []
+  );
+  // let workEmployeRus = workEmployeArr.map((it) =>
+  //   it === "isFull"
+  //     ? "Полная"
+  //     : it === "isPartial"
+  //     ? "Частичная"
+  //     : it === "isProject"
+  //     ? "Проектная работа"
+  //     : it === "isInternship"
+  //     ? "Стажировка"
+  //     : "Желаемая занятость не указана"
+  // );
+  let desiredWorkSchedule = resumeData.desiredWorkSchedule
+    ? resumeData.desiredWorkSchedule
+    : { isEmpty: true };
+  let desiredWorkScheduleArr = Object.entries(desiredWorkSchedule).reduce(
+    (accum, [k, v]) => {
+      return v === true ? [...accum, k] : accum;
+    },
+    []
+  );
+  // let desiredWorkScheduleArrRus = desiredWorkScheduleArr.map((it) =>
+  //   it === "isFull"
+  //     ? "Полный день"
+  //     : it === "isShift"
+  //     ? "Сменный график"
+  //     : it === "isFlex"
+  //     ? "Гибкий график"
+  //     : it === "isRemote"
+  //     ? "Удаленная работа"
+  //     : it === "isRotational"
+  //     ? "Вахтовый метод"
+  //     : "Желаемый график работы не указан"
+  // );
+
   const [certificateLink, setCertificateLink] = useState(almazIdCertificate);
   const [enemyVisible, setEnemyVisible] = useState(false);
   const [disabledValue, setDisabledValue] = useState(false);
@@ -368,7 +414,7 @@ const ResumeEditAntd = () => {
               <span className={style.resumeSpan}>Желаемая занятость</span>
               <Form.Item
                 className={style.inputImitator}
-                initialValue={resumeData?.desiredEmployment}
+                initialValue={workEmployeArr}
                 name="desiredEmployment"
               >
                 <Checkbox.Group options={plainOptions} />
@@ -376,7 +422,7 @@ const ResumeEditAntd = () => {
               <span className={style.resumeSpan}>Желаемый график работы</span>
               <Form.Item
                 className={style.inputImitator}
-                initialValue={resumeData?.desiredWorkSchedule}
+                initialValue={desiredWorkScheduleArr}
                 name="desiredWorkSchedule"
               >
                 <Checkbox.Group options={plainOptions2} />
@@ -443,13 +489,13 @@ const ResumeEditAntd = () => {
                               disabled={disabledValue}
                               placeholder=""
                             />
-                            <Checkbox
-                              onClick={getDisabledValue}
-                              className={style.littleElemMargin}
-                            >
-                              По настоящее время
-                            </Checkbox>
                           </Form.Item>
+                          <Checkbox
+                            onClick={getDisabledValue}
+                            className={style.littleElemMargin}
+                          >
+                            По настоящее время
+                          </Checkbox>
                         </div>
                         <div className={style.workXPform__child}>
                           <span className={style.workXPspan}>Должность</span>
@@ -730,13 +776,13 @@ const ResumeEditAntd = () => {
                               disabled={disabledValueSchool}
                               placeholder=""
                             />
-                            <Checkbox
-                              onClick={getDisabledValueSchool}
-                              className={style.littleElemMargin}
-                            >
-                              По настоящее время
-                            </Checkbox>
                           </Form.Item>
+                          <Checkbox
+                            onClick={getDisabledValueSchool}
+                            className={style.littleElemMargin}
+                          >
+                            По настоящее время
+                          </Checkbox>
                         </div>
                         <Button
                           className={style.inputImitatorCenter}
@@ -862,13 +908,13 @@ const ResumeEditAntd = () => {
                               disabled={disabledValueInst}
                               placeholder=""
                             />
-                            <Checkbox
-                              onClick={getDisabledValueInst}
-                              className={style.littleElemMargin}
-                            >
-                              По настоящее время
-                            </Checkbox>
                           </Form.Item>
+                          <Checkbox
+                            onClick={getDisabledValueInst}
+                            className={style.littleElemMargin}
+                          >
+                            По настоящее время
+                          </Checkbox>
                         </div>
                         <Button
                           className={style.inputImitatorCenter}
