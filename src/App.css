@@ -51,6 +51,12 @@ body {
 /* .ant-form-item:last-child {
   margin-right: auto;
 } */
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+    background-color: #55c500;
+}
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot {
+    background: #55c500;
+}
 .ant-form-item-has-feedback.ant-form-item-has-success .ant-form-item-children-icon,
 .ant-form-item-has-feedback.ant-form-item-has-warning .ant-form-item-children-icon,
 .ant-form-item-has-feedback.ant-form-item-has-error .ant-form-item-children-icon,

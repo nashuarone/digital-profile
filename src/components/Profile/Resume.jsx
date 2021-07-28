@@ -283,19 +283,6 @@ const Resume = () => {
             {resumeData?.projectActivities?.length
               ? resumeData.projectActivities.map((proj) => (
                   <div className={style.hhBlocks}>
-                    {/* <div className={style.hhBlocks__left}>
-                  <div className={style.resumeInfo}>
-                    <span className={style.userInfo__innerClear}>
-                      {proj ? proj.startDate.slice(0, 10).split("-").reverse().join(".") : null}
-                    </span>
-                    <span className={style.userInfo__innerMinus}>
-                      -
-                    </span>
-                    <span className={style.userInfo__innerClear}>
-                      {proj.endDate ? proj.endDate.slice(0, 10).split("-").reverse().join(".") : "По настоящее время"}
-                    </span>
-                  </div>
-                </div> */}
                     <div className={style.hhBlocks__right}>
                       <div className={style.workInfo}>
                         <span className={style.workInfo__innerClear}>
@@ -351,19 +338,13 @@ const Resume = () => {
                       <div className={style.resumeInfo}>
                         <span className={style.userInfo__innerClear}>
                           {school.startDate
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join(".")}
+                            .slice(0, 4)}
                         </span>
                         <span className={style.userInfo__innerMinus}>-</span>
                         <span className={style.userInfo__innerClear}>
                           {school.endDate
                             ? school.endDate
-                                .slice(0, 10)
-                                .split("-")
-                                .reverse()
-                                .join(".")
+                                .slice(0, 4)
                             : "По настоящее время"}
                         </span>
                       </div>
@@ -389,19 +370,13 @@ const Resume = () => {
                       <div className={style.resumeInfo}>
                         <span className={style.userInfo__innerClear}>
                           {highSchool.startDate
-                            .slice(0, 10)
-                            .split("-")
-                            .reverse()
-                            .join(".")}
+                            .slice(0, 4)}
                         </span>
                         <span className={style.userInfo__innerMinus}>-</span>
                         <span className={style.userInfo__innerClear}>
                           {highSchool.endDate
                             ? highSchool.endDate
-                                .slice(0, 10)
-                                .split("-")
-                                .reverse()
-                                .join(".")
+                                .slice(0, 4)
                             : "По настоящее время"}
                         </span>
                       </div>
