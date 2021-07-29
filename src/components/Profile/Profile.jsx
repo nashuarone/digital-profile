@@ -7,6 +7,7 @@ import AboutmeEdit from "./Editors/AboutmeEdit";
 import Resume from "./Resume";
 import DigitalProfile from "./DigitalProfile";
 import ResumeEditAntd from "./Editors/ResumeEditAntd";
+import Notification from "./Notifications";
 
 const Profile = () => {
   return (
@@ -26,12 +27,15 @@ const Profile = () => {
         <Menu.Item key="2">
           <NavLink to="/profile/digital-profile">Цифровой профиль</NavLink>
         </Menu.Item>
-        <Menu.Item key="3">Уведомления</Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/profile/notifications">Уведомления</NavLink>
+        </Menu.Item>
       </Menu>
       {<Route exact path="/profile/aboutme-editor" component={AboutmeEdit} />}
       {<Route path="/profile/resume-editor" component={ResumeEditAntd} />}
       {<Route path="/profile/resume" component={Resume} />}
       {<Route path="/profile/digital-profile" component={DigitalProfile} />}
+      {<Route path="/profile/notifications" component={Notification} />}
       {<Route exact path="/profile" component={Aboutme} />}
     </div>
   );

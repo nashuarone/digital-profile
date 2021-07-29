@@ -30,7 +30,7 @@ export const Avatar = () => {
     fmData.append("image", file);
     setFirst(file.name.split(".").shift())
     setSecond(file.name.split(".").pop())
-    setThird(fileEncoded.slice(23))
+    setThird(fileEncoded.split(",").pop());
     setSuccessParams(true)
     onSuccess("Ok");
   };

@@ -32,7 +32,7 @@ const Hat = () => {
           <Menu.Item key="3">Банк резюме</Menu.Item>
         </Menu>
         <div className={style.header__log}>
-          <Badge count={2}>
+          <Badge count={0}>
             <BellFilled className={style.logSize} />
           </Badge>
           <Button

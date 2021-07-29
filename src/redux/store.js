@@ -6,6 +6,7 @@ import feedbackReducer from "./feedbackReducer";
 import resumeReducer from "./resumeReducer";
 import skillReducer from "./skillReducer";
 import storageReducer from "./storageReducer";
+import notificationsReducer from "./notificationsReducer";
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -13,7 +14,8 @@ let reducers = combineReducers({
   resume: resumeReducer,
   storage: storageReducer,
   skills: skillReducer,
-  feedback: feedbackReducer
+  feedback: feedbackReducer,
+  notifications: notificationsReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

@@ -312,3 +312,19 @@ export const skillsAPI = {
       });
   },
 };
+
+export const notificationsAPI = {
+  all(userId) {
+    return axiosInstanse
+      .get(`/api/users/${userId}/notifications`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/ld+json",
+        },
+      })
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+};
