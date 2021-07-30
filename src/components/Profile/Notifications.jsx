@@ -15,16 +15,22 @@ const Notification = () => {
   return (
     <div className={style.profile__personalinfo}>
       <h1>Уведомления</h1>
-      <div>
-        {notificationsData?.length ? notificationsData.map((mess) => (
-          <div>
-            <div>date</div>
-            <div>
-              <div>{mess.message}</div>
-            </div>
-            time
-          </div>
-        )) : "Уведомлений нет"}
+      <div className={style.notificationsBlock}>
+        {notificationsData?.length
+          ? notificationsData.map((mess) => (
+              <div key={mess.id} className={style.notificationElement}>
+                <div className={style.notificationDate}>
+                  {mess.createdAt.slice(0, 10).split("-").reverse().join(".")}
+                </div>
+                <div className={style.notificationMessage}>
+                  <div>{mess.message}</div>
+                </div>
+                <div className={style.notificationTime}>
+                  {mess.createdAt.slice(11, 16)}
+                </div>
+              </div>
+            ))
+          : "Уведомлений нет"}
       </div>
     </div>
   );

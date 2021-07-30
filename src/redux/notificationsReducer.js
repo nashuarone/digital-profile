@@ -11,7 +11,7 @@ const appReducer = (state_a = initialState, action) => {
     case SET_NOTIFICATIONS:
       return {
         ...state_a,
-        notificationsData: action.payload,
+        notificationsData: action.payload["hydra:member"],
       };
     default:
       return state_a;
@@ -24,7 +24,7 @@ export const getNotifications = (userId) => (dispatch) => {
   notificationsAPI.all(userId).then((res) => {
     //dispatch(setSuccessMessage("Сообщение отправлено"));
     dispatch(setNotifications(res.data));
-    console.log("HardSkills", res.data);
+    console.log("Уведомления:", res.data);
     //dispatch(setSuccessMessage(""));
   });
 };

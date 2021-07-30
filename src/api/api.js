@@ -311,6 +311,19 @@ export const skillsAPI = {
         return e.response;
       });
   },
+  soft(userId) {
+    return axiosInstanse
+      .get(`/api/hard_skills/users/${userId}/history`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/ld+json",
+        },
+      })
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
 };
 
 export const notificationsAPI = {

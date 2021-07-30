@@ -33,7 +33,9 @@ const Hat = () => {
         </Menu>
         <div className={style.header__log}>
           <Badge count={0}>
-            <BellFilled className={style.logSize} />
+            <NavLink to="/profile/notifications">
+              <BellFilled className={style.logSize} />
+            </NavLink>
           </Badge>
           <Button
             onClick={() => dispatch(generalLogout())}

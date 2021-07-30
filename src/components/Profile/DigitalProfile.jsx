@@ -8,19 +8,19 @@ import { ResponsiveBullet } from "@nivo/bullet";
 import { getHardSkills } from "../../redux/skillReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-const data = {
+const hardSkillsDataMock = {
   children: [
     {
       name: "PHP",
-      loc: 31,
+      currentValue: 31,
     },
     {
       name: "Angular",
-      loc: 33,
+      currentValue: 33,
     },
     {
       name: "Nodejs",
-      loc: 26,
+      currentValue: 26,
     },
     {
       name: "React",
@@ -30,38 +30,37 @@ const data = {
           children: [
             {
               name: "redux",
-              loc: 13,
+              currentValue: 13,
             },
             {
               name: "redux-thunk",
-              loc: 23,
+              currentValue: 23,
             },
           ],
         },
         {
           name: "Hooks",
-          loc: 17,
+          currentValue: 17,
         },
         {
           name: "JSX",
-          loc: 6,
+          currentValue: 6,
         },
         {
           name: "JS / ES6",
-          loc: 22,
+          currentValue: 22,
         },
       ],
     },
     {
       name: "Vue",
-      loc: 43,
+      currentValue: 43,
     },
   ],
 };
 const data2 = [
   {
     id: "Сидоров",
-    color: "hsl(284, 70%, 50%)",
     data: [
       {
         x: "апрель 2021",
@@ -153,7 +152,7 @@ const dataGreen = data4.filter((it) => it.measures[0] >= 50);
 const DigitalProfile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((s) => s.auth.userData.id);
-//  const hardSkillsData = useSelector((s) => s.skills.hardSkillsData);
+  const hardSkillsData = useSelector((s) => s.skills.hardSkillsData);
   useEffect(() => {
     dispatch(getHardSkills(userId));
   }, [dispatch, userId]);
@@ -162,29 +161,14 @@ const DigitalProfile = () => {
       <h2>Hard skills</h2>
       <div className={style.profile__personalinfo}>
         <h2>Web разработка</h2>
-        <div>
-          <Tooltip title="Стажер / Junior / Middle">
-            <Progress
-              strokeColor={{
-                "0%": "#32FFDA",
-                "100%": "#1388F3",
-              }}
-              percent={42}
-            />
-            <div className={style.digitalProgress}>
-              <span>Стажер</span>
-              <span>Junior</span>
-              <span>Middle</span>
-            </div>
-          </Tooltip>
-        </div>
+
         <div className={style.digitalCharts}>
           <div className={style.digitalCharts__sunburst}>
             <ResponsiveSunburst
-              data={data}
+              data={hardSkillsData.children ? hardSkillsData : hardSkillsDataMock}
               margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
               id="name"
-              value="loc"
+              value="currentValue"
               cornerRadius={2}
               borderColor={{ theme: "background" }}
               colors={{ scheme: "nivo" }}
@@ -197,7 +181,23 @@ const DigitalProfile = () => {
               }}
             />
           </div>
-          <div className={style.digitalCharts__sunburst}>
+          <div className={style.digitalCharts__restCharts}>
+            <div>
+              <Tooltip title="Стажер / Junior / Middle">
+                <Progress
+                  strokeColor={{
+                    "0%": "#32FFDA",
+                    "100%": "#1388F3",
+                  }}
+                  percent={42}
+                />
+                <div className={style.digitalProgress}>
+                  <span>Стажер</span>
+                  <span>Junior</span>
+                  <span>Middle</span>
+                </div>
+              </Tooltip>
+            </div>
             <ResponsiveLine
               data={data2}
               margin={{ top: 50, right: 110, bottom: 50, left: 60 }}

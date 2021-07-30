@@ -378,8 +378,13 @@
   .digitalCharts {
     display: flex;
     &__sunburst {
-      padding: 20px;
-      width: 50%;
+      padding: 10px;
+      width: 60%;
+      height: 400px;
+    }
+    &__restCharts {
+      padding: 10px;
+      width: 40%;
       height: 350px;
     }
   }
@@ -416,5 +421,21 @@
     &__span {
       display: none;
     }
+  }
+  .notificationMessage {
+    margin: 10px 0;
+    padding: 20px;
+    background: #3783F5;
+    border-radius: 0 10px;
+    border: 2px solid #1AFBB7;
+    color: white;
+  }
+  .notificationDate {
+    text-align: center;
+    color: gray;
+  }
+  .notificationTime {
+    text-align: end;
+    color: gray;
   }
 }
