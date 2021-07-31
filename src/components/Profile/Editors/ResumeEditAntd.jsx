@@ -108,17 +108,6 @@ const ResumeEditAntd = () => {
     },
     []
   );
-  // let workEmployeRus = workEmployeArr.map((it) =>
-  //   it === "isFull"
-  //     ? "Полная"
-  //     : it === "isPartial"
-  //     ? "Частичная"
-  //     : it === "isProject"
-  //     ? "Проектная работа"
-  //     : it === "isInternship"
-  //     ? "Стажировка"
-  //     : "Желаемая занятость не указана"
-  // );
   let desiredWorkSchedule = resumeData.desiredWorkSchedule
     ? resumeData.desiredWorkSchedule
     : { isEmpty: true };
@@ -128,19 +117,6 @@ const ResumeEditAntd = () => {
     },
     []
   );
-  // let desiredWorkScheduleArrRus = desiredWorkScheduleArr.map((it) =>
-  //   it === "isFull"
-  //     ? "Полный день"
-  //     : it === "isShift"
-  //     ? "Сменный график"
-  //     : it === "isFlex"
-  //     ? "Гибкий график"
-  //     : it === "isRemote"
-  //     ? "Удаленная работа"
-  //     : it === "isRotational"
-  //     ? "Вахтовый метод"
-  //     : "Желаемый график работы не указан"
-  // );
 
   const [certificateLink, setCertificateLink] = useState(almazIdCertificate);
   const [enemyVisible, setEnemyVisible] = useState(false);
@@ -303,6 +279,12 @@ const ResumeEditAntd = () => {
                 className={style.inputImitator}
                 initialValue={resumeData?.telegramIdentifier}
                 name="telegramIdentifier"
+                rules={[
+                  {
+                    min: 4,
+                    message: "минимум 4 символа",
+                  },
+                ]}
               >
                 <Input placeholder="" />
               </Form.Item>

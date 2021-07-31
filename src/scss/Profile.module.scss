@@ -242,7 +242,7 @@
         font-size: 20px;
         &__left {
           border-right: 1px solid darkslategrey;
-          width: 35%;
+          width: 30%;
           margin-right: 20px;
           .resumeInfo {
             margin: 5px 0;
@@ -261,6 +261,7 @@
           }
         }
         &__right {
+          width: 65%;
           .resumeInfo {
             margin: 10px 0;
             display: flex;
@@ -380,7 +381,7 @@
     &__sunburst {
       padding: 10px;
       width: 60%;
-      height: 400px;
+      height: 450px;
     }
     &__restCharts {
       padding: 10px;
@@ -422,8 +423,22 @@
       display: none;
     }
   }
+  .notificationMiddleBlock {
+    display: flex;
+    &__logo {
+      width: 10%;
+      .notificationLogo {
+        margin: 10px;
+        svg {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
   .notificationMessage {
-    margin: 10px 0;
+    margin: 10px;
+    width: 90%;
     padding: 20px;
     background: #3783F5;
     border-radius: 0 10px;

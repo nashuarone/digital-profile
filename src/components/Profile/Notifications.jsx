@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Icon from "@ant-design/icons";
+import { AuthLogoSvg } from "../../assets/forSvgExport";
 import { getNotifications } from "../../redux/notificationsReducer";
 import style from "../../scss/Profile.module.scss";
+
+const AuthLogoIcon = (props) => <Icon component={AuthLogoSvg} {...props} />;
 
 const Notification = () => {
   const dispatch = useDispatch();
@@ -22,8 +26,15 @@ const Notification = () => {
                 <div className={style.notificationDate}>
                   {mess.createdAt.slice(0, 10).split("-").reverse().join(".")}
                 </div>
-                <div className={style.notificationMessage}>
-                  <div>{mess.message}</div>
+                <div className={style.notificationMiddleBlock}>
+                  <div className={style.notificationMiddleBlock__logo}>
+                    <AuthLogoIcon
+                      className={style.notificationLogo}
+                    />
+                  </div>
+                  <div className={style.notificationMessage}>
+                    <p>{mess.message}</p>
+                  </div>
                 </div>
                 <div className={style.notificationTime}>
                   {mess.createdAt.slice(11, 16)}

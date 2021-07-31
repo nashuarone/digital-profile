@@ -5,6 +5,7 @@ import style from "../../scss/Profile.module.scss";
 import { Button, Steps, Popover } from "antd";
 import { MailOutlined, PhoneOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { getProfilePhoto } from "../../redux/storageReducer";
+import { getProgress } from "../../redux/roadmapReducer";
 
 const { Step } = Steps;
 const baseImgURL = `https://tandemteam.site`;
@@ -26,13 +27,14 @@ const Aboutme = () => {
   const dispatch = useDispatch();
   const userData = useSelector((s) => s.auth.userData);
   const profilePhotoFileLink = useSelector((s) => s.storage.profilePhotoFileLink);
+  const progressPosition = useSelector((s) => s.roadmap.roadmapData.length);
   const [isVisibleAnswer, setVisibleAnswer] = useState(false);
   const toggleVisibleAnswer = () => {
     setVisibleAnswer(!isVisibleAnswer);
   };
-  // if (profilePhotoFileLink) {
-  //   defaultPhotoLink = profilePhotoFileLink
-  // }
+  useEffect(() => {
+      dispatch(getProgress());
+  }, [dispatch, userData.id]);
   useEffect(() => {
     if (userData.photo) {
       dispatch(getProfilePhoto(userData.photo))
@@ -94,7 +96,7 @@ const Aboutme = () => {
         <h2>Дорожная карта</h2>
         <div className={style.profile__personalinfo}>
           <div className={style.timeline}>
-            <Steps current={0} progressDot={customDot}>
+            <Steps current={progressPosition ? progressPosition - 1 : 0} progressDot={customDot}>
               <Step description="Регистрация, Резюме" />
               <Step description="Диагностика" />
               <Step description="Прохождение курсов" />

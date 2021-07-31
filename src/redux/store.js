@@ -7,6 +7,7 @@ import resumeReducer from "./resumeReducer";
 import skillReducer from "./skillReducer";
 import storageReducer from "./storageReducer";
 import notificationsReducer from "./notificationsReducer";
+import roadmapReducer from "./roadmapReducer";
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -15,7 +16,8 @@ let reducers = combineReducers({
   storage: storageReducer,
   skills: skillReducer,
   feedback: feedbackReducer,
-  notifications: notificationsReducer
+  notifications: notificationsReducer,
+  roadmap: roadmapReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

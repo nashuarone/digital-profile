@@ -341,3 +341,19 @@ export const notificationsAPI = {
       });
   },
 };
+
+export const roadmapAPI = {
+  progress() {
+    return axiosInstanse
+      .get(`/api/roadmap`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/ld+json",
+        },
+      })
+      .then((res) => res)
+      .catch((e) => {
+        return e.response;
+      });
+  },
+};

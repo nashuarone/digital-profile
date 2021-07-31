@@ -51,6 +51,9 @@ body {
 /* .ant-form-item:last-child {
   margin-right: auto;
 } */
+.ant-progress-bg {
+    height: 15px !important;
+}
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
     background-color: #55c500;
 }

@@ -34,7 +34,16 @@ const hardSkillsDataMock = {
             },
             {
               name: "redux-thunk",
-              currentValue: 23,
+              children: [
+                {
+                  name: "midleware",
+                  currentValue: 13,
+                },
+                {
+                  name: "thunk-creator",
+                  currentValue: 23,
+                },
+              ],
             },
           ],
         },
