@@ -157,10 +157,12 @@ export const createResume = (
             if (res.status === 500) {
               dispatch(setErrMessage("500. Что-то пошло не так"));
               dispatch(toggleIsLoginButton(false));
+              checkChangerBack();
             }
             if (res.status === 400 || res.status === 404) {
               dispatch(setErrMessage("400. Что-то пошло не так"));
               dispatch(toggleIsLoginButton(false));
+              checkChangerBack();
             }
             if (res.status === 200) {
               dispatch(setSuccessMessage("Резюме сохранено"));
@@ -213,6 +215,7 @@ export const createResume = (
           .catch((err) => {
             dispatch(toggleIsLoginButton(false));
             console.log(err);
+            checkChangerBack();
           });
   };
   export const getResume = (resumeLink) => (dispatch) => {
@@ -236,6 +239,7 @@ export const createResume = (
       .catch((err) => {
         dispatch(toggleIsLoginButton(false));
         console.log(err);
+        checkChangerBack();
       });
   };
 
