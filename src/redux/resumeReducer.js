@@ -67,6 +67,10 @@ const checkChanger = () => {
   isCheck = true;
   return
 }
+const checkChangerBack = () => {
+  isCheck = false;
+  return;
+};
 
 export const setResume = (data) => ({
   type: SET_RESUME,
@@ -216,11 +220,16 @@ export const createResume = (
     resumeAPI
       .get(resumeLink)
       .then((res) => {
+        if (res.status === 200) {
+          checkChanger()
+        }
+        if (res.status === 404) {
+          checkChangerBack();
+        }
         dispatch(setSuccessMessage("Резюме подгружено"));
         dispatch(toggleIsLoginButton(false));
         dispatch(setResume(res.data))
         console.log(res.data);
-        checkChanger()
         dispatch(setSuccessMessage(""));
         dispatch(setRedirectCondition(false));
       })
