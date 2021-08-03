@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Icon from "@ant-design/icons";
-import { AuthLogoSvg } from "../../assets/forSvgExport";
+// import Icon from "@ant-design/icons";
+// import { AuthLogoSvg } from "../../assets/forSvgExport";
 import { getNotifications } from "../../redux/notificationsReducer";
 import style from "../../scss/Profile.module.scss";
+import adminLogo from "../../assets/AdminGirl.png"
 
-const AuthLogoIcon = (props) => <Icon component={AuthLogoSvg} {...props} />;
+// const AuthLogoIcon = (props) => <Icon component={AuthLogoSvg} {...props} />;
 
 const Notification = () => {
   const dispatch = useDispatch();
@@ -28,9 +29,9 @@ const Notification = () => {
                 </div>
                 <div className={style.notificationMiddleBlock}>
                   <div className={style.notificationMiddleBlock__logo}>
-                    <AuthLogoIcon
-                      className={style.notificationLogo}
-                    />
+                    <div className={style.notificationLogo}>
+                      <img src={adminLogo} alt="" />
+                    </div>
                   </div>
                   <div className={style.notificationMessage}>
                     <p>{mess.message}</p>

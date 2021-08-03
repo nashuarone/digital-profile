@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import style from "../../../scss/Profile.module.scss";
 import { Form, Select, Button, Checkbox, DatePicker, Input, Radio, Space, InputNumber, message } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -31,6 +31,7 @@ const ResumeEditAntd = () => {
   const userData = useSelector((s) => s.auth.userData);
   const resumeData = useSelector((s) => s.resume.resumeData);
   const isFetchingButton = useSelector((s) => s.resume.isFetchingButton);
+  const isReadyForRedirect = useSelector((s) => s.resume.isReadyForRedirect);
   const success_message = useSelector((s) => s.resume.success_message);
   const error_message = useSelector((s) => s.resume.error_message);
   const almazIdCertificate = useSelector((s) => s.storage.almazIdCertificate);
@@ -159,6 +160,9 @@ const ResumeEditAntd = () => {
       changeSuccess(success_message);
     }
   }, [success_message]);
+  if (isReadyForRedirect) {
+    return <Redirect to="/profile/resume" />;
+  }
   return (
     <div>
       <div className={style.profile__personalinfo}>

@@ -5,6 +5,7 @@ const SET_RESUME = "SET_RESUME";
 const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 const TOGGLE_IS_LOGIN_BUTTON = "TOGGLE_IS_LOGIN_BUTTON";
+const SET_REDIRECT_CONDITION = "SET_REDIRECT_CONDITION";
 
 let isCheck = false
 
@@ -12,6 +13,7 @@ let initialState = {
   resumeData: {},
   isLoaded: false,
   isFetchingButton: false,
+  isReadyForRedirect: false,
   error_message: "",
   success_message: "",
 };
@@ -51,6 +53,11 @@ const resumeReducer = (state = initialState, action) => {
         ...state,
         isFetchingButton: action.fetchingStatus,
       };
+    case SET_REDIRECT_CONDITION:
+      return {
+        ...state,
+        isReadyForRedirect: action.redirectStatus,
+      };
     default:
       return state;
   }
@@ -79,6 +86,10 @@ export const setSuccessMessage = (success_message) => ({
 export const toggleIsLoginButton = (fetchingStatus) => ({
   type: TOGGLE_IS_LOGIN_BUTTON,
   fetchingStatus,
+});
+export const setRedirectCondition = (redirectStatus) => ({
+  type: SET_REDIRECT_CONDITION,
+  redirectStatus,
 });
 
 export const createResume = (
@@ -153,6 +164,7 @@ export const createResume = (
               dispatch(setResume(res.data));
               console.log(res.data);
               dispatch(setSuccessMessage(""));
+              dispatch(setRedirectCondition(true));
             }
           })
           .catch((err) => {
@@ -192,6 +204,7 @@ export const createResume = (
             dispatch(setResume(res.data));
             console.log(res.data);
             dispatch(setSuccessMessage(""));
+            dispatch(setRedirectCondition(true));
           })
           .catch((err) => {
             dispatch(toggleIsLoginButton(false));
@@ -209,6 +222,7 @@ export const createResume = (
         console.log(res.data);
         checkChanger()
         dispatch(setSuccessMessage(""));
+        dispatch(setRedirectCondition(false));
       })
       .catch((err) => {
         dispatch(toggleIsLoginButton(false));

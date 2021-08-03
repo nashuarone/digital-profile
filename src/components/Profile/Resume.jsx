@@ -138,38 +138,38 @@ const Resume = () => {
                     {userData.email}
                   </span>
                 </div>
-                <div className={style.resumeInfo}>
+                {resumeData.telegramIdentifier && (<div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-telegram-plane"></i>
                   </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.telegramIdentifier}
                   </span>
-                </div>
-                <div className={style.resumeInfo}>
+                </div>)}
+                {resumeData.discordIdentifier && (<div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-discord"></i>
                   </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.discordIdentifier}
                   </span>
-                </div>
-                <div className={style.resumeInfo}>
+                </div>)}
+                {resumeData.vkLink && (<div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-vk"></i>
                   </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.vkLink}
                   </span>
-                </div>
-                <div className={style.resumeInfo}>
+                </div>)}
+                {resumeData.fbLink && (<div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerIcon}>
                     <i className="fab fa-facebook"></i>
                   </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.fbLink}
                   </span>
-                </div>
+                </div>)}
               </div>
               <div className={style.hhBlocks__right}>
                 <div className={style.resumeInfo}>
@@ -195,17 +195,17 @@ const Resume = () => {
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerStock}>Пол:</span>
                   <span className={style.resumeInfo__inner}>
-                    {resumeData.sex === 0 ? "Мужской" : "Женский"}
+                    {resumeData.sex === 0 ? "Мужской" : resumeData.sex === 1 ? "Женский": "Пол не указан"}
                   </span>
                 </div>
-                <div className={style.resumeInfo}>
+                {resumeData.sex === 0 && (<div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerStock}>
                     Военный билет:
                   </span>
                   <span className={style.resumeInfo__inner}>
                     {resumeData.militaryTicker ? "Есть" : "Нет"}
                   </span>
-                </div>
+                </div>)}
                 <div className={style.resumeInfo}>
                   <span className={style.resumeInfo__innerStock}>
                     Гражданство:
