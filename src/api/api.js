@@ -19,7 +19,7 @@ export const authAPI = {
         password,
         birthDate,
       })
-      .then((res) => res.data)
+      .then((res) => res)
       .catch((e) => {
         return e.response;
       });

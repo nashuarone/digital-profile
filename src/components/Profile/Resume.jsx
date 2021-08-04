@@ -63,9 +63,7 @@ const Resume = () => {
     }
   }, [dispatch, userData.photo, profilePhotoFileLink]);
   useEffect(() => {
-    if (userData.resume) {
-      dispatch(getResume(userData.resume));
-    }
+    dispatch(getResume(userData.resume));
   }, [dispatch, userData.resume]);
   return (
     <div>

@@ -13,6 +13,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const isFetchingButton = useSelector((s) => s.auth.isFetchingButton);
   const success_message = useSelector((s) => s.auth.success_message);
+  const error_message = useSelector((s) => s.auth.error_message);
   const [form] = Form.useForm();
   const onFinish = (values) => {
     dispatch(
@@ -39,9 +40,17 @@ const SignUp = () => {
       </Select>
     </Form.Item>
   );
+  const regError = (error_message) => {
+    message.error(error_message);
+  };
   const regSuccess = (success_message) => {
     message.success(success_message);
   };
+  useEffect(() => {
+    if (error_message) {
+      regError(error_message);
+    }
+  }, [error_message]);
   useEffect(() => {
     if (success_message) {
       regSuccess(success_message);

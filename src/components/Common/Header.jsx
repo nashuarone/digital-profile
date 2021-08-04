@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import style from "../../scss/App.module.scss";
 import { Layout, Menu, Button, Badge } from "antd";
@@ -12,6 +12,8 @@ const HeadLogoIcon = (props) => <Icon component={HeadLogoSvg} {...props} />;
 
 const Hat = () => {
   const dispatch = useDispatch();
+  const progressPosition = useSelector((s) => s.roadmap.roadmapData.length);
+  let specVal = progressPosition > 1 ? null : "disabled"
   return (
     <div>
       <Header className={style.header}>
@@ -25,7 +27,7 @@ const Hat = () => {
           <Menu.Item key="0">
             <NavLink to="/profile">Профиль</NavLink>
           </Menu.Item>
-          <Menu.Item key="1">
+          <Menu.Item disabled={specVal} key="1">
             <NavLink to="/diagnostics">Диагностика</NavLink>
           </Menu.Item>
           <Menu.Item key="2">Стажировка</Menu.Item>

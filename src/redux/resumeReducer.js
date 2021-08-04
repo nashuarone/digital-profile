@@ -157,12 +157,10 @@ export const createResume = (
             if (res.status === 500) {
               dispatch(setErrMessage("500. Что-то пошло не так"));
               dispatch(toggleIsLoginButton(false));
-              checkChangerBack();
             }
             if (res.status === 400 || res.status === 404) {
               dispatch(setErrMessage("400. Что-то пошло не так"));
               dispatch(toggleIsLoginButton(false));
-              checkChangerBack();
             }
             if (res.status === 200) {
               dispatch(setSuccessMessage("Резюме сохранено"));
@@ -215,7 +213,6 @@ export const createResume = (
           .catch((err) => {
             dispatch(toggleIsLoginButton(false));
             console.log(err);
-            checkChangerBack();
           });
   };
   export const getResume = (resumeLink) => (dispatch) => {
@@ -224,22 +221,22 @@ export const createResume = (
       .get(resumeLink)
       .then((res) => {
         if (res.status === 200) {
+          dispatch(setSuccessMessage("Резюме подгружено"));
+          dispatch(toggleIsLoginButton(false));
+          dispatch(setResume(res.data))
+          console.log(res.data);
+          dispatch(setSuccessMessage(""));
+          dispatch(setRedirectCondition(false));
           checkChanger()
         }
         if (res.status === 404) {
           checkChangerBack();
+          dispatch(toggleIsLoginButton(false));
         }
-        dispatch(setSuccessMessage("Резюме подгружено"));
-        dispatch(toggleIsLoginButton(false));
-        dispatch(setResume(res.data))
-        console.log(res.data);
-        dispatch(setSuccessMessage(""));
-        dispatch(setRedirectCondition(false));
       })
       .catch((err) => {
         dispatch(toggleIsLoginButton(false));
         console.log(err);
-        checkChangerBack();
       });
   };
 

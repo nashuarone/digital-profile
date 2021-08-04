@@ -90,11 +90,25 @@ export const createUser =
     dispatch(toggleIsLoginButton(true));
     authAPI
       .signup(firstName, secondName, thirdName, email, tel, password, birthDate)
-      .then((data) => {
-        dispatch(setSuccessMessage("Регистрация пройдена, войдите в личный кабинет"));
-        dispatch(toggleIsLoginButton(false));
-        console.log(data);
-        dispatch(setSuccessMessage(""));
+      .then((res) => {
+        if (res.status === 422) {
+          dispatch(setErrMessage("422. Введенные вами данные уже используются"));
+          dispatch(toggleIsLoginButton(false));
+          console.log(res);
+          dispatch(setErrMessage(""));
+        }
+        if (res.status === 400) {
+          dispatch(setErrMessage("400. Ошибка в передаваемых данных"));
+          dispatch(toggleIsLoginButton(false));
+          console.log(res);
+          dispatch(setErrMessage(""));
+        }
+        if (res.status === 201 || res.status === 200) {
+          dispatch(setSuccessMessage("Регистрация пройдена, войдите в личный кабинет"));
+          dispatch(toggleIsLoginButton(false));
+          console.log(res);
+          dispatch(setSuccessMessage(""));
+        }
       })
       .catch((err) => {
         dispatch(toggleIsLoginButton(false));
